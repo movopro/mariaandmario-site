@@ -32,16 +32,38 @@ const translations = {
     startTimeValue: "18:00",
     giftKey: "REQUIRED GIFTS:",
     giftValue: "ONLY MONEY ACCEPTED - TICKET ON ENTRANCE",
-    visualMemory: "VISUAL MEMORY",
-    galleryTitle: "FRAGMENTS FROM OUR UNIVERSE",
     soundtrack: "SOUNDTRACK",
     musicTitle: "THE MUSIC OF OUR WORLD",
     musicText: "YOUR FAVORITE SONGS, MEMORIES, AND MOMENTS WILL BECOME PART OF THE NIGHT.",
     donateTitle: "DONATE OUR YOUNG FAMILY",
     nextInteraction: "NEXT INTERACTION",
-    rsvpReadyTitle: "READY FOR THE RSVP MENU",
-    rsvpReadyText: "THE NEXT STEP IS THE ACTUAL INTERACTIVE MENU WITH ATTENDANCE, FAMILY RESPONSE, DRINKS, SONG REQUEST, DONATION, AND SAFE INVITE LOGIC.",
-    rsvpSoon: "OPEN RSVP MENU SOON",
+    rsvpMissionTitle: "MISSION RSVP",
+    rsvpMissionText: "CONFIRM YOUR PRESENCE, CHOOSE YOUR DRINKS, LEAVE A SONG, AND COMPLETE YOUR ENTRY INTO OUR CELEBRATION.",
+    attendanceTitle: "ATTENDANCE STATUS",
+    attendanceYes: "WE WILL ATTEND",
+    attendanceNo: "WE CANNOT ATTEND",
+    guestCountTitle: "GUEST COUNT",
+    guestOne: "ONLY 1 PERSON",
+    guestTwo: "2 PEOPLE / +1",
+    drinksTitle: "ALCOHOL PREFERENCES",
+    drinkVodka: "VODKA",
+    drinkWhiskey: "WHISKEY",
+    drinkBeer: "BEER",
+    drinkRakia: "RAKIA",
+    drinkCognac: "COGNAC",
+    drinkWine: "WINE",
+    songTitle: "SONG GIFT",
+    songLabel: "WRITE A FAVORITE SONG FOR THE NIGHT",
+    songPlaceholder: "YOUR SONG TITLE / ARTIST",
+    messageTitle: "OPTIONAL MESSAGE",
+    messageLabel: "LEAVE A SHORT NOTE FOR US",
+    messagePlaceholder: "WRITE YOUR MESSAGE HERE",
+    donatePanelTitle: "DONATE OUR YOUNG FAMILY",
+    donatePanelText: "IF YOU CANNOT ATTEND OR IF YOU WISH TO SUPPORT US DIRECTLY, YOU CAN USE OUR REVOLUT QR CODE.",
+    finalStep: "FINAL STEP",
+    submitTitle: "SEND YOUR RESPONSE",
+    submitText: "THIS IS THE FRONTEND VERSION. NEXT WE WILL CONNECT IT TO A REAL DATABASE WITH ONE RESPONSE PER FAMILY.",
+    submitBtn: "SUBMIT RESPONSE",
     sequence: [
       "TIME HAS COME...",
       "TO GET MARRIED",
@@ -84,16 +106,38 @@ const translations = {
     startTimeValue: "18:00",
     giftKey: "ПОДАРЪЦИ:",
     giftValue: "ПРИЕМАТ СЕ САМО ПАРИ - БИЛЕТ НА ВХОДА",
-    visualMemory: "ВИЗУАЛНА ПАМЕТ",
-    galleryTitle: "ФРАГМЕНТИ ОТ НАШАТА ВСЕЛЕНА",
     soundtrack: "САУНДТРАК",
     musicTitle: "МУЗИКАТА НА НАШИЯ СВЯТ",
     musicText: "ВАШИТЕ ЛЮБИМИ ПЕСНИ, СПОМЕНИ И МОМЕНТИ ЩЕ СТАНАТ ЧАСТ ОТ ВЕЧЕРТА.",
     donateTitle: "ПОДКРЕПЕТЕ НАШЕТО МЛАДО СЕМЕЙСТВО",
     nextInteraction: "СЛЕДВАЩА ИНТЕРАКЦИЯ",
-    rsvpReadyTitle: "ГОТОВИ ЛИ СТЕ ЗА RSVP МЕНЮТО",
-    rsvpReadyText: "СЛЕДВАЩАТА СТЪПКА Е ИСТИНСКОТО ИНТЕРАКТИВНО МЕНЮ С ПРИСЪСТВИЕ, СЕМЕЕН ОТГОВОР, НАПИТКИ, ПЕСЕН ПОЖЕЛАНИЕ, ДАРЕНИЕ И ЗАЩИТЕНА ЛОГИКА ЗА ПОКАНИТЕ.",
-    rsvpSoon: "RSVP МЕНЮТО ИДВА СКОРО",
+    rsvpMissionTitle: "RSVP МИСИЯ",
+    rsvpMissionText: "ПОТВЪРДИ ПРИСЪСТВИЕ, ИЗБЕРИ НАПИТКИ, ОСТАВИ ПЕСЕН И ЗАВЪРШИ ВЛИЗАНЕТО СИ В НАШИЯ ПРАЗНИК.",
+    attendanceTitle: "СТАТУС НА ПРИСЪСТВИЕ",
+    attendanceYes: "ЩЕ ПРИСЪСТВАМЕ",
+    attendanceNo: "НЯМА ДА УСПЕЕМ ДА ПРИСЪСТВАМЕ",
+    guestCountTitle: "БРОЙ ГОСТИ",
+    guestOne: "САМО 1 ЧОВЕК",
+    guestTwo: "2МА ДУШИ / +1",
+    drinksTitle: "ПРЕДПОЧИТАН АЛКОХОЛ",
+    drinkVodka: "ВОДКА",
+    drinkWhiskey: "УИСКИ",
+    drinkBeer: "БИРА",
+    drinkRakia: "РАКИЯ",
+    drinkCognac: "КОНЯК",
+    drinkWine: "ВИНО",
+    songTitle: "ПЕСЕН ПОДАРЪК",
+    songLabel: "НАПИШИ ЛЮБИМА ПЕСЕН ЗА ВЕЧЕРТА",
+    songPlaceholder: "ЗАГЛАВИЕ / ИЗПЪЛНИТЕЛ",
+    messageTitle: "ДОПЪЛНИТЕЛНО СЪОБЩЕНИЕ",
+    messageLabel: "ОСТАВИ КРАТКО ПОСЛАНИЕ ЗА НАС",
+    messagePlaceholder: "НАПИШИ СЪОБЩЕНИЕТО ТУК",
+    donatePanelTitle: "ПОДКРЕПЕТЕ НАШЕТО МЛАДО СЕМЕЙСТВО",
+    donatePanelText: "АКО НЕ МОЖЕТЕ ДА ПРИСЪСТВАТЕ ИЛИ ИСКАТЕ ДА НИ ПОДКРЕПИТЕ ДИРЕКТНО, МОЖЕТЕ ДА ИЗПОЛЗВАТЕ НАШИЯ REVOLUT QR КОД.",
+    finalStep: "ПОСЛЕДНА СТЪПКА",
+    submitTitle: "ИЗПРАТИ ОТГОВОРА",
+    submitText: "ТОВА Е FRONTEND ВЕРСИЯТА. СЛЕДВАЩО ЩЕ Я СВЪРЖЕМ С РЕАЛНА БАЗА ДАННИ И ПО ЕДИН ОТГОВОР НА СЕМЕЙСТВО.",
+    submitBtn: "ИЗПРАТИ ОТГОВОР",
     sequence: [
       "МОМЕНТЪТ НАСТЪПИ...",
       "ДА СЕ ОЖЕНИМ",
@@ -108,7 +152,6 @@ const translations = {
 let currentLang = "en";
 let sequenceStarted = false;
 let journeyStarted = false;
-let revealTriggered = false;
 let journeyInterval = null;
 
 const body = document.body;
@@ -135,6 +178,9 @@ const enterWorldBtn = document.getElementById("enterWorldBtn");
 const playVowBtn = document.getElementById("playVowBtn");
 const pauseVowBtn = document.getElementById("pauseVowBtn");
 
+const rsvpForm = document.getElementById("rsvpForm");
+const rsvpStatus = document.getElementById("rsvpStatus");
+
 const revealCards = document.querySelectorAll(".reveal-card");
 const journeySlides = document.querySelectorAll(".journey-slide");
 
@@ -157,20 +203,27 @@ function applyTranslations(lang) {
   currentLang = lang;
   document.documentElement.lang = lang;
 
-  document.querySelectorAll("[data-i18n]").forEach(el => {
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
     const key = el.dataset.i18n;
     if (translations[lang][key]) {
       el.textContent = translations[lang][key];
     }
   });
 
-  langButtons.forEach(btn => {
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+    const key = el.dataset.i18nPlaceholder;
+    if (translations[lang][key]) {
+      el.placeholder = translations[lang][key];
+    }
+  });
+
+  langButtons.forEach((btn) => {
     btn.classList.toggle("is-active", btn.dataset.lang === lang);
   });
 }
 
 function showScreen(screen) {
-  [matrixIntro, farewellScreen, welcomeScreen, mainExperience].forEach(section => {
+  [matrixIntro, farewellScreen, welcomeScreen, mainExperience].forEach((section) => {
     section.classList.add("hidden-screen");
   });
   screen.classList.remove("hidden-screen");
@@ -213,17 +266,6 @@ function startExperience(lang) {
   }, 650);
 }
 
-function runMissionReveal() {
-  if (revealTriggered) return;
-  revealTriggered = true;
-
-  revealCards.forEach((card, index) => {
-    setTimeout(() => {
-      card.classList.add("is-visible");
-    }, 220 + index * 220);
-  });
-}
-
 function startJourneySlides() {
   if (journeyInterval || journeySlides.length === 0) return;
 
@@ -247,7 +289,7 @@ function enterJourney() {
     showScreen(mainExperience);
     window.scrollTo({ top: 0, behavior: "auto" });
     startJourneySlides();
-    runMissionReveal();
+    observeRevealCards();
   }, 450);
 
   setTimeout(() => {
@@ -255,13 +297,30 @@ function enterJourney() {
   }, 1100);
 }
 
-langChoices.forEach(button => {
-  button.addEventListener("click", () => {
+function observeRevealCards() {
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        obs.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.16
+  });
+
+  revealCards.forEach((card) => observer.observe(card));
+}
+
+langChoices.forEach((button) => {
+  button.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
     startExperience(button.dataset.langSelect);
   });
 });
 
-langButtons.forEach(button => {
+langButtons.forEach((button) => {
   button.addEventListener("click", () => {
     applyTranslations(button.dataset.lang);
   });
@@ -282,7 +341,7 @@ yesBtn.addEventListener("click", async () => {
     introAudio.currentTime = 0;
     await introAudio.play();
   } catch (error) {
-    console.log("Intro audio blocked until user interaction is allowed.", error);
+    console.log("Intro audio blocked.", error);
   }
   showScreen(welcomeScreen);
 });
@@ -301,6 +360,32 @@ playVowBtn.addEventListener("click", async () => {
 
 pauseVowBtn.addEventListener("click", () => {
   vowAudio.pause();
+});
+
+rsvpForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const formData = new FormData(rsvpForm);
+  const attendance = formData.get("attendance");
+  const guestCount = formData.get("guestCount");
+  const drinks = formData.getAll("drinks");
+  const song = formData.get("song")?.trim() || "";
+  const message = formData.get("message")?.trim() || "";
+
+  const payload = {
+    attendance,
+    guestCount,
+    drinks,
+    song,
+    message
+  };
+
+  console.log("RSVP FRONTEND PAYLOAD:", payload);
+
+  rsvpStatus.textContent =
+    currentLang === "bg"
+      ? "ОТГОВОРЪТ Е ПОДГОТВЕН. СЛЕДВАЩО ГО СВЪРЗВАМЕ С БАЗАТА."
+      : "RESPONSE CAPTURED. NEXT WE CONNECT IT TO THE DATABASE.";
 });
 
 const canvas = document.getElementById("matrixCanvas");
