@@ -200,12 +200,61 @@ const rsvpForm = document.getElementById("rsvpForm");
 const rsvpStatus = document.getElementById("rsvpStatus");
 const revealCards = document.querySelectorAll(".reveal-card");
 
-const languageAudio = new Audio("./assets/music/trailer-intro2.mp3");
-languageAudio.volume = 0.6;
+const introAudio = document.getElementById('introAudio');
+const journeyAudio = document.getElementById('journeyAudio');
 
-const journeyAudio = new Audio("./assets/music/trailer-intro.mp3");
-journeyAudio.volume = 0.58;
-journeyAudio.loop = true;
+let introAudioStarted = false;
+let journeyAudioStarted = false;
+
+function safePlay(audioEl, volume = 1) {
+  if (!audioEl) return;
+  audioEl.volume = volume;
+  const playPromise = audioEl.play();
+  if (playPromise && typeof playPromise.catch === 'function') {
+    playPromise.catch((err) => {
+      console.log('Audio play prevented:', err);
+    });
+  }
+}
+
+function stopAudio(audioEl) {
+  if (!audioEl) return;
+  audioEl.pause();
+  audioEl.currentTime = 0;
+}
+
+function pauseAudio(audioEl) {
+  if (!audioEl) return;
+  audioEl.pause();
+}
+
+function startIntroAudio() {
+  if (!introAudio || introAudioStarted) return;
+  stopAudio(journeyAudio);
+  safePlay(introAudio, 0.85);
+  introAudioStarted = true;
+  journeyAudioStarted = false;
+}
+
+function startJourneyAudio() {
+  if (!journeyAudio) return;
+
+  pauseAudio(introAudio);
+  introAudioStarted = false;
+
+  if (!journeyAudioStarted) {
+    journeyAudio.currentTime = 0;
+  }
+
+  safePlay(journeyAudio, 0.9);
+  journeyAudioStarted = true;
+}
+
+function pauseJourneyAudio() {
+  pauseAudio(journeyAudio);
+  journeyAudioStarted = false;
+}
+
 
 function stopAudio(audio) {
   audio.pause();
