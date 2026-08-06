@@ -5,114 +5,160 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Maria & Mario | Wedding Invitation</title>
   <meta name="description" content="Maria and Mario wedding invitation." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
-  <a class="skip-link" href="#main-content">Skip to content</a>
+  <canvas id="matrixCanvas" aria-hidden="true"></canvas>
 
-  <header class="topbar">
-    <div class="brand">M&M</div>
-    <div class="topbar-actions">
-      <button id="themeToggle" class="ghost-btn" aria-label="Toggle theme">Theme</button>
-      <button id="langToggle" class="ghost-btn" aria-label="Switch language">BG</button>
-    </div>
-  </header>
+  <main class="site-shell">
+    <section id="matrixIntro" class="screen screen-active">
+      <div class="intro-overlay"></div>
 
-  <main id="main-content">
-    <section id="matrixScreen" class="screen active">
-      <div class="matrix-rain" aria-hidden="true"></div>
-      <div class="matrix-overlay"></div>
-
-      <div class="content-shell">
-        <p id="sequenceText" class="sequence-text"></p>
+      <div class="intro-center">
+        <p class="eyebrow">Maria & Mario</p>
+        <div id="typeSequence" class="type-sequence" aria-live="polite"></div>
 
         <div id="dateBlock" class="date-block hidden">
-          <p class="event-date" data-en="28 August 2027" data-bg="28 Август 2027">28 August 2027</p>
+          <p class="date-label">Event date</p>
+          <h1>28 August 2027</h1>
+        </div>
 
-          <div class="decision-group">
-            <button id="yesBtn" class="primary-btn"
-              data-en="Yes, I'm in"
-              data-bg="Да, вътре съм">
-              Yes, I'm in
-            </button>
-
-            <button id="noBtn" class="secondary-btn"
-              data-en="No, I prefer my simulation of reality"
-              data-bg="Не, предпочитам моята симулация на реалността">
-              No, I prefer my simulation of reality
-            </button>
-          </div>
+        <div id="choiceBlock" class="choice-block hidden">
+          <button id="yesBtn" class="btn btn-primary">Yes, I'm in</button>
+          <button id="noBtn" class="btn btn-secondary">No, I prefer my simulation of reality</button>
         </div>
       </div>
     </section>
 
     <section id="farewellScreen" class="screen hidden-screen">
-      <div class="farewell-wrap">
-        <h1
-          data-en="Farewell our friend, see you in another dimension"
-          data-bg="Сбогом, приятелю, ще се видим в друго измерение">
-          Farewell our friend, see you in another dimension
-        </h1>
-
-        <button id="restartBtn" class="primary-btn"
-          data-en="Return to the portal"
-          data-bg="Върни ме в портала">
-          Return to the portal
-        </button>
+      <div class="message-panel narrow">
+        <p class="eyebrow">Transmission ended</p>
+        <h2>Farewell our friend, see you in another dimension</h2>
+        <button id="returnBtn" class="btn btn-primary">Return to the invitation</button>
       </div>
     </section>
 
-    <section id="worldScreen" class="screen hidden-screen">
-      <div class="castle-background"></div>
-      <div class="world-overlay"></div>
+    <section id="welcomeScreen" class="screen hidden-screen">
+      <div class="castle-glow"></div>
+      <div class="stars"></div>
 
-      <div class="world-content">
-        <p class="eyebrow" data-en="Welcome to our world" data-bg="Добре дошли в нашия свят">
-          Welcome to our world
+      <div class="welcome-content">
+        <p class="eyebrow">Welcome sequence</p>
+        <h2>Welcome to our world</h2>
+        <p class="lead">
+          You were chosen to step beyond the code and into our story.
         </p>
-
-        <h1 data-en="Maria & Mario" data-bg="Мария и Марио">
-          Maria & Mario
-        </h1>
-
-        <p class="intro-copy"
-          data-en="This is where our story opens. A cinematic wedding experience is coming next."
-          data-bg="Тук започва нашата история. Следва кино изживяване за нашата сватба.">
-          This is where our story opens. A cinematic wedding experience is coming next.
-        </p>
-
-        <button id="enterSiteBtn" class="primary-btn"
-          data-en="Enter our world"
-          data-bg="Влез в нашия свят">
-          Enter our world
-        </button>
+        <button id="enterWorldBtn" class="btn btn-primary">Enter the celebration</button>
       </div>
     </section>
 
-    <section id="infoScreen" class="screen hidden-screen">
-      <div class="info-wrap">
-        <h2 data-en="Event Details" data-bg="Детайли за събитието">Event Details</h2>
-
-        <div class="details-list">
-          <p><span>Location:</span> <span data-en="Coordinates to be added" data-bg="Координатите ще бъдат добавени">Coordinates to be added</span></p>
-          <p><span>Dress code:</span> <span>casual summer party</span></p>
-          <p><span data-en="Start time:" data-bg="Начален час:">Start time:</span> <span>18:00</span></p>
-          <p><span data-en="Required gifts:" data-bg="Подаръци:">Required gifts:</span> <span data-en="Only money accepted - ticket on entrance" data-bg="Приемат се само пари - билет на входа">Only money accepted - ticket on entrance</span></p>
-        </div>
-
-        <div class="placeholder-box">
-          <p data-en="Next step: media carousel, RSVP per family, drinks, favorite song, donate QR."
-             data-bg="Следваща стъпка: медия каросел, RSVP за семейство, напитки, любима песен, donate QR.">
-            Next step: media carousel, RSVP per family, drinks, favorite song, donate QR.
+    <section id="mainExperience" class="hidden-screen">
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Maria & Mario</p>
+          <h2>Our story begins where fantasy meets destiny.</h2>
+          <p class="lead">
+            A cinematic summer evening, a celebration with the people who matter most,
+            and one unforgettable world made for all of us together.
           </p>
         </div>
-      </div>
+
+        <div class="hero-portrait hero-first">
+          <img src="./assets/images/portrait-01.webp" alt="Maria and Mario portrait" width="1200" height="1500" fetchpriority="high" />
+        </div>
+      </header>
+
+      <section class="photo-band">
+        <div class="photo-card large"><img src="./assets/images/portrait-02.webp" alt="Maria and Mario portrait" width="1200" height="1500" loading="lazy" decoding="async" /></div>
+        <div class="photo-card"><img src="./assets/images/portrait-03.webp" alt="Maria and Mario portrait" width="1200" height="1500" loading="lazy" decoding="async" /></div>
+        <div class="photo-card"><img src="./assets/images/portrait-04.webp" alt="Maria and Mario portrait" width="1200" height="1500" loading="lazy" decoding="async" /></div>
+      </section>
+
+      <section class="info-section">
+        <div class="section-heading">
+          <p class="eyebrow">Celebration details</p>
+          <h2>Event information</h2>
+        </div>
+
+        <div class="info-grid">
+          <article class="info-card">
+            <span class="info-key">Location:</span>
+            <span class="info-value">Event coordinates to be added</span>
+          </article>
+
+          <article class="info-card">
+            <span class="info-key">Dress code:</span>
+            <span class="info-value">Casual summer party</span>
+          </article>
+
+          <article class="info-card">
+            <span class="info-key">Start time:</span>
+            <span class="info-value">18:00</span>
+          </article>
+
+          <article class="info-card">
+            <span class="info-key">Required gifts:</span>
+            <span class="info-value">Only money accepted - ticket on entrance</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="gallery-section">
+        <div class="section-heading">
+          <p class="eyebrow">Moments</p>
+          <h2>Fragments from our universe</h2>
+        </div>
+
+        <div class="gallery-grid">
+          <div class="gallery-item tall"><img src="./assets/images/portrait-05.webp" alt="Maria and Mario portrait" width="1200" height="1500" loading="lazy" decoding="async" /></div>
+          <div class="gallery-item"><img src="./assets/images/portrait-06.webp" alt="Maria and Mario portrait" width="1200" height="1500" loading="lazy" decoding="async" /></div>
+          <div class="gallery-item"><img src="./assets/images/portrait-07.webp" alt="Maria and Mario portrait" width="1200" height="1500" loading="lazy" decoding="async" /></div>
+          <div class="gallery-item wide"><img src="./assets/images/portrait-08.webp" alt="Maria and Mario portrait" width="1200" height="1500" loading="lazy" decoding="async" /></div>
+          <div class="gallery-item"><img src="./assets/images/portrait-09.webp" alt="Maria and Mario portrait" width="1200" height="1500" loading="lazy" decoding="async" /></div>
+          <div class="gallery-item"><img src="./assets/images/portrait-10.webp" alt="Maria and Mario portrait" width="1200" height="1500" loading="lazy" decoding="async" /></div>
+        </div>
+      </section>
+
+      <section class="music-donate-section">
+        <div class="music-card">
+          <p class="eyebrow">Soundtrack</p>
+          <h2>The music of our world</h2>
+          <p>
+            Your favorite songs and memories will become part of the night.
+          </p>
+          <button id="playVowBtn" class="btn btn-primary">Play our theme</button>
+          <button id="pauseVowBtn" class="btn btn-secondary">Pause music</button>
+        </div>
+
+        <div class="donate-card">
+          <p class="eyebrow">Donate our young family</p>
+          <h2>Revolut QR</h2>
+          <img src="./assets/qr/revolut-qr.png" alt="Revolut QR code" width="1200" height="1200" loading="lazy" decoding="async" class="qr-image" />
+        </div>
+      </section>
+
+      <section class="closing-gallery">
+        <div class="closing-card"><img src="./assets/images/portrait-11.webp" alt="Maria and Mario portrait" width="1200" height="1500" loading="lazy" decoding="async" /></div>
+        <div class="closing-card"><img src="./assets/images/portrait-12.webp" alt="Maria and Mario portrait" width="1200" height="1500" loading="lazy" decoding="async" /></div>
+        <div class="closing-card"><img src="./assets/images/portrait-13.webp" alt="Maria and Mario portrait" width="1200" height="1500" loading="lazy" decoding="async" /></div>
+        <div class="closing-card"><img src="./assets/images/portrait-14.webp" alt="Maria and Mario portrait" width="1200" height="1500" loading="lazy" decoding="async" /></div>
+      </section>
+
+      <section class="rsvp-entry">
+        <div class="message-panel">
+          <p class="eyebrow">Next step</p>
+          <h2>RSVP and family response are next.</h2>
+          <p>
+            In the next step we will add the protected invitation flow, attendance choices,
+            drinks selection, guest count, favorite song gift, and family-safe RSVP logic.
+          </p>
+        </div>
+      </section>
     </section>
   </main>
-
-  <audio id="introAudio" preload="none">
-    <source src="./assets/trailer-intro.mp3" type="audio/mpeg" />
-  </audio>
 
   <script src="./script.js" defer></script>
 </body>
