@@ -1,405 +1,188 @@
-<!DOCTYPE html>
+<!doctype html>
+
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
-  <title>Maria & Mario | Wedding Invitation</title>
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Maria & Mario — Invitation</title>
+  <meta name="description" content="Cinematic wedding invitation for Maria & Mario" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap"
-    rel="stylesheet"
-  />
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;800&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
-  <canvas id="matrixCanvas" aria-hidden="true"></canvas>
-  <div class="scene-fade" id="sceneFade"></div>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-  <div class="lang-switch hidden-switch" aria-label="Language switcher">
-    <button class="lang-btn is-active" data-lang="en" type="button">EN</button>
-    <button class="lang-btn" data-lang="bg" type="button">BG</button>
+
+  <main id="main">
+    <!-- LANGUAGE SCREEN -->
+    <section id="language-screen" class="screen active">
+      <div class="language-panel">
+        <p class="eyebrow">Choose language</p>
+        <h1>Maria & Mario</h1>
+        <p class="lede">Select the language that feels right for you.</p>
+
+            <div class="language-actions">
+      <button class="lang-btn" data-lang="en" type="button">English</button>
+      <button class="lang-btn" data-lang="bg" type="button">Български</button>
+    </div>
+  </div>
+</section>
+
+<!-- MATRIX INTRO -->
+<section id="matrix-intro" class="screen">
+  <canvas id="matrixCanvas" aria-hidden="true"></canvas>
+
+  <!-- THIS IS NOT A BOX — text appears directly over the code -->
+  <div class="matrix-copy" id="matrixCopy" aria-live="polite">
+    <p class="matrix-line active">Time has come...</p>
+    <p class="matrix-line">To get married</p>
+    <p class="matrix-line">If you see this then you are special to us</p>
+    <p class="matrix-line">and...</p>
+    <p class="matrix-line">You've been selected to join our matrix</p>
+    <p class="matrix-line">Are you in?</p>
   </div>
 
-  <main class="site-shell">
-    <section id="languageGate" class="screen gate-screen">
-      <div class="gate-aura gate-aura-1"></div>
-      <div class="gate-aura gate-aura-2"></div>
+  <div class="matrix-actions" id="matrixActions">
+    <div class="wedding-date">28 August 2027</div>
+    <div class="choice-row">
+      <button id="yesBtn" class="choice-btn yes" type="button">Yes, I'm in</button>
+      <button id="noBtn" class="choice-btn no" type="button">No, I prefer my simulation of reality</button>
+    </div>
+  </div>
+</section>
 
-      <div class="gate-panel">
-        <p class="eyebrow" data-i18n="brand">MARIA & MARIO</p>
-        <h1 class="gate-title" data-i18n="languageTitle">SELECT LANGUAGE</h1>
-        <p class="gate-subtitle" data-i18n="languageSubtitle">
-          ИЗБЕРИ ЕЗИК / CHOOSE LANGUAGE
-        </p>
+<!-- FAREWELL -->
+<section id="farewell-screen" class="screen">
+  <div class="farewell-copy">
+    <p class="eyebrow">Signal lost</p>
+    <h2>Farewell our friend, see you in another dimension</h2>
+  </div>
+</section>
 
-        <div class="gate-actions">
-          <button class="fancy-lang-btn" data-lang-select="en" type="button">
-            <span class="flag-badge" aria-hidden="true">
-              <svg class="flag-icon" viewBox="0 0 64 64" fill="none">
-                <rect width="64" height="64" rx="16" fill="#0A0F18"/>
-                <path d="M14 20h36v24H14z" fill="#012169"/>
-                <path d="M14 20l36 24M50 20L14 44" stroke="#fff" stroke-width="6"/>
-                <path d="M14 20l36 24M50 20L14 44" stroke="#C8102E" stroke-width="3"/>
-                <path d="M32 20v24M14 32h36" stroke="#fff" stroke-width="10"/>
-                <path d="M32 20v24M14 32h36" stroke="#C8102E" stroke-width="6"/>
-              </svg>
-            </span>
-            <span class="lang-content">
-              <span class="lang-choice-label">English</span>
-              <span class="lang-choice-text">Enter the story in English</span>
-            </span>
-            <span class="lang-arrow">↗</span>
-          </button>
+<!-- OUR JOURNEY -->
+<section id="journey-screen" class="screen">
+  <div class="journey-hero">
+    <p class="eyebrow">Welcome to our world</p>
+    <h2>Our Journey</h2>
+    <p class="lede">A cinematic moment of two lives becoming one.</p>
+  </div>
 
-          <button class="fancy-lang-btn" data-lang-select="bg" type="button">
-            <span class="flag-badge" aria-hidden="true">
-              <svg class="flag-icon" viewBox="0 0 64 64" fill="none">
-                <rect width="64" height="64" rx="16" fill="#fff"/>
-                <rect y="21.333" width="64" height="21.333" fill="#00966E"/>
-                <rect y="42.666" width="64" height="21.334" rx="0 0 16 16" fill="#D62612"/>
-              </svg>
-            </span>
-            <span class="lang-content">
-              <span class="lang-choice-label">Български</span>
-              <span class="lang-choice-text">Влез в историята на български</span>
-            </span>
-            <span class="lang-arrow">↗</span>
-          </button>
-        </div>
-      </div>
-    </section>
+  <div class="journey-media">
+    <div class="collage-track" id="collageTrack" aria-hidden="true">
+      <!-- replace these src with your vertical images -->
+      <figure class="media-tile"><img src="./assets/images/photo-1.jpg" alt="photo 1" loading="lazy" width="800" height="1000"></figure>
+      <figure class="media-tile"><img src="./assets/images/photo-2.jpg" alt="photo 2" loading="lazy" width="800" height="1000"></figure>
+      <figure class="media-tile"><img src="./assets/images/photo-3.jpg" alt="photo 3" loading="lazy" width="800" height="1000"></figure>
+      <figure class="media-tile"><img src="./assets/images/photo-4.jpg" alt="photo 4" loading="lazy" width="800" height="1000"></figure>
+      <figure class="media-tile"><img src="./assets/images/photo-5.jpg" alt="photo 5" loading="lazy" width="800" height="1000"></figure>
+      <figure class="media-tile"><img src="./assets/images/photo-6.jpg" alt="photo 6" loading="lazy" width="800" height="1000"></figure>
+      <figure class="media-tile"><img src="./assets/images/photo-7.jpg" alt="photo 7" loading="lazy" width="800" height="1000"></figure>
+      <figure class="media-tile"><img src="./assets/images/photo-8.jpg" alt="photo 8" loading="lazy" width="800" height="1000"></figure>
+      <!-- duplicate for seamless loop -->
+      <figure class="media-tile"><img src="./assets/images/photo-1.jpg" alt="photo 1" loading="lazy" width="800" height="1000"></figure>
+      <figure class="media-tile"><img src="./assets/images/photo-2.jpg" alt="photo 2" loading="lazy" width="800" height="1000"></figure>
+    </div>
+  </div>
 
-    <section id="matrixIntro" class="screen hidden-screen">
-      <div class="intro-overlay"></div>
+  <div class="journey-info">
+    <div class="info-row"><span>location:</span><strong>42.0, 23.0</strong></div>
+    <div class="info-row"><span>dress code:</span><strong>casual summer party</strong></div>
+    <div class="info-row"><span>start time:</span><strong>18:00</strong></div>
+    <div class="info-row"><span>required gifts:</span><strong>only money accepted - ticket on entrance</strong></div>
+  </div>
 
-      <div class="intro-center intro-box">
-        <p class="eyebrow" data-i18n="brand">MARIA & MARIO</p>
+  <div class="journey-cta">
+    <button id="openRsvpBtn" class="primary-btn" type="button">Open RSVP</button>
+  </div>
+</section>
 
-        <div id="typeSequence" class="type-sequence" aria-live="polite"></div>
+<!-- RSVP -->
+<section id="rsvp-screen" class="screen">
+  <div class="rsvp-shell">
+    <div class="rsvp-head">
+      <p class="eyebrow">RSVP</p>
+      <h2>Tell us who is coming</h2>
+      <p class="lede">One invite per family. Add only the exact guests from your household.</p>
+    </div>
 
-        <div id="dateBlock" class="date-block hidden">
-          <p class="date-label" data-i18n="eventDateLabel">EVENT DATE</p>
-          <h1 data-i18n="eventDate">28 AUGUST 2027</h1>
-        </div>
+    <form id="rsvpForm" class="rsvp-form">
+      <fieldset class="form-group">
+        <legend>Attendance</legend>
+        <label class="radio-card"><input type="radio" name="attendance" value="yes" checked> We will attend</label>
+        <label class="radio-card"><input type="radio" name="attendance" value="no"> We cannot attend</label>
+      </fieldset>
 
-        <div id="choiceBlock" class="choice-block hidden">
-          <div class="choice-stack">
-            <button id="yesBtn" class="choice-card choice-card-primary" type="button">
-              <span class="choice-kicker" data-i18n="choiceAKicker">CHOICE A</span>
-              <span class="choice-title" data-i18n="yesTitle">YES, I'M IN</span>
-              <span class="choice-text" data-i18n="yesText">
-                ENTER THE STORY. JOIN THE CELEBRATION. UNLOCK THE NEXT SCENE.
-              </span>
-            </button>
+      <div class="form-grid">
+        <label>
+          Family code
+          <input type="text" name="inviteCode" placeholder="e.g. KALOYANOVI27" required>
+        </label>
 
-            <button id="noBtn" class="choice-card choice-card-secondary" type="button">
-              <span class="choice-kicker" data-i18n="choiceBKicker">CHOICE B</span>
-              <span class="choice-title" data-i18n="noTitle">
-                NO, I PREFER MY SIMULATION OF REALITY
-              </span>
-              <span class="choice-text" data-i18n="noText">
-                EXIT THIS TIMELINE AND RETURN TO YOUR DIMENSION.
-              </span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="farewellScreen" class="screen hidden-screen">
-      <div class="message-panel narrow">
-        <p class="eyebrow" data-i18n="transmissionClosed">TRANSMISSION CLOSED</p>
-        <h2 data-i18n="farewellTitle">
-          FAREWELL OUR FRIEND, SEE YOU IN ANOTHER DIMENSION
-        </h2>
-        <p data-i18n="farewellText">
-          THIS STORYLINE ENDS HERE. ANOTHER PORTAL MAY OPEN SOMEDAY.
-        </p>
-        <div class="panel-actions">
-          <button id="returnBtn" class="btn btn-secondary" type="button" data-i18n="returnInvitation">
-            RETURN TO INVITATION
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <section id="welcomeScreen" class="screen hidden-screen">
-      <div class="stars"></div>
-      <div class="rainbow-arc"></div>
-      <div class="castle-glow"></div>
-
-      <div class="welcome-content">
-        <p class="eyebrow" data-i18n="nextScene">NEXT SCENE</p>
-        <h2 data-i18n="welcomeTitle">WELCOME TO OUR WORLD</h2>
-        <p class="lead" data-i18n="welcomeText">
-          YOU HAVE PASSED THROUGH THE CODE. NOW STEP INTO A NIGHT OF LOVE, CINEMA,
-          SUMMER LIGHTS, AND ONE STORY WRITTEN FOR ALL OF US.
-        </p>
-
-        <div class="hero-actions">
-          <button
-            id="enterWorldBtn"
-            class="btn btn-primary"
-            type="button"
-            data-i18n="enterCelebration"
-          >
-            ENTER THE CELEBRATION
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <section id="mainExperience" class="screen hidden-screen story-mode">
-      <div class="journey-hero">
-        <div class="journey-background">
-          <div class="journey-overlay"></div>
-
-          <div class="marvel-wall marvel-wall-top">
-            <div class="marvel-track marvel-track-a">
-              <img src="./assets/images/portrait-01.webp" alt="Maria and Mario memory 1" loading="lazy" />
-              <img src="./assets/images/portrait-02.webp" alt="Maria and Mario memory 2" loading="lazy" />
-              <img src="./assets/images/portrait-03.webp" alt="Maria and Mario memory 3" loading="lazy" />
-              <img src="./assets/images/portrait-04.webp" alt="Maria and Mario memory 4" loading="lazy" />
-              <img src="./assets/images/portrait-05.webp" alt="Maria and Mario memory 5" loading="lazy" />
-              <img src="./assets/images/portrait-06.webp" alt="Maria and Mario memory 6" loading="lazy" />
-              <img src="./assets/images/portrait-07.webp" alt="Maria and Mario memory 7" loading="lazy" />
-              <img src="./assets/images/portrait-08.webp" alt="Maria and Mario memory 8" loading="lazy" />
-              <img src="./assets/images/portrait-09.webp" alt="Maria and Mario memory 9" loading="lazy" />
-              <img src="./assets/images/portrait-10.webp" alt="Maria and Mario memory 10" loading="lazy" />
-              <img src="./assets/images/portrait-11.webp" alt="Maria and Mario memory 11" loading="lazy" />
-              <img src="./assets/images/portrait-12.webp" alt="Maria and Mario memory 12" loading="lazy" />
-              <img src="./assets/images/portrait-13.webp" alt="Maria and Mario memory 13" loading="lazy" />
-              <img src="./assets/images/portrait-14.webp" alt="Maria and Mario memory 14" loading="lazy" />
-            </div>
-
-            <div class="marvel-track marvel-track-b">
-              <img src="./assets/images/portrait-14.webp" alt="" loading="lazy" />
-              <img src="./assets/images/portrait-13.webp" alt="" loading="lazy" />
-              <img src="./assets/images/portrait-12.webp" alt="" loading="lazy" />
-              <img src="./assets/images/portrait-11.webp" alt="" loading="lazy" />
-              <img src="./assets/images/portrait-10.webp" alt="" loading="lazy" />
-              <img src="./assets/images/portrait-09.webp" alt="" loading="lazy" />
-              <img src="./assets/images/portrait-08.webp" alt="" loading="lazy" />
-              <img src="./assets/images/portrait-07.webp" alt="" loading="lazy" />
-              <img src="./assets/images/portrait-06.webp" alt="" loading="lazy" />
-              <img src="./assets/images/portrait-05.webp" alt="" loading="lazy" />
-              <img src="./assets/images/portrait-04.webp" alt="" loading="lazy" />
-              <img src="./assets/images/portrait-03.webp" alt="" loading="lazy" />
-              <img src="./assets/images/portrait-02.webp" alt="" loading="lazy" />
-              <img src="./assets/images/portrait-01.webp" alt="" loading="lazy" />
-            </div>
-          </div>
-
-          <div class="marvel-wall marvel-wall-bottom">
-            <div class="marvel-track marvel-track-c">
-              <img src="./assets/images/portrait-03.webp" alt="" loading="lazy" />
-              <img src="./assets/images/portrait-06.webp" alt="" loading="lazy" />
-              <img src="./assets/images/portrait-09.webp" alt="" loading="lazy" />
-              <img src="./assets/images/portrait-12.webp" alt="" loading="lazy" />
-              <img src="./assets/images/portrait-14.webp" alt="" loading="lazy" />
-              <img src="./assets/images/portrait-01.webp" alt="" loading="lazy" />
-              <img src="./assets/images/portrait-05.webp" alt="" loading="lazy" />
-              <img src="./assets/images/portrait-08.webp" alt="" loading="lazy" />
-              <img src="./assets/images/portrait-11.webp" alt="" loading="lazy" />
-              <img src="./assets/images/portrait-02.webp" alt="" loading="lazy" />
-              <img src="./assets/images/portrait-04.webp" alt="" loading="lazy" />
-              <img src="./assets/images/portrait-07.webp" alt="" loading="lazy" />
-              <img src="./assets/images/portrait-10.webp" alt="" loading="lazy" />
-              <img src="./assets/images/portrait-13.webp" alt="" loading="lazy" />
-            </div>
-          </div>
-        </div>
-
-        <div class="journey-content">
-          <p class="eyebrow" data-i18n="mainStory">THE MAIN STORY</p>
-          <h2 data-i18n="heroTitle">OUR STORY BEGINS WHERE FANTASY MEETS DESTINY.</h2>
-          <p class="lead" data-i18n="heroText">
-            A CINEMATIC SUMMER EVENING. A WORLD BUILT FOR THE PEOPLE WE LOVE.
-            A MOMENT WHERE REAL LIFE FEELS BIGGER THAN FILM.
-          </p>
-          <p class="always-line" data-i18n="alwaysLine">ALWAYS? ALWAYS.</p>
-
-          <div class="hero-actions">
-            <button id="playJourneyBtn" class="btn btn-secondary" type="button" data-i18n="playTheme">
-              PLAY OUR THEME
-            </button>
-            <button id="pauseJourneyBtn" class="btn btn-secondary" type="button" data-i18n="pauseMusic">
-              PAUSE MUSIC
-            </button>
-          </div>
-        </div>
+        <label>
+          Guests
+          <select name="guests" required>
+            <option value="1">1 person</option>
+            <option value="2">2 people</option>
+            <option value="3">3 people</option>
+            <option value="4">4 people</option>
+          </select>
+        </label>
       </div>
 
-      <section class="mission-section">
-        <div class="section-heading reveal-card">
-          <p class="eyebrow" data-i18n="eventFile">EVENT FILE</p>
-          <h2 data-i18n="detailsTitle">CELEBRATION DETAILS</h2>
+      <fieldset class="form-group">
+        <legend>Drinks</legend>
+        <div class="check-grid">
+          <label><input type="checkbox" name="drinks" value="vodka"> Vodka</label>
+          <label><input type="checkbox" name="drinks" value="whiskey"> Whiskey</label>
+          <label><input type="checkbox" name="drinks" value="beer"> Beer</label>
+          <label><input type="checkbox" name="drinks" value="rakia"> Rakia</label>
+          <label><input type="checkbox" name="drinks" value="cognac"> Cognac</label>
+          <label><input type="checkbox" name="drinks" value="wine"> Wine</label>
         </div>
+      </fieldset>
 
-        <div class="mission-grid">
-          <article class="mission-card reveal-card">
-            <span class="mission-index">01</span>
-            <span class="info-key" data-i18n="locationKey">LOCATION:</span>
-            <p class="info-value" data-i18n="locationValue">COORDINATES TO BE ADDED</p>
-          </article>
+      <div class="form-grid">
+        <label>
+          Favorite song gift
+          <input type="text" name="song" placeholder="Write your favorite song">
+        </label>
 
-          <article class="mission-card reveal-card">
-            <span class="mission-index">02</span>
-            <span class="info-key" data-i18n="dressCodeKey">DRESS CODE:</span>
-            <p class="info-value" data-i18n="dressCodeValue">CASUAL SUMMER PARTY</p>
-          </article>
+        <label>
+          Donation note
+          <input type="text" name="note" placeholder="Optional message">
+        </label>
+      </div>
 
-          <article class="mission-card reveal-card">
-            <span class="mission-index">03</span>
-            <span class="info-key" data-i18n="startTimeKey">START TIME:</span>
-            <p class="info-value" data-i18n="startTimeValue">18:00</p>
-          </article>
-
-          <article class="mission-card reveal-card">
-            <span class="mission-index">04</span>
-            <span class="info-key" data-i18n="giftKey">REQUIRED GIFTS:</span>
-            <p class="info-value" data-i18n="giftValue">ONLY MONEY ACCEPTED - TICKET ON ENTRANCE</p>
-          </article>
+      <label>
+        QR donation
+        <div class="qr-box">
+          <img src="./assets/images/revolut-qr.png" alt="Revolut QR code for donation" loading="lazy" width="320" height="320">
         </div>
-      </section>
+      </label>
 
-      <section class="music-donate-section">
-        <article class="music-card reveal-card">
-          <p class="eyebrow" data-i18n="soundtrack">SOUNDTRACK</p>
-          <h2 data-i18n="musicTitle">THE MUSIC OF OUR WORLD</h2>
-          <p data-i18n="musicText">
-            YOUR FAVORITE SONGS, MEMORIES, AND MOMENTS WILL BECOME PART OF THE NIGHT.
-          </p>
-        </article>
+      <div class="form-actions">
+        <button class="primary-btn" type="submit">Save my answer</button>
+        <button class="secondary-btn" id="backToJourneyBtn" type="button">Back to journey</button>
+      </div>
+    </form>
+  </div>
+</section>
+</main>
 
-        <article class="donate-card reveal-card donate-panel">
-          <div>
-            <p class="eyebrow" data-i18n="donateTitle">DONATE OUR YOUNG FAMILY</p>
-            <h2 data-i18n="donatePanelTitle">DONATE OUR YOUNG FAMILY</h2>
-            <p data-i18n="donatePanelText">
-              IF YOU CANNOT ATTEND OR IF YOU WISH TO SUPPORT US DIRECTLY, YOU CAN USE OUR REVOLUT QR CODE.
-            </p>
-          </div>
-          <img
-            class="large-qr"
-            src="./assets/qr/revolut-qr.png"
-            alt="Revolut QR code"
-            width="240"
-            height="240"
-          />
-        </article>
-      </section>
 
-      <section class="rsvp-entry">
-        <div class="section-heading reveal-card">
-          <p class="eyebrow" data-i18n="nextInteraction">NEXT INTERACTION</p>
-          <h2 data-i18n="rsvpMissionTitle">MISSION RSVP</h2>
-          <p class="rsvp-copy" data-i18n="rsvpMissionText">
-            CONFIRM YOUR PRESENCE, CHOOSE YOUR DRINKS, LEAVE A SONG, AND COMPLETE YOUR ENTRY INTO OUR CELEBRATION.
-          </p>
-        </div>
+  <!-- audio -->
+<audio id="audioIntro2" preload="auto"><source src="./assets/audio/trailer-intro2.mp3" type="audio/mpeg"></audio>
+<audio id="audioJourney" preload="auto"><source src="./assets/audio/trailer-intro.mp3" type="audio/mpeg"></audio>
 
-        <form id="rsvpForm" class="rsvp-form">
-          <div class="rsvp-grid">
-            <article class="rsvp-card reveal-card">
-              <h3 class="rsvp-card-title" data-i18n="attendanceTitle">ATTENDANCE STATUS</h3>
-              <div class="option-grid">
-                <label class="choice-option">
-                  <input type="radio" name="attendance" value="attending" required />
-                  <span data-i18n="attendanceYes">WE WILL ATTEND</span>
-                </label>
-                <label class="choice-option">
-                  <input type="radio" name="attendance" value="not_attending" />
-                  <span data-i18n="attendanceNo">WE CANNOT ATTEND</span>
-                </label>
-              </div>
-            </article>
 
-            <article class="rsvp-card reveal-card">
-              <h3 class="rsvp-card-title" data-i18n="guestCountTitle">GUEST COUNT</h3>
-              <div class="option-grid two-col">
-                <label class="choice-option">
-                  <input type="radio" name="guestCount" value="1" required />
-                  <span data-i18n="guestOne">ONLY 1 PERSON</span>
-                </label>
-                <label class="choice-option">
-                  <input type="radio" name="guestCount" value="2" />
-                  <span data-i18n="guestTwo">2 PEOPLE / +1</span>
-                </label>
-              </div>
-            </article>
+  <!-- script module -->
 
-            <article class="rsvp-card reveal-card">
-              <h3 class="rsvp-card-title" data-i18n="drinksTitle">ALCOHOL PREFERENCES</h3>
-              <div class="drink-grid">
-                <label class="check-option"><input type="checkbox" name="drinks" value="vodka" /><span data-i18n="drinkVodka">VODKA</span></label>
-                <label class="check-option"><input type="checkbox" name="drinks" value="whiskey" /><span data-i18n="drinkWhiskey">WHISKEY</span></label>
-                <label class="check-option"><input type="checkbox" name="drinks" value="beer" /><span data-i18n="drinkBeer">BEER</span></label>
-                <label class="check-option"><input type="checkbox" name="drinks" value="rakia" /><span data-i18n="drinkRakia">RAKIA</span></label>
-                <label class="check-option"><input type="checkbox" name="drinks" value="cognac" /><span data-i18n="drinkCognac">COGNAC</span></label>
-                <label class="check-option"><input type="checkbox" name="drinks" value="wine" /><span data-i18n="drinkWine">WINE</span></label>
-              </div>
-            </article>
 
-            <article class="rsvp-card reveal-card">
-              <h3 class="rsvp-card-title" data-i18n="songTitle">SONG GIFT</h3>
-              <label class="field-label" for="songInput" data-i18n="songLabel">
-                WRITE A FAVORITE SONG FOR THE NIGHT
-              </label>
-              <input
-                id="songInput"
-                class="text-field"
-                type="text"
-                name="song"
-                data-i18n-placeholder="songPlaceholder"
-                placeholder="YOUR SONG TITLE / ARTIST"
-              />
-            </article>
+  <script type="module" src="./script.js" defer></script>
 
-            <article class="rsvp-card reveal-card">
-              <h3 class="rsvp-card-title" data-i18n="messageTitle">OPTIONAL MESSAGE</h3>
-              <label class="field-label" for="messageInput" data-i18n="messageLabel">
-                LEAVE A SHORT NOTE FOR US
-              </label>
-              <textarea
-                id="messageInput"
-                class="text-area"
-                name="message"
-                data-i18n-placeholder="messagePlaceholder"
-                placeholder="WRITE YOUR MESSAGE HERE"
-              ></textarea>
-            </article>
-          </div>
 
-          <div class="submit-panel reveal-card">
-            <div class="submit-copy">
-              <p class="eyebrow" data-i18n="finalStep">FINAL STEP</p>
-              <h3 class="rsvp-card-title" data-i18n="submitTitle">SEND YOUR RESPONSE</h3>
-              <p class="rsvp-copy" data-i18n="submitText">
-                YOUR RESPONSE WILL NOW BE SAVED TO OUR GUEST SYSTEM.
-              </p>
-            </div>
-
-            <div class="submit-actions">
-              <button id="submitBtn" class="btn btn-primary" type="submit" data-i18n="submitBtn">
-                SUBMIT RESPONSE
-              </button>
-            </div>
-          </div>
-
-          <p id="rsvpStatus" class="rsvp-status" aria-live="polite"></p>
-        </form>
-      </section>
-    </section>
-  </main>
-
-  <script src="./script.js"></script>
 </body>
 </html>
