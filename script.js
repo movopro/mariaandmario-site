@@ -171,6 +171,8 @@ let sequenceStarted = false;
 let journeyStarted = false;
 let matrixAnimationActive = true;
 let inviteRecord = null;
+let introAudioStarted = false;
+let journeyAudioStarted = false;
 
 const body = document.body;
 const languageGate = document.getElementById("languageGate");
@@ -200,27 +202,32 @@ const rsvpForm = document.getElementById("rsvpForm");
 const rsvpStatus = document.getElementById("rsvpStatus");
 const revealCards = document.querySelectorAll(".reveal-card");
 
-const introAudio = document.getElementById('introAudio');
-const journeyAudio = document.getElementById('journeyAudio');
+const introAudio = document.getElementById("introAudio");
+const journeyAudio = document.getElementById("journeyAudio");
 
-let introAudioStarted = false;
-let journeyAudioStarted = false;
+if (introAudio) {
+  introAudio.preload = "auto";
+  introAudio.volume = 0.85;
+}
 
-document.querySelectorAll('[data-lang-select]').forEach((btn) => {
-  btn.addEventListener('click', () => {
-    startIntroAudio();
-  });
-});
+if (journeyAudio) {
+  journeyAudio.preload = "auto";
+  journeyAudio.volume = 0.9;
+  journeyAudio.loop = true;
+}
 
-function safePlay(audioEl, volume = 1) {
-  if (!audioEl) return;
-  audioEl.volume = volume;
+function safePlay(audioEl, volume = null) {
+  if (!audioEl) return Promise.resolve();
+  if (volume !== null) {
+    audioEl.volume = volume;
+  }
   const playPromise = audioEl.play();
-  if (playPromise && typeof playPromise.catch === 'function') {
-    playPromise.catch((err) => {
-      console.log('Audio play prevented:', err);
+  if (playPromise && typeof playPromise.catch === "function") {
+    return playPromise.catch((err) => {
+      console.log("Audio play prevented:", err);
     });
   }
+  return Promise.resolve();
 }
 
 function stopAudio(audioEl) {
@@ -235,8 +242,9 @@ function pauseAudio(audioEl) {
 }
 
 function startIntroAudio() {
-  if (!introAudio || introAudioStarted) return;
+  if (!introAudio) return;
   stopAudio(journeyAudio);
+  introAudio.currentTime = 0;
   safePlay(introAudio, 0.85);
   introAudioStarted = true;
   journeyAudioStarted = false;
@@ -244,7 +252,6 @@ function startIntroAudio() {
 
 function startJourneyAudio() {
   if (!journeyAudio) return;
-
   pauseAudio(introAudio);
   introAudioStarted = false;
 
@@ -259,20 +266,6 @@ function startJourneyAudio() {
 function pauseJourneyAudio() {
   pauseAudio(journeyAudio);
   journeyAudioStarted = false;
-}
-
-
-function stopAudio(audio) {
-  audio.pause();
-  audio.currentTime = 0;
-}
-
-async function safePlay(audio) {
-  try {
-    await audio.play();
-  } catch (error) {
-    console.log("Audio playback blocked:", error);
-  }
 }
 
 function getInviteToken() {
@@ -314,14 +307,14 @@ function applyTranslations(lang) {
 
   document.querySelectorAll("[data-i18n]").forEach((el) => {
     const key = el.dataset.i18n;
-    if (translations[lang][key]) {
+    if (translations[lang] && translations[lang][key]) {
       el.textContent = translations[lang][key];
     }
   });
 
   document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
     const key = el.dataset.i18nPlaceholder;
-    if (translations[lang][key]) {
+    if (translations[lang] && translations[lang][key]) {
       el.placeholder = translations[lang][key];
     }
   });
@@ -338,6 +331,55 @@ function showScreen(screen) {
   screen.classList.remove("hidden-screen");
 }
 
+function randomGlyph() {
+  const chars = "01アイウエオカキクケコサシスセソABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  return chars[Math.floor(Math.random() * chars.length)];
+}
+
+function renderSignalLine(text, done) {
+  typeSequence.innerHTML = "";
+
+  const line = document.createElement("div");
+  line.className = "type-line signal-line";
+  typeSequence.appendChild(line);
+
+  let revealIndex = 0;
+  let glitchPasses = 0;
+  const maxGlitchPasses = 10;
+
+  const interval = setInterval(() => {
+    let output = "";
+
+    for (let i = 0; i < text.length; i++) {
+      if (i < revealIndex) {
+        output += text[i];
+      } else if (text[i] === " ") {
+        output += " ";
+      } else {
+        output += randomGlyph();
+      }
+    }
+
+    line.textContent = output;
+
+    glitchPasses++;
+
+    if (glitchPasses % 2 === 0 && revealIndex < text.length) {
+      revealIndex++;
+    }
+
+    if (revealIndex >= text.length && glitchPasses > text.length + maxGlitchPasses) {
+      clearInterval(interval);
+      line.textContent = text;
+      line.classList.add("signal-complete");
+
+      setTimeout(() => {
+        done();
+      }, 1100);
+    }
+  }, 65);
+}
+
 function playSequence(index = 0) {
   const lines = translations[currentLang].sequence;
 
@@ -347,25 +389,16 @@ function playSequence(index = 0) {
     return;
   }
 
-  const line = document.createElement("div");
-  line.className = "type-line";
-  line.textContent = lines[index];
-
-  typeSequence.innerHTML = "";
-  typeSequence.appendChild(line);
-
-  setTimeout(() => {
+  renderSignalLine(lines[index], () => {
     playSequence(index + 1);
-  }, 4300);
+  });
 }
 
 async function startExperience(lang) {
   applyTranslations(lang);
   gatePanel.classList.add("fade-out");
 
-  stopAudio(journeyAudio);
-  languageAudio.currentTime = 0;
-  safePlay(languageAudio);
+  startIntroAudio();
 
   setTimeout(() => {
     languageGate.classList.add("hidden-screen");
@@ -392,18 +425,10 @@ function observeRevealCards() {
         obs.unobserve(entry.target);
       }
     });
-  }, {
-    threshold: 0.16
-  });
+  }, { threshold: 0.16 });
 
   revealCards.forEach((card) => observer.observe(card));
 }
-
-async function enterJourney() {
-  if (journeyStarted) return;
-  journeyStarted = true;
-
-  activateSceneFade();
 
 async function enterJourney() {
   if (journeyStarted) return;
@@ -412,15 +437,16 @@ async function enterJourney() {
 
   setTimeout(async () => {
     stopMatrixAnimation();
-    stopAudio(languageAudio);
+    stopAudio(introAudio);
     showScreen(mainExperience);
-    window.scrollTo({ top: 0, behavior: 'auto' });
+    window.scrollTo({ top: 0, behavior: "auto" });
     observeRevealCards();
-    journeyAudio.currentTime = 0;
-    await safePlay(journeyAudio);
+    startJourneyAudio();
   }, 450);
 
-  setTimeout(() => deactivateSceneFade(), 1100);
+  setTimeout(() => {
+    deactivateSceneFade();
+  }, 1100);
 }
 
 langChoices.forEach((button) => {
@@ -437,80 +463,94 @@ langButtons.forEach((button) => {
   });
 });
 
-noBtn.addEventListener("click", () => {
-  stopAudio(languageAudio);
-  showScreen(farewellScreen);
-});
+if (noBtn) {
+  noBtn.addEventListener("click", () => {
+    stopAudio(introAudio);
+    showScreen(farewellScreen);
+  });
+}
 
-returnBtn.addEventListener("click", async () => {
-  showScreen(matrixIntro);
-  await safePlay(languageAudio);
-});
+if (returnBtn) {
+  returnBtn.addEventListener("click", async () => {
+    showScreen(matrixIntro);
+    await safePlay(introAudio, 0.85);
+  });
+}
 
-yesBtn.addEventListener("click", async () => {
-  showScreen(welcomeScreen);
-});
+if (yesBtn) {
+  yesBtn.addEventListener("click", async () => {
+    showScreen(welcomeScreen);
+  });
+}
 
-enterWorldBtn.addEventListener("click", () => {
-  enterJourney();
-});
+if (enterWorldBtn) {
+  enterWorldBtn.addEventListener("click", () => {
+    enterJourney();
+  });
+}
 
-playJourneyBtn.addEventListener("click", async () => {
-  await safePlay(journeyAudio);
-});
+if (playJourneyBtn) {
+  playJourneyBtn.addEventListener("click", async () => {
+    startJourneyAudio();
+  });
+}
 
-pauseJourneyBtn.addEventListener("click", () => {
-  journeyAudio.pause();
-});
+if (pauseJourneyBtn) {
+  pauseJourneyBtn.addEventListener("click", () => {
+    pauseJourneyAudio();
+  });
+}
 
-rsvpForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  rsvpStatus.textContent = "";
+if (rsvpForm) {
+  rsvpForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    rsvpStatus.textContent = "";
 
-  const token = getInviteToken();
-  if (!token) {
-    rsvpStatus.textContent = translations[currentLang].inviteMissing;
-    return;
-  }
+    const token = getInviteToken();
+    if (!token) {
+      rsvpStatus.textContent = translations[currentLang].inviteMissing;
+      return;
+    }
 
-  if (!inviteRecord) {
-    await loadInvite();
-  }
+    if (!inviteRecord) {
+      await loadInvite();
+    }
 
-  if (!inviteRecord) {
-    rsvpStatus.textContent = translations[currentLang].inviteMissing;
-    return;
-  }
+    if (!inviteRecord) {
+      rsvpStatus.textContent = translations[currentLang].inviteMissing;
+      return;
+    }
 
-  const formData = new FormData(rsvpForm);
-  const attendance = formData.get("attendance");
-  const guestCount = Number(formData.get("guestCount"));
-  const drinks = formData.getAll("drinks");
-  const song = formData.get("song")?.trim() || null;
-  const message = formData.get("message")?.trim() || null;
+    const formData = new FormData(rsvpForm);
+    const attendance = formData.get("attendance");
+    const guestCount = Number(formData.get("guestCount"));
+    const drinks = formData.getAll("drinks");
+    const song = formData.get("song")?.trim() || null;
+    const message = formData.get("message")?.trim() || null;
 
-  const payload = {
-    invite_id: inviteRecord.id,
-    attendance,
-    guest_count: guestCount,
-    drinks,
-    song,
-    message,
-    updated_at: new Date().toISOString()
-  };
+    const payload = {
+      invite_id: inviteRecord.id,
+      attendance,
+      guest_count: guestCount,
+      drinks,
+      song,
+      message,
+      updated_at: new Date().toISOString()
+    };
 
-  const { error } = await supabaseClient
-    .from("responses")
-    .upsert(payload, { onConflict: "invite_id" });
+    const { error } = await supabaseClient
+      .from("responses")
+      .upsert(payload, { onConflict: "invite_id" });
 
-  if (error) {
-    console.error(error);
-    rsvpStatus.textContent = translations[currentLang].responseError;
-    return;
-  }
+    if (error) {
+      console.error(error);
+      rsvpStatus.textContent = translations[currentLang].responseError;
+      return;
+    }
 
-  rsvpStatus.textContent = translations[currentLang].responseSaved;
-});
+    rsvpStatus.textContent = translations[currentLang].responseSaved;
+  });
+}
 
 const canvas = document.getElementById("matrixCanvas");
 const ctx = canvas.getContext("2d");
