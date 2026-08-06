@@ -9,6 +9,11 @@
   --green: #6cff9f;
   --green-2: #39e97a;
   --gold: #f0d28d;
+  --warm-1: #ffcf93;
+  --warm-2: #ff9f6c;
+  --warm-3: #ff6464;
+  --marvel-red: #b61f2c;
+  --marvel-gold: #f1bf68;
   --rainbow-1: #7ed7ff;
   --rainbow-2: #f8d775;
   --rainbow-3: #f39ac7;
@@ -129,7 +134,7 @@ body.matrix-hidden #matrixCanvas {
 }
 
 .hidden-screen {
-  display: none;
+  display: none !important;
 }
 
 #languageGate::before,
@@ -240,10 +245,6 @@ body.matrix-hidden #matrixCanvas {
   margin-inline: auto;
 }
 
-.lang-choice {
-  border: none;
-}
-
 .fancy-lang-btn {
   position: relative;
   width: 100%;
@@ -251,7 +252,7 @@ body.matrix-hidden #matrixCanvas {
   padding: 18px 20px;
   border-radius: 26px;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255,255,255,0.035)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.035)),
     rgba(255, 255, 255, 0.03);
   color: var(--text);
   display: grid;
@@ -262,7 +263,7 @@ body.matrix-hidden #matrixCanvas {
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow:
     0 16px 40px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255,255,255,0.05);
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
   transition:
     transform 0.28s ease,
     border-color 0.28s ease,
@@ -276,7 +277,7 @@ body.matrix-hidden #matrixCanvas {
   transform: translateY(-4px) scale(1.01);
   border-color: rgba(108, 255, 159, 0.28);
   background:
-    linear-gradient(180deg, rgba(108, 255, 159, 0.09), rgba(255,255,255,0.045)),
+    linear-gradient(180deg, rgba(108, 255, 159, 0.09), rgba(255, 255, 255, 0.045)),
     rgba(255, 255, 255, 0.04);
   box-shadow:
     0 22px 50px rgba(0, 0, 0, 0.28),
@@ -293,9 +294,9 @@ body.matrix-hidden #matrixCanvas {
   display: grid;
   place-items: center;
   border-radius: 20px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
   flex: 0 0 auto;
 }
 
@@ -400,9 +401,17 @@ body.matrix-hidden #matrixCanvas {
     linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.78));
 }
 
+#mainExperience {
+  background:
+    radial-gradient(circle at top, rgba(255, 184, 109, 0.12), transparent 20%),
+    radial-gradient(circle at bottom, rgba(182, 31, 44, 0.14), transparent 34%),
+    linear-gradient(180deg, #120b0b 0%, #24120f 26%, #351819 58%, #120e15 100%);
+}
+
 #mainExperience::before {
   background:
-    radial-gradient(circle at top, rgba(108, 255, 159, 0.03), transparent 24%);
+    linear-gradient(180deg, rgba(255, 196, 115, 0.04), transparent 18%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.08));
 }
 
 .intro-center {
@@ -599,10 +608,10 @@ body.matrix-hidden #matrixCanvas {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--green), var(--green-2));
-  color: #041008;
+  background: linear-gradient(135deg, var(--warm-1), var(--warm-2) 52%, var(--marvel-red));
+  color: #180808;
   font-weight: 800;
-  box-shadow: 0 14px 30px rgba(54, 255, 142, 0.16);
+  box-shadow: 0 14px 30px rgba(255, 102, 76, 0.24);
 }
 
 .btn-secondary {
@@ -746,7 +755,8 @@ body.matrix-hidden #matrixCanvas {
 }
 
 @keyframes rainbowSweep {
-  0%, 100% {
+  0%,
+  100% {
     transform: rotate(-6deg) scale(1);
     opacity: 0.58;
   }
@@ -808,59 +818,104 @@ body.matrix-hidden #matrixCanvas {
   position: absolute;
   inset: 0;
   z-index: 0;
-}
-
-.journey-slide {
-  position: absolute;
-  inset: -3%;
-  background-size: cover;
-  background-position: center;
-  opacity: 0;
-  transform: scale(1.12) translateX(0) translateY(0);
-  transition: opacity 1.35s ease, transform 6s ease;
-  filter: saturate(1.04) contrast(1.02);
-}
-
-.journey-slide.is-active {
-  opacity: 1;
-  transform: scale(1.02) translateX(0) translateY(0);
-}
-
-.journey-slide.pan-left.is-active {
-  transform: scale(1.05) translateX(-2.5%) translateY(-1%);
-}
-
-.journey-slide.pan-right.is-active {
-  transform: scale(1.05) translateX(2.5%) translateY(1%);
-}
-
-.journey-slide.pan-up.is-active {
-  transform: scale(1.06) translateY(-2.5%);
+  overflow: hidden;
 }
 
 .journey-overlay {
   position: absolute;
   inset: 0;
+  z-index: 3;
   background:
-    linear-gradient(180deg, rgba(3, 5, 9, 0.14), rgba(3, 5, 9, 0.48)),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.12), rgba(0,0,0,0.04), rgba(0,0,0,0.12));
-  z-index: 1;
+    linear-gradient(180deg, rgba(11, 7, 7, 0.18), rgba(11, 7, 7, 0.58)),
+    radial-gradient(circle at center, rgba(255, 213, 143, 0.08), transparent 38%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.16), rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.16));
+}
+
+.marvel-wall {
+  position: absolute;
+  left: -6%;
+  width: 112%;
+  display: grid;
+  gap: 18px;
+  transform: rotate(-4deg);
+  opacity: 0.88;
+  filter: saturate(1.08) contrast(1.03);
+}
+
+.marvel-wall-top {
+  top: -3%;
+}
+
+.marvel-wall-bottom {
+  bottom: 4%;
+  transform: rotate(4deg);
+  opacity: 0.42;
+}
+
+.marvel-track {
+  display: flex;
+  gap: 16px;
+  width: max-content;
+}
+
+.marvel-track img {
+  width: clamp(120px, 14vw, 220px);
+  height: clamp(150px, 18vw, 280px);
+  object-fit: cover;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 217, 150, 0.22);
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.28),
+    0 0 0 1px rgba(255, 255, 255, 0.03);
+}
+
+.marvel-track-a {
+  animation: marqueeLeft 34s linear infinite;
+}
+
+.marvel-track-b {
+  animation: marqueeRight 40s linear infinite;
+}
+
+.marvel-track-c {
+  animation: marqueeLeft 46s linear infinite;
+}
+
+@keyframes marqueeLeft {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-35%); }
+}
+
+@keyframes marqueeRight {
+  0% { transform: translateX(-20%); }
+  100% { transform: translateX(8%); }
 }
 
 .journey-content {
   position: relative;
-  z-index: 2;
+  z-index: 4;
   width: min(100% - 32px, 1080px);
   text-align: center;
   padding: 48px 24px;
+}
+
+.journey-content h2 {
+  color: #fff3e0;
+  text-shadow:
+    0 2px 10px rgba(0, 0, 0, 0.26),
+    0 0 38px rgba(255, 155, 102, 0.14);
+}
+
+.journey-content .eyebrow {
+  color: var(--marvel-gold);
 }
 
 .journey-content .lead {
   text-align: center;
   margin-inline: auto;
   max-width: 68ch;
-  color: #f5f7fb;
-  text-shadow: 0 2px 18px rgba(0,0,0,0.4);
+  color: #fff3e7;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.4);
 }
 
 .always-line {
@@ -886,6 +941,10 @@ body.matrix-hidden #matrixCanvas {
   text-align: center;
 }
 
+.section-heading .eyebrow {
+  color: var(--marvel-gold);
+}
+
 .mission-grid,
 .rsvp-grid {
   display: grid;
@@ -902,11 +961,25 @@ body.matrix-hidden #matrixCanvas {
   overflow: hidden;
   border-radius: var(--radius);
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03)),
-    rgba(8, 13, 22, 0.7);
-  border: 1px solid rgba(255,255,255,0.12);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.03)),
+    rgba(23, 11, 12, 0.7);
+  border: 1px solid rgba(255, 214, 148, 0.14);
   box-shadow: var(--shadow);
   backdrop-filter: blur(10px);
+}
+
+.mission-card::before,
+.music-card::before,
+.donate-card::before,
+.rsvp-card::before,
+.submit-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 204, 142, 0.06), transparent 32%),
+    radial-gradient(circle at top right, rgba(182, 31, 44, 0.09), transparent 38%);
+  pointer-events: none;
 }
 
 .mission-card,
@@ -920,7 +993,7 @@ body.matrix-hidden #matrixCanvas {
 .mission-index {
   display: inline-block;
   margin-bottom: 18px;
-  color: var(--green);
+  color: var(--warm-1);
   font-size: 0.82rem;
   font-weight: 800;
 }
@@ -944,7 +1017,7 @@ body.matrix-hidden #matrixCanvas {
 .info-key,
 .field-label {
   display: block;
-  color: var(--gold);
+  color: var(--warm-1);
   font-weight: 800;
   font-size: 0.82rem;
   margin-bottom: 10px;
@@ -993,8 +1066,8 @@ body.matrix-hidden #matrixCanvas {
   min-height: 58px;
   padding: 16px 18px;
   border-radius: 18px;
-  border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255, 227, 179, 0.12);
+  background: rgba(255, 255, 255, 0.04);
   color: var(--text);
   cursor: pointer;
   transition:
@@ -1007,15 +1080,15 @@ body.matrix-hidden #matrixCanvas {
 .choice-option:hover,
 .check-option:hover {
   transform: translateY(-2px);
-  border-color: rgba(108, 255, 159, 0.22);
-  background: rgba(255,255,255,0.07);
+  border-color: rgba(255, 194, 122, 0.32);
+  background: rgba(255, 255, 255, 0.07);
 }
 
 .choice-option input,
 .check-option input {
   width: 18px;
   height: 18px;
-  accent-color: var(--green);
+  accent-color: var(--warm-2);
   flex: 0 0 auto;
 }
 
@@ -1024,8 +1097,8 @@ body.matrix-hidden #matrixCanvas {
   width: 100%;
   padding: 16px 18px;
   border-radius: 18px;
-  border: 1px solid rgba(255,255,255,0.12);
-  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255, 214, 148, 0.12);
+  background: rgba(255, 255, 255, 0.05);
   color: var(--text);
   outline: none;
   font: inherit;
@@ -1036,16 +1109,16 @@ body.matrix-hidden #matrixCanvas {
 
 .text-field::placeholder,
 .text-area::placeholder {
-  color: #98a6c7;
+  color: #d0b8a7;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
 
 .text-field:focus,
 .text-area:focus {
-  border-color: rgba(108, 255, 159, 0.34);
-  box-shadow: 0 0 0 4px rgba(108, 255, 159, 0.08);
-  background: rgba(255,255,255,0.06);
+  border-color: rgba(255, 185, 103, 0.42);
+  box-shadow: 0 0 0 4px rgba(255, 185, 103, 0.1);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .text-area {
@@ -1062,6 +1135,8 @@ body.matrix-hidden #matrixCanvas {
 .large-qr {
   max-width: 240px;
   margin-top: 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 214, 148, 0.15);
 }
 
 .submit-panel {
@@ -1083,7 +1158,7 @@ body.matrix-hidden #matrixCanvas {
   min-height: 28px;
   margin: 0;
   text-align: center;
-  color: var(--green);
+  color: var(--warm-1);
   font-size: 0.92rem;
 }
 
@@ -1099,6 +1174,11 @@ body.matrix-hidden #matrixCanvas {
   .submit-panel {
     display: grid;
     justify-content: stretch;
+  }
+
+  .marvel-wall {
+    width: 140%;
+    left: -20%;
   }
 }
 
@@ -1181,5 +1261,10 @@ body.matrix-hidden #matrixCanvas {
 
   .rainbow-arc::after {
     inset: 16px 34px 0;
+  }
+
+  .marvel-track img {
+    width: 110px;
+    height: 140px;
   }
 }
