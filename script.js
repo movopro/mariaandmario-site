@@ -1,10 +1,10 @@
 const lines = [
-  "Time has come...",
-  "To get married",
-  "If you see this then you are special to us",
-  "and...",
-  "You've been selected to join our matrix",
-  "Are you in?"
+  "TIME HAS COME...",
+  "TO GET MARRIED",
+  "IF YOU SEE THIS THEN YOU ARE SPECIAL TO US",
+  "AND...",
+  "YOU'VE BEEN SELECTED TO JOIN OUR MATRIX",
+  "ARE YOU IN?"
 ];
 
 const typeSequence = document.getElementById("typeSequence");
@@ -34,7 +34,6 @@ function showScreen(screen) {
   [matrixIntro, farewellScreen, welcomeScreen, mainExperience].forEach(section => {
     section.classList.add("hidden-screen");
   });
-
   screen.classList.remove("hidden-screen");
 }
 
@@ -54,7 +53,7 @@ function playSequence(index = 0) {
 
   setTimeout(() => {
     playSequence(index + 1);
-  }, 1900);
+  }, 4300);
 }
 
 noBtn.addEventListener("click", () => {
@@ -72,9 +71,8 @@ yesBtn.addEventListener("click", async () => {
     introAudio.currentTime = 0;
     await introAudio.play();
   } catch (error) {
-    console.log("Autoplay blocked until user interaction is fully allowed.", error);
+    console.log("Intro audio blocked until user interaction is allowed.", error);
   }
-
   showScreen(welcomeScreen);
 });
 
@@ -102,14 +100,14 @@ const ctx = canvas.getContext("2d");
 
 let width = window.innerWidth;
 let height = window.innerHeight;
+const fontSize = 18;
+let columns = Math.floor(width / fontSize);
+let drops = Array(columns).fill(1);
 
 canvas.width = width;
 canvas.height = height;
 
 const letters = "01アイウエオカキクケコサシスセソABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const fontSize = 18;
-let columns = Math.floor(width / fontSize);
-let drops = Array(columns).fill(1);
 
 function resizeCanvas() {
   width = window.innerWidth;
@@ -121,23 +119,31 @@ function resizeCanvas() {
 }
 
 function drawMatrix() {
-  ctx.fillStyle = "rgba(5, 7, 11, 0.08)";
+  ctx.fillStyle = "rgba(2, 6, 8, 0.072)";
   ctx.fillRect(0, 0, width, height);
 
-  ctx.fillStyle = "#3fff8f";
   ctx.font = `${fontSize}px monospace`;
 
   for (let i = 0; i < drops.length; i++) {
     const text = letters.charAt(Math.floor(Math.random() * letters.length));
-    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+    const x = i * fontSize;
+    const y = drops[i] * fontSize;
 
-    if (drops[i] * fontSize > height && Math.random() > 0.975) {
+    ctx.fillStyle = "#7fffd4";
+    ctx.fillText(text, x, y - fontSize);
+
+    ctx.fillStyle = "#39e97a";
+    ctx.fillText(text, x, y);
+
+    if (y > height && Math.random() > 0.975) {
       drops[i] = 0;
     }
 
     drops[i]++;
   }
+
+  requestAnimationFrame(drawMatrix);
 }
 
-setInterval(drawMatrix, 55);
 window.addEventListener("resize", resizeCanvas);
+requestAnimationFrame(drawMatrix);
