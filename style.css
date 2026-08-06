@@ -80,20 +80,35 @@ button {
   display: none;
 }
 
+.intro-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at center, rgba(108, 255, 159, 0.06), transparent 34%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.72));
+}
+
 #matrixIntro::before,
 #welcomeScreen::before,
 #farewellScreen::before,
-#mainExperience::before {
+#mainExperience::before,
+#languageGate::before {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
 }
 
-#matrixIntro::before {
+#languageGate::before {
   background:
-    radial-gradient(circle at center, rgba(108, 255, 159, 0.06), transparent 34%),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.72));
+    radial-gradient(circle at center, rgba(108, 255, 159, 0.08), transparent 38%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.74));
+}
+
+#farewellScreen::before {
+  background:
+    radial-gradient(circle at center, rgba(255, 120, 160, 0.06), transparent 30%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.78));
 }
 
 #welcomeScreen::before {
@@ -103,22 +118,143 @@ button {
     linear-gradient(180deg, rgba(5, 9, 17, 0.08), rgba(5, 9, 17, 0.56));
 }
 
-#farewellScreen::before {
-  background:
-    radial-gradient(circle at center, rgba(255, 120, 160, 0.06), transparent 30%),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.78));
-}
-
 #mainExperience::before {
   background:
     radial-gradient(circle at top, rgba(108, 255, 159, 0.04), transparent 25%);
 }
 
+.gate-panel,
 .intro-center,
 .welcome-content,
 .message-panel {
   position: relative;
   z-index: 2;
+}
+
+.gate-screen {
+  overflow: hidden;
+}
+
+.gate-panel {
+  width: min(100%, 760px);
+  padding: 44px 28px;
+  text-align: center;
+  border-radius: 32px;
+  background: rgba(4, 8, 14, 0.58);
+  border: 1px solid rgba(108, 255, 159, 0.12);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.03),
+    0 24px 80px rgba(0, 0, 0, 0.44),
+    0 0 60px rgba(108, 255, 159, 0.06);
+  backdrop-filter: blur(12px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.gate-panel.fade-out {
+  opacity: 0;
+  transform: scale(0.98) translateY(-10px);
+}
+
+.gate-title {
+  margin: 0 0 12px;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.6rem, 5vw, 5rem);
+  line-height: 1;
+  font-weight: 600;
+}
+
+.gate-subtitle {
+  margin: 0 0 28px;
+  color: var(--muted);
+  letter-spacing: 0.12em;
+  font-size: 0.95rem;
+}
+
+.gate-actions {
+  display: grid;
+  gap: 14px;
+}
+
+.lang-choice {
+  width: 100%;
+  padding: 22px 24px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  display: grid;
+  gap: 10px;
+  text-align: left;
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.18);
+}
+
+.lang-choice:hover {
+  transform: translateY(-4px) scale(1.01);
+  border-color: rgba(108, 255, 159, 0.22);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.lang-choice-label {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.6rem, 3vw, 2.6rem);
+  line-height: 1.05;
+}
+
+.lang-choice-text {
+  color: var(--muted);
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+}
+
+.lang-switch {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 50;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 999px;
+  background: rgba(4, 8, 14, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(12px);
+}
+
+.hidden-switch {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.lang-btn {
+  min-width: 52px;
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.lang-btn:hover {
+  transform: translateY(-1px);
+  border-color: rgba(108, 255, 159, 0.18);
+}
+
+.lang-btn.is-active {
+  background: linear-gradient(135deg, var(--green), var(--green-2));
+  color: #031008;
+  box-shadow: 0 8px 22px rgba(57, 233, 122, 0.22);
 }
 
 .intro-center {
@@ -238,6 +374,65 @@ button {
   gap: 16px;
 }
 
+.choice-stack {
+  width: min(100%, 760px);
+  display: grid;
+  gap: 16px;
+}
+
+.choice-card {
+  width: 100%;
+  text-align: left;
+  padding: 22px 24px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  display: grid;
+  gap: 10px;
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.18);
+}
+
+.choice-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  border-color: rgba(108, 255, 159, 0.22);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.choice-card-primary {
+  background: linear-gradient(180deg, rgba(108, 255, 159, 0.08), rgba(255, 255, 255, 0.04));
+}
+
+.choice-card-secondary {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.03));
+}
+
+.choice-kicker {
+  color: var(--green);
+  font-size: 0.74rem;
+  letter-spacing: 0.22em;
+  font-weight: 700;
+}
+
+.choice-title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.5rem, 3vw, 2.6rem);
+  line-height: 1.04;
+  color: var(--text);
+}
+
+.choice-text {
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  letter-spacing: 0.06em;
+}
+
 .btn {
   min-height: 48px;
   padding: 14px 22px;
@@ -287,6 +482,10 @@ button {
   box-shadow: var(--shadow);
   backdrop-filter: blur(16px);
   text-align: center;
+}
+
+.message-panel.narrow {
+  width: min(100%, 680px);
 }
 
 .message-panel h2,
@@ -365,6 +564,19 @@ button {
   color: var(--muted);
   font-size: 1.08rem;
   line-height: 1.75;
+}
+
+.panel-actions,
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.hero-actions {
+  justify-content: flex-start;
 }
 
 #mainExperience {
@@ -480,11 +692,6 @@ button {
   padding: 28px;
 }
 
-.music-card .btn {
-  margin-top: 18px;
-  margin-right: 12px;
-}
-
 .qr-image {
   max-width: 260px;
   margin-top: 18px;
@@ -516,6 +723,10 @@ button {
     grid-column: auto;
     grid-row: auto;
   }
+
+  .hero-actions {
+    justify-content: center;
+  }
 }
 
 @media (max-width: 640px) {
@@ -523,9 +734,24 @@ button {
     padding: 24px 16px;
   }
 
+  .lang-switch {
+    top: 10px;
+    right: 10px;
+    gap: 6px;
+    padding: 6px;
+  }
+
+  .lang-btn {
+    min-width: 48px;
+    min-height: 44px;
+    padding: 10px 12px;
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+  }
+
   .intro-center {
     min-height: 380px;
-    padding: 40px 22px;
+    padding: 72px 22px 40px;
   }
 
   .type-sequence {
@@ -536,7 +762,8 @@ button {
   .message-panel,
   .music-card,
   .donate-card,
-  .info-card {
+  .info-card,
+  .gate-panel {
     padding: 24px 20px;
   }
 
