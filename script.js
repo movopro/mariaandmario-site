@@ -1,11 +1,13 @@
 const SUPABASE_URL = "https://kotgbrwblrtjmizoojii.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtvdGdicndibHJ0am1pem9vamlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwMjMyMDUsImV4cCI6MjEwMTU5OTIwNX0.uCFXjKrjSFWCQEMskae2J9fZ0lrtzMccNuuNaJGPr0Y";
+const SUPABASE_ANON_KEY = "YOUR_EXISTING_ANON_KEY_HERE";
 
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const translations = {
   en: {
     brand: "MARIA & MARIO",
+    languageTitle: "SELECT LANGUAGE",
+    languageSubtitle: "CHOOSE YOUR PORTAL",
     eventDateLabel: "EVENT DATE",
     eventDate: "28 AUGUST 2027",
     choiceAKicker: "CHOICE A",
@@ -22,7 +24,7 @@ const translations = {
     welcomeTitle: "WELCOME TO OUR WORLD",
     welcomeText: "YOU HAVE PASSED THROUGH THE CODE. NOW STEP INTO A NIGHT OF LOVE, CINEMA, SUMMER LIGHTS, AND ONE STORY WRITTEN FOR ALL OF US.",
     enterCelebration: "ENTER THE CELEBRATION",
-    mainStory: "THE MAIN STORY",
+    mainStory: "OUR JOURNEY",
     heroTitle: "OUR STORY BEGINS WHERE FANTASY MEETS DESTINY.",
     heroText: "A CINEMATIC SUMMER EVENING. A WORLD BUILT FOR THE PEOPLE WE LOVE. A MOMENT WHERE REAL LIFE FEELS BIGGER THAN FILM.",
     alwaysLine: "ALWAYS? ALWAYS.",
@@ -84,6 +86,8 @@ const translations = {
   },
   bg: {
     brand: "МАРИЯ И МАРИО",
+    languageTitle: "ИЗБЕРИ ЕЗИК",
+    languageSubtitle: "ИЗБЕРИ СВОЯ ПОРТАЛ",
     eventDateLabel: "ДАТА НА СЪБИТИЕТО",
     eventDate: "28 АВГУСТ 2027",
     choiceAKicker: "ИЗБОР A",
@@ -100,7 +104,7 @@ const translations = {
     welcomeTitle: "ДОБРЕ ДОШЛИ В НАШИЯ СВЯТ",
     welcomeText: "ПРЕМИНА УСПЕШНО ПРЕЗ КОДА. СЕГА ВЛЕЗ В ЕДНА ВЕЧЕР НА ЛЮБОВ, КИНО, ЛЕТНИ СВЕТЛИНИ И ИСТОРИЯ, СЪЗДАДЕНА ЗА ВСИЧКИ НАС.",
     enterCelebration: "ВЛЕЗ В ПРАЗНИКА",
-    mainStory: "ГЛАВНАТА ИСТОРИЯ",
+    mainStory: "НАШЕТО ПЪТЕШЕСТВИЕ",
     heroTitle: "НАШАТА ИСТОРИЯ ЗАПОЧВА ТАМ, КЪДЕТО ФАНТАЗИЯТА СРЕЩА СЪДБАТА.",
     heroText: "ЕДНА КИНЕМАТОГРАФИЧНА ЛЯТНА ВЕЧЕР. СВЯТ, СЪЗДАДЕН ЗА ХОРАТА, КОИТО ОБИЧАМЕ. МИГ, В КОЙТО РЕАЛНОСТТА Е ПО-ГОЛЯМА ОТ ФИЛМ.",
     alwaysLine: "ALWAYS? ALWAYS.",
@@ -165,7 +169,6 @@ const translations = {
 let currentLang = "en";
 let sequenceStarted = false;
 let journeyStarted = false;
-let journeyInterval = null;
 let matrixAnimationActive = true;
 let inviteRecord = null;
 
@@ -190,21 +193,32 @@ const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
 const returnBtn = document.getElementById("returnBtn");
 const enterWorldBtn = document.getElementById("enterWorldBtn");
-const playVowBtn = document.getElementById("playVowBtn");
-const pauseVowBtn = document.getElementById("pauseVowBtn");
+const playJourneyBtn = document.getElementById("playJourneyBtn");
+const pauseJourneyBtn = document.getElementById("pauseJourneyBtn");
 
 const rsvpForm = document.getElementById("rsvpForm");
 const rsvpStatus = document.getElementById("rsvpStatus");
-
 const revealCards = document.querySelectorAll(".reveal-card");
-const journeySlides = document.querySelectorAll(".journey-slide");
 
-const introAudio = new Audio("./assets/music/trailer-intro.mp3");
-introAudio.volume = 0.55;
+const languageAudio = new Audio("./assets/music/trailer-intro2.mp3");
+languageAudio.volume = 0.6;
 
-const vowAudio = new Audio("./assets/music/the-vow.mp3");
-vowAudio.volume = 0.5;
-vowAudio.loop = true;
+const journeyAudio = new Audio("./assets/music/trailer-intro.mp3");
+journeyAudio.volume = 0.58;
+journeyAudio.loop = true;
+
+function stopAudio(audio) {
+  audio.pause();
+  audio.currentTime = 0;
+}
+
+async function safePlay(audio) {
+  try {
+    await audio.play();
+  } catch (error) {
+    console.log("Audio playback blocked:", error);
+  }
+}
 
 function getInviteToken() {
   const url = new URL(window.location.href);
@@ -290,9 +304,13 @@ function playSequence(index = 0) {
   }, 4300);
 }
 
-function startExperience(lang) {
+async function startExperience(lang) {
   applyTranslations(lang);
   gatePanel.classList.add("fade-out");
+
+  stopAudio(journeyAudio);
+  languageAudio.currentTime = 0;
+  safePlay(languageAudio);
 
   setTimeout(() => {
     languageGate.classList.add("hidden-screen");
@@ -306,50 +324,9 @@ function startExperience(lang) {
   }, 650);
 }
 
-function cycleJourneyMotion(index) {
-  const motions = ["pan-left", "pan-right", "pan-up"];
-  journeySlides.forEach((slide) => {
-    slide.classList.remove("pan-left", "pan-right", "pan-up", "is-active");
-  });
-
-  const slide = journeySlides[index];
-  slide.classList.add("is-active", motions[index % motions.length]);
-}
-
-function startJourneySlides() {
-  if (journeyInterval || journeySlides.length === 0) return;
-
-  let current = 0;
-  cycleJourneyMotion(current);
-
-  journeyInterval = setInterval(() => {
-    current = (current + 1) % journeySlides.length;
-    cycleJourneyMotion(current);
-  }, 3800);
-}
-
 function stopMatrixAnimation() {
   matrixAnimationActive = false;
   body.classList.add("matrix-hidden");
-}
-
-function enterJourney() {
-  if (journeyStarted) return;
-  journeyStarted = true;
-
-  activateSceneFade();
-
-  setTimeout(() => {
-    stopMatrixAnimation();
-    showScreen(mainExperience);
-    window.scrollTo({ top: 0, behavior: "auto" });
-    startJourneySlides();
-    observeRevealCards();
-  }, 450);
-
-  setTimeout(() => {
-    deactivateSceneFade();
-  }, 1100);
 }
 
 function observeRevealCards() {
@@ -367,6 +344,27 @@ function observeRevealCards() {
   revealCards.forEach((card) => observer.observe(card));
 }
 
+async function enterJourney() {
+  if (journeyStarted) return;
+  journeyStarted = true;
+
+  activateSceneFade();
+
+  setTimeout(async () => {
+    stopMatrixAnimation();
+    stopAudio(languageAudio);
+    showScreen(mainExperience);
+    window.scrollTo({ top: 0, behavior: "auto" });
+    observeRevealCards();
+    journeyAudio.currentTime = 0;
+    await safePlay(journeyAudio);
+  }, 450);
+
+  setTimeout(() => {
+    deactivateSceneFade();
+  }, 1100);
+}
+
 langChoices.forEach((button) => {
   button.addEventListener("click", (event) => {
     event.preventDefault();
@@ -382,22 +380,16 @@ langButtons.forEach((button) => {
 });
 
 noBtn.addEventListener("click", () => {
-  introAudio.pause();
-  introAudio.currentTime = 0;
+  stopAudio(languageAudio);
   showScreen(farewellScreen);
 });
 
-returnBtn.addEventListener("click", () => {
+returnBtn.addEventListener("click", async () => {
   showScreen(matrixIntro);
+  await safePlay(languageAudio);
 });
 
 yesBtn.addEventListener("click", async () => {
-  try {
-    introAudio.currentTime = 0;
-    await introAudio.play();
-  } catch (error) {
-    console.log("Intro audio blocked.", error);
-  }
   showScreen(welcomeScreen);
 });
 
@@ -405,16 +397,12 @@ enterWorldBtn.addEventListener("click", () => {
   enterJourney();
 });
 
-playVowBtn.addEventListener("click", async () => {
-  try {
-    await vowAudio.play();
-  } catch (error) {
-    console.log("Audio playback failed.", error);
-  }
+playJourneyBtn.addEventListener("click", async () => {
+  await safePlay(journeyAudio);
 });
 
-pauseVowBtn.addEventListener("click", () => {
-  vowAudio.pause();
+pauseJourneyBtn.addEventListener("click", () => {
+  journeyAudio.pause();
 });
 
 rsvpForm.addEventListener("submit", async (event) => {
@@ -521,6 +509,7 @@ function drawMatrix() {
 window.addEventListener("resize", resizeCanvas);
 
 (async function init() {
+  applyTranslations("en");
   await loadInvite();
   requestAnimationFrame(drawMatrix);
 })();
