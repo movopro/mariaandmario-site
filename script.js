@@ -206,6 +206,12 @@ const journeyAudio = document.getElementById('journeyAudio');
 let introAudioStarted = false;
 let journeyAudioStarted = false;
 
+document.querySelectorAll('[data-lang-select]').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    startIntroAudio();
+  });
+});
+
 function safePlay(audioEl, volume = 1) {
   if (!audioEl) return;
   audioEl.volume = volume;
