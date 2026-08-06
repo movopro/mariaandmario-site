@@ -5,10 +5,13 @@
   --surface-2: rgba(255, 255, 255, 0.06);
   --border: rgba(127, 255, 170, 0.12);
   --text: #f5f7fb;
-  --muted: #aeb8d2;
+  --muted: #bfc7da;
   --green: #6cff9f;
   --green-2: #39e97a;
   --gold: #f0d28d;
+  --rainbow-1: #7ed7ff;
+  --rainbow-2: #f8d775;
+  --rainbow-3: #f39ac7;
   --shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
   --radius: 28px;
   --radius-sm: 18px;
@@ -50,6 +53,36 @@ button {
   letter-spacing: 0.14em;
 }
 
+.gate-title,
+.type-sequence,
+.date-block h1,
+.message-panel h2,
+.section-heading h2,
+.music-card h2,
+.donate-card h2,
+.welcome-content h2,
+.journey-content h2,
+.rsvp-card-title,
+.lang-choice-label,
+.choice-title {
+  font-family: "Cinzel", serif;
+}
+
+.eyebrow,
+.lang-choice-text,
+.choice-kicker,
+.mission-index,
+.info-key,
+.field-label,
+.rsvp-status,
+.date-label,
+.lang-btn,
+button,
+.btn {
+  font-family: "Bebas Neue", sans-serif;
+  letter-spacing: 0.12em;
+}
+
 #matrixCanvas {
   position: fixed;
   inset: 0;
@@ -60,11 +93,12 @@ button {
   pointer-events: none;
   mix-blend-mode: screen;
   filter: saturate(1.15) contrast(1.08);
-  transition: opacity 1.2s ease;
+  transition: opacity 1.2s ease, visibility 1.2s ease;
 }
 
 body.matrix-hidden #matrixCanvas {
-  opacity: 0;
+  opacity: 0 !important;
+  visibility: hidden;
 }
 
 .scene-fade {
@@ -166,6 +200,14 @@ body.matrix-hidden #matrixCanvas {
     0 0 80px rgba(108, 255, 159, 0.08);
   backdrop-filter: blur(16px);
   transition: opacity 0.6s ease, transform 0.6s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.gate-panel > * {
+  width: 100%;
 }
 
 .gate-panel.fade-out {
@@ -175,10 +217,10 @@ body.matrix-hidden #matrixCanvas {
 
 .gate-title {
   margin: 0 0 12px;
-  font-family: "Cormorant Garamond", serif;
   font-size: clamp(2.8rem, 5vw, 5.2rem);
   line-height: 1;
   font-weight: 600;
+  text-align: center;
 }
 
 .gate-subtitle {
@@ -186,6 +228,7 @@ body.matrix-hidden #matrixCanvas {
   color: var(--muted);
   letter-spacing: 0.12em;
   font-size: 0.96rem;
+  text-align: center;
 }
 
 .gate-actions {
@@ -193,6 +236,8 @@ body.matrix-hidden #matrixCanvas {
   gap: 16px;
   position: relative;
   z-index: 4;
+  width: min(100%, 660px);
+  margin-inline: auto;
 }
 
 .lang-choice {
@@ -265,7 +310,6 @@ body.matrix-hidden #matrixCanvas {
 }
 
 .lang-choice-label {
-  font-family: "Cormorant Garamond", serif;
   font-size: clamp(1.7rem, 3vw, 2.7rem);
   line-height: 1.05;
 }
@@ -385,11 +429,10 @@ body.matrix-hidden #matrixCanvas {
 
 .eyebrow {
   margin: 0 0 18px;
-  letter-spacing: 0.38em;
   color: #7fffaf;
-  font-size: 0.76rem;
+  font-size: 0.92rem;
   font-weight: 700;
-  text-indent: 0.38em;
+  text-align: center;
 }
 
 .type-sequence {
@@ -398,7 +441,6 @@ body.matrix-hidden #matrixCanvas {
   display: grid;
   place-items: center;
   text-align: center;
-  font-family: "Cormorant Garamond", serif;
   font-size: clamp(2.4rem, 5vw, 5.8rem);
   font-weight: 600;
   line-height: 1.02;
@@ -459,18 +501,18 @@ body.matrix-hidden #matrixCanvas {
 
 .date-block h1 {
   margin: 0;
-  font-family: "Cormorant Garamond", serif;
   font-size: clamp(2.4rem, 4vw, 4.4rem);
   font-weight: 600;
   letter-spacing: 0.03em;
   color: var(--gold);
+  text-align: center;
 }
 
 .date-label {
   margin: 0 0 8px;
   color: var(--muted);
-  letter-spacing: 0.24em;
-  font-size: 0.75rem;
+  font-size: 0.78rem;
+  text-align: center;
 }
 
 .choice-block {
@@ -518,13 +560,11 @@ body.matrix-hidden #matrixCanvas {
 
 .choice-kicker {
   color: var(--green);
-  font-size: 0.74rem;
-  letter-spacing: 0.22em;
+  font-size: 0.82rem;
   font-weight: 700;
 }
 
 .choice-title {
-  font-family: "Cormorant Garamond", serif;
   font-size: clamp(1.5rem, 3vw, 2.6rem);
   line-height: 1.04;
   color: var(--text);
@@ -600,13 +640,14 @@ body.matrix-hidden #matrixCanvas {
 .journey-content h2,
 .rsvp-card-title {
   margin: 0 0 16px;
-  font-family: "Cormorant Garamond", serif;
   line-height: 1.05;
   font-size: clamp(2rem, 4vw, 4.2rem);
+  text-align: center;
 }
 
 .rsvp-card-title {
   font-size: clamp(1.5rem, 2vw, 2.2rem);
+  text-align: left;
 }
 
 .message-panel p,
@@ -662,10 +703,73 @@ body.matrix-hidden #matrixCanvas {
   filter: blur(10px);
 }
 
+.rainbow-arc {
+  position: absolute;
+  top: 8%;
+  left: 50%;
+  width: min(92vw, 980px);
+  height: 340px;
+  transform: translateX(-50%);
+  border-top-left-radius: 999px;
+  border-top-right-radius: 999px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.75;
+}
+
+.rainbow-arc::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    conic-gradient(
+      from 210deg at 50% 100%,
+      transparent 0deg 18deg,
+      rgba(126, 215, 255, 0.95) 28deg,
+      rgba(248, 215, 117, 0.88) 48deg,
+      rgba(243, 154, 199, 0.82) 68deg,
+      rgba(255, 255, 255, 0.94) 82deg,
+      transparent 100deg 360deg
+    );
+  filter: blur(10px) saturate(1.1);
+  animation: rainbowSweep 6.5s ease-in-out infinite;
+}
+
+.rainbow-arc::after {
+  content: "";
+  position: absolute;
+  inset: 22px 80px 0;
+  background: linear-gradient(180deg, rgba(7, 16, 25, 0), rgba(7, 16, 25, 1) 72%);
+}
+
+@keyframes rainbowSweep {
+  0%, 100% {
+    transform: rotate(-6deg) scale(1);
+    opacity: 0.58;
+  }
+  50% {
+    transform: rotate(6deg) scale(1.03);
+    opacity: 0.95;
+  }
+}
+
 .welcome-content {
   width: min(100%, 820px);
   text-align: center;
   padding: 48px 24px;
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.welcome-content .lead {
+  text-align: center;
+  margin-inline: auto;
 }
 
 .lead {
@@ -674,6 +778,7 @@ body.matrix-hidden #matrixCanvas {
   color: var(--muted);
   font-size: 1.08rem;
   line-height: 1.75;
+  text-align: center;
 }
 
 .panel-actions,
@@ -696,43 +801,76 @@ body.matrix-hidden #matrixCanvas {
   overflow: hidden;
   display: grid;
   place-items: center;
+  isolation: isolate;
 }
 
 .journey-background {
   position: absolute;
   inset: 0;
+  z-index: 0;
 }
 
 .journey-slide {
   position: absolute;
-  inset: -4%;
+  inset: -3%;
   background-size: cover;
   background-position: center;
   opacity: 0;
-  transform: scale(1.08);
-  transition: opacity 1.8s ease, transform 8s ease;
+  transform: scale(1.12) translateX(0) translateY(0);
+  transition: opacity 1.35s ease, transform 6s ease;
+  filter: saturate(1.04) contrast(1.02);
 }
 
 .journey-slide.is-active {
   opacity: 1;
-  transform: scale(1);
+  transform: scale(1.02) translateX(0) translateY(0);
+}
+
+.journey-slide.pan-left.is-active {
+  transform: scale(1.05) translateX(-2.5%) translateY(-1%);
+}
+
+.journey-slide.pan-right.is-active {
+  transform: scale(1.05) translateX(2.5%) translateY(1%);
+}
+
+.journey-slide.pan-up.is-active {
+  transform: scale(1.06) translateY(-2.5%);
 }
 
 .journey-overlay {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(3, 5, 9, 0.42), rgba(3, 5, 9, 0.72)),
-    radial-gradient(circle at center, rgba(255, 255, 255, 0.04), transparent 46%);
+    linear-gradient(180deg, rgba(3, 5, 9, 0.14), rgba(3, 5, 9, 0.48)),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.12), rgba(0,0,0,0.04), rgba(0,0,0,0.12));
   z-index: 1;
 }
 
 .journey-content {
   position: relative;
   z-index: 2;
-  width: min(100% - 32px, 980px);
+  width: min(100% - 32px, 1080px);
   text-align: center;
   padding: 48px 24px;
+}
+
+.journey-content .lead {
+  text-align: center;
+  margin-inline: auto;
+  max-width: 68ch;
+  color: #f5f7fb;
+  text-shadow: 0 2px 18px rgba(0,0,0,0.4);
+}
+
+.always-line {
+  margin: 18px auto 0;
+  text-align: center;
+  color: var(--gold);
+  font-family: "Cinzel", serif;
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  letter-spacing: 0.16em;
+  opacity: 0.92;
 }
 
 .mission-section,
@@ -783,8 +921,7 @@ body.matrix-hidden #matrixCanvas {
   display: inline-block;
   margin-bottom: 18px;
   color: var(--green);
-  font-size: 0.78rem;
-  letter-spacing: 0.28em;
+  font-size: 0.82rem;
   font-weight: 800;
 }
 
@@ -809,8 +946,7 @@ body.matrix-hidden #matrixCanvas {
   display: block;
   color: var(--gold);
   font-weight: 800;
-  letter-spacing: 0.12em;
-  font-size: 0.76rem;
+  font-size: 0.82rem;
   margin-bottom: 10px;
 }
 
@@ -948,8 +1084,7 @@ body.matrix-hidden #matrixCanvas {
   margin: 0;
   text-align: center;
   color: var(--green);
-  font-size: 0.86rem;
-  letter-spacing: 0.1em;
+  font-size: 0.92rem;
 }
 
 @media (max-width: 980px) {
@@ -957,14 +1092,13 @@ body.matrix-hidden #matrixCanvas {
   .music-donate-section,
   .rsvp-grid,
   .option-grid.two-col,
-  .drink-grid,
-  .submit-panel {
+  .drink-grid {
     grid-template-columns: 1fr;
   }
 
-  .music-donate-section,
   .submit-panel {
     display: grid;
+    justify-content: stretch;
   }
 }
 
@@ -1012,7 +1146,6 @@ body.matrix-hidden #matrixCanvas {
     min-height: 44px;
     padding: 10px 12px;
     font-size: 0.78rem;
-    letter-spacing: 0.14em;
   }
 
   .intro-center {
@@ -1039,5 +1172,14 @@ body.matrix-hidden #matrixCanvas {
   .rsvp-entry {
     width: min(100% - 24px, var(--container));
     padding-top: 64px;
+  }
+
+  .rainbow-arc {
+    top: 10%;
+    height: 220px;
+  }
+
+  .rainbow-arc::after {
+    inset: 16px 34px 0;
   }
 }
