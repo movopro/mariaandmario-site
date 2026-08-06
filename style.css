@@ -1,18 +1,17 @@
 :root {
-  --bg: #05070b;
-  --bg-soft: #0b1020;
-  --surface: rgba(11, 16, 32, 0.72);
+  --bg: #030509;
+  --bg-2: #07101a;
+  --surface: rgba(8, 13, 22, 0.62);
   --surface-2: rgba(255, 255, 255, 0.06);
-  --border: rgba(255, 255, 255, 0.12);
+  --border: rgba(127, 255, 170, 0.12);
   --text: #f5f7fb;
-  --muted: #b8c0d9;
-  --green: #3fff8f;
-  --green-dark: #13c767;
-  --gold: #f2d28b;
-  --pink: #f7d6e5;
-  --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
-  --radius: 24px;
-  --radius-sm: 16px;
+  --muted: #aeb8d2;
+  --green: #6cff9f;
+  --green-2: #39e97a;
+  --gold: #f0d28d;
+  --shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+  --radius: 28px;
+  --radius-sm: 18px;
   --container: 1200px;
 }
 
@@ -31,10 +30,11 @@ body {
   min-height: 100vh;
   font-family: "Inter", sans-serif;
   background:
-    radial-gradient(circle at top, rgba(18, 35, 24, 0.4), transparent 40%),
-    linear-gradient(180deg, #040507 0%, #07101b 45%, #0d1422 100%);
+    radial-gradient(circle at top, rgba(29, 72, 52, 0.18), transparent 28%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 48%, #09111d 100%);
   color: var(--text);
   overflow-x: hidden;
+  text-transform: uppercase;
 }
 
 img {
@@ -47,6 +47,8 @@ img {
 button {
   font: inherit;
   cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
 }
 
 #matrixCanvas {
@@ -55,8 +57,10 @@ button {
   width: 100%;
   height: 100%;
   z-index: 0;
-  opacity: 0.25;
+  opacity: 0.54;
   pointer-events: none;
+  mix-blend-mode: screen;
+  filter: saturate(1.15) contrast(1.08);
 }
 
 .site-shell {
@@ -72,21 +76,42 @@ button {
   padding: 32px;
 }
 
-.screen-active {
-  visibility: visible;
-  opacity: 1;
-}
-
 .hidden-screen {
   display: none;
 }
 
-.intro-overlay {
+#matrixIntro::before,
+#welcomeScreen::before,
+#farewellScreen::before,
+#mainExperience::before {
+  content: "";
   position: absolute;
   inset: 0;
+  pointer-events: none;
+}
+
+#matrixIntro::before {
   background:
-    radial-gradient(circle at center, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.72)),
-    linear-gradient(180deg, rgba(0,0,0,0.3), rgba(0,0,0,0.8));
+    radial-gradient(circle at center, rgba(108, 255, 159, 0.06), transparent 34%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.72));
+}
+
+#welcomeScreen::before {
+  background:
+    radial-gradient(circle at 50% 18%, rgba(255, 222, 160, 0.18), transparent 30%),
+    radial-gradient(circle at 50% 78%, rgba(122, 170, 255, 0.12), transparent 36%),
+    linear-gradient(180deg, rgba(5, 9, 17, 0.08), rgba(5, 9, 17, 0.56));
+}
+
+#farewellScreen::before {
+  background:
+    radial-gradient(circle at center, rgba(255, 120, 160, 0.06), transparent 30%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.78));
+}
+
+#mainExperience::before {
+  background:
+    radial-gradient(circle at top, rgba(108, 255, 159, 0.04), transparent 25%);
 }
 
 .intro-center,
@@ -97,40 +122,81 @@ button {
 }
 
 .intro-center {
-  width: min(100%, 980px);
+  width: min(100%, 1040px);
+  min-height: 440px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  padding: 48px 24px;
+  padding: 56px 40px;
+}
+
+.intro-box {
+  border-radius: 32px;
+  background: rgba(4, 8, 14, 0.5);
+  border: 1px solid rgba(108, 255, 159, 0.12);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.03),
+    0 24px 80px rgba(0, 0, 0, 0.44),
+    0 0 60px rgba(108, 255, 159, 0.06);
+  backdrop-filter: blur(10px);
 }
 
 .eyebrow {
-  margin: 0 0 16px;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--green);
-  font-size: 0.8rem;
+  margin: 0 0 18px;
+  letter-spacing: 0.38em;
+  color: #7fffaf;
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-indent: 0.38em;
 }
 
 .type-sequence {
-  min-height: 180px;
+  min-height: 220px;
+  width: 100%;
   display: grid;
   place-items: center;
-  font-family: "Cinzel", serif;
-  font-size: clamp(2rem, 5vw, 4.8rem);
-  line-height: 1.1;
-  text-shadow: 0 0 20px rgba(63, 255, 143, 0.18);
+  text-align: center;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.4rem, 5vw, 5.8rem);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: 0.02em;
+  color: #f8fafc;
+  text-shadow:
+    0 0 10px rgba(255, 255, 255, 0.07),
+    0 0 24px rgba(108, 255, 159, 0.1);
 }
 
 .type-line {
   opacity: 0;
-  transform: translateY(20px);
-  animation: fadeLine 1.4s ease forwards;
+  transform: translateY(26px) scale(0.982);
+  filter: blur(14px);
+  animation: cinematicFade 4.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-@keyframes fadeLine {
-  0% { opacity: 0; transform: translateY(20px); filter: blur(8px); }
-  20% { opacity: 1; transform: translateY(0); filter: blur(0); }
-  80% { opacity: 1; transform: translateY(0); filter: blur(0); }
-  100% { opacity: 0; transform: translateY(-10px); filter: blur(6px); }
+@keyframes cinematicFade {
+  0% {
+    opacity: 0;
+    transform: translateY(26px) scale(0.982);
+    filter: blur(16px);
+  }
+  16% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+  72% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-14px) scale(1.01);
+    filter: blur(10px);
+  }
 }
 
 .hidden {
@@ -140,78 +206,138 @@ button {
 
 .date-block,
 .choice-block {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 .date-block {
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
-.date-block:not(.hidden),
-.choice-block:not(.hidden) {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
+.date-block h1 {
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.4rem, 4vw, 4.4rem);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--gold);
 }
 
 .date-label {
   margin: 0 0 8px;
   color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.24em;
   font-size: 0.75rem;
-}
-
-.date-block h1 {
-  margin: 0;
-  font-family: "Cinzel", serif;
-  font-size: clamp(2rem, 4vw, 3.8rem);
-  color: var(--gold);
 }
 
 .choice-block {
   margin-top: 28px;
-  display: flex;
   gap: 16px;
-  justify-content: center;
-  flex-wrap: wrap;
 }
 
 .btn {
+  min-height: 48px;
   padding: 14px 22px;
   border-radius: 999px;
   border: 1px solid transparent;
-  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+  will-change: transform;
 }
 
 .btn:hover {
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.01);
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--green), var(--green-dark));
+  background: linear-gradient(135deg, var(--green), var(--green-2));
   color: #041008;
-  font-weight: 700;
+  font-weight: 800;
+  box-shadow: 0 14px 30px rgba(54, 255, 142, 0.16);
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.05);
   color: var(--text);
-  border-color: var(--border);
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
 #farewellScreen {
   background:
-    radial-gradient(circle at top, rgba(120, 20, 60, 0.15), transparent 40%),
-    linear-gradient(180deg, #06070c, #0e1020);
+    radial-gradient(circle at top, rgba(255, 120, 160, 0.12), transparent 36%),
+    linear-gradient(180deg, #04050a, #0b1020);
+}
+
+.message-panel {
+  width: min(100%, 760px);
+  padding: 42px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+  text-align: center;
+}
+
+.message-panel h2,
+.hero-copy h2,
+.section-heading h2,
+.music-card h2,
+.donate-card h2,
+.welcome-content h2 {
+  margin: 0 0 16px;
+  font-family: "Cormorant Garamond", serif;
+  line-height: 1.05;
+  font-size: clamp(2rem, 4vw, 4.2rem);
+}
+
+.message-panel p,
+.hero-copy p,
+.music-card p,
+.welcome-content p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.03rem;
+  line-height: 1.7;
 }
 
 #welcomeScreen {
   overflow: hidden;
   background:
-    radial-gradient(circle at top, rgba(98, 64, 168, 0.24), transparent 28%),
-    radial-gradient(circle at bottom, rgba(255, 203, 124, 0.18), transparent 30%),
-    linear-gradient(180deg, #08111e 0%, #151d38 45%, #241738 100%);
+    radial-gradient(circle at 50% 18%, rgba(255, 220, 150, 0.2), transparent 24%),
+    radial-gradient(circle at 50% 84%, rgba(93, 136, 255, 0.18), transparent 30%),
+    linear-gradient(180deg, #071019 0%, #111b2f 48%, #24173b 100%);
+}
+
+.stars,
+.stars::before,
+.stars::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0.8px, transparent 1.2px);
+  background-size: 160px 160px;
+  opacity: 0.34;
+}
+
+.stars::before {
+  transform: scale(1.25);
+  opacity: 0.2;
+}
+
+.stars::after {
+  transform: scale(1.45);
+  opacity: 0.12;
 }
 
 .castle-glow {
@@ -223,30 +349,8 @@ button {
   height: 420px;
   border-radius: 50% 50% 0 0;
   background:
-    radial-gradient(circle at center, rgba(255, 232, 185, 0.25), rgba(255, 232, 185, 0.04) 50%, transparent 72%);
+    radial-gradient(circle at center, rgba(255, 232, 185, 0.24), rgba(255, 232, 185, 0.04) 52%, transparent 72%);
   filter: blur(10px);
-}
-
-.stars,
-.stars::before,
-.stars::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image:
-    radial-gradient(circle, rgba(255,255,255,0.9) 0.8px, transparent 1.2px);
-  background-size: 160px 160px;
-  opacity: 0.35;
-}
-
-.stars::before {
-  transform: scale(1.2);
-  opacity: 0.2;
-}
-
-.stars::after {
-  transform: scale(1.45);
-  opacity: 0.12;
 }
 
 .welcome-content {
@@ -255,41 +359,12 @@ button {
   padding: 48px 24px;
 }
 
-.welcome-content h2,
-.message-panel h2,
-.hero-copy h2,
-.section-heading h2,
-.music-card h2,
-.donate-card h2 {
-  margin: 0 0 16px;
-  font-family: "Cinzel", serif;
-  line-height: 1.1;
-  font-size: clamp(2rem, 4vw, 4rem);
-}
-
-.lead,
-.message-panel p,
-.hero-copy p,
-.music-card p {
-  margin: 0;
+.lead {
+  margin: 0 auto;
+  max-width: 58ch;
   color: var(--muted);
-  font-size: 1.05rem;
-  line-height: 1.7;
-}
-
-.message-panel {
-  width: min(100%, 760px);
-  padding: 40px;
-  border-radius: var(--radius);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(14px);
-  text-align: center;
-}
-
-.message-panel.narrow {
-  width: min(100%, 680px);
+  font-size: 1.08rem;
+  line-height: 1.75;
 }
 
 #mainExperience {
@@ -300,21 +375,10 @@ button {
 
 .hero {
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
+  grid-template-columns: 1.08fr 0.92fr;
   gap: 32px;
   align-items: center;
   margin-bottom: 56px;
-}
-
-.hero-copy,
-.info-section,
-.gallery-section,
-.music-donate-section,
-.rsvp-entry,
-.photo-band,
-.closing-gallery {
-  position: relative;
-  z-index: 2;
 }
 
 .hero-copy {
@@ -331,7 +395,7 @@ button {
   border-radius: var(--radius);
   overflow: hidden;
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: var(--shadow);
   backdrop-filter: blur(10px);
 }
@@ -351,10 +415,6 @@ button {
   margin-bottom: 72px;
 }
 
-.photo-card.large {
-  grid-row: span 1;
-}
-
 .section-heading {
   margin-bottom: 24px;
 }
@@ -369,14 +429,23 @@ button {
   padding: 24px 28px;
   display: grid;
   gap: 10px;
+  animation: floatCard 7s ease-in-out infinite;
+}
+
+.info-card:nth-child(2) { animation-delay: 0.6s; }
+.info-card:nth-child(3) { animation-delay: 1.2s; }
+.info-card:nth-child(4) { animation-delay: 1.8s; }
+
+@keyframes floatCard {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
 }
 
 .info-key {
   color: var(--gold);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  font-size: 0.76rem;
 }
 
 .info-value {
@@ -447,19 +516,21 @@ button {
     grid-column: auto;
     grid-row: auto;
   }
-
-  .hero-copy {
-    order: 2;
-  }
-
-  .hero-first {
-    order: 1;
-  }
 }
 
 @media (max-width: 640px) {
   .screen {
     padding: 24px 16px;
+  }
+
+  .intro-center {
+    min-height: 380px;
+    padding: 40px 22px;
+  }
+
+  .type-sequence {
+    min-height: 180px;
+    font-size: clamp(2rem, 8vw, 3.8rem);
   }
 
   .message-panel,
