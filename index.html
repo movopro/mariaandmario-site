@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Maria & Mario | Wedding Invitation</title>
-  <meta name="description" content="Maria and Mario wedding invitation." />
+  <title>MARIA & MARIO | WEDDING INVITATION</title>
+  <meta name="description" content="MARIA AND MARIO WEDDING INVITATION." />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -14,30 +15,70 @@
   <canvas id="matrixCanvas" aria-hidden="true"></canvas>
 
   <main class="site-shell">
-    <section id="matrixIntro" class="screen screen-active">
+    <section id="languageGate" class="screen gate-screen">
+      <div class="gate-panel">
+        <p class="eyebrow">WELCOME</p>
+        <h1 class="gate-title">SELECT LANGUAGE</h1>
+        <p class="gate-subtitle">ИЗБЕРИ ЕЗИК / CHOOSE LANGUAGE</p>
+
+        <div class="gate-actions">
+          <button class="lang-choice" type="button" data-lang-select="en">
+            <span class="lang-choice-label">ENGLISH</span>
+            <span class="lang-choice-text">ENTER IN ENGLISH</span>
+          </button>
+
+          <button class="lang-choice" type="button" data-lang-select="bg">
+            <span class="lang-choice-label">БЪЛГАРСКИ</span>
+            <span class="lang-choice-text">ВЛЕЗ НА БЪЛГАРСКИ</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <nav class="lang-switch hidden-switch" aria-label="Language switcher">
+      <button class="lang-btn is-active" type="button" data-lang="en">EN</button>
+      <button class="lang-btn" type="button" data-lang="bg">BG</button>
+    </nav>
+
+    <section id="matrixIntro" class="screen hidden-screen">
       <div class="intro-overlay"></div>
 
       <div class="intro-center intro-box">
-        <p class="eyebrow">Maria & Mario</p>
+        <p class="eyebrow" data-i18n="brand">MARIA & MARIO</p>
+
         <div id="typeSequence" class="type-sequence" aria-live="polite"></div>
 
         <div id="dateBlock" class="date-block hidden">
-          <p class="date-label">Event date</p>
-          <h1>28 August 2027</h1>
+          <p class="date-label" data-i18n="eventDateLabel">EVENT DATE</p>
+          <h1 data-i18n="eventDate">28 AUGUST 2027</h1>
         </div>
 
         <div id="choiceBlock" class="choice-block hidden">
-          <button id="yesBtn" class="btn btn-primary">Yes, I'm in</button>
-          <button id="noBtn" class="btn btn-secondary">No, I prefer my simulation of reality</button>
+          <div class="choice-stack">
+            <button id="yesBtn" class="choice-card choice-card-primary">
+              <span class="choice-kicker" data-i18n="choiceAKicker">CHOICE A</span>
+              <span class="choice-title" data-i18n="yesTitle">YES, I'M IN</span>
+              <span class="choice-text" data-i18n="yesText">ENTER THE STORY. JOIN THE CELEBRATION. UNLOCK THE NEXT SCENE.</span>
+            </button>
+
+            <button id="noBtn" class="choice-card choice-card-secondary">
+              <span class="choice-kicker" data-i18n="choiceBKicker">CHOICE B</span>
+              <span class="choice-title" data-i18n="noTitle">NO, I PREFER MY SIMULATION OF REALITY</span>
+              <span class="choice-text" data-i18n="noText">EXIT THIS TIMELINE AND RETURN TO YOUR DIMENSION.</span>
+            </button>
+          </div>
         </div>
       </div>
     </section>
 
     <section id="farewellScreen" class="screen hidden-screen">
       <div class="message-panel narrow">
-        <p class="eyebrow">Transmission ended</p>
-        <h2>Farewell our friend, see you in another dimension</h2>
-        <button id="returnBtn" class="btn btn-primary">Return to the invitation</button>
+        <p class="eyebrow" data-i18n="transmissionClosed">TRANSMISSION CLOSED</p>
+        <h2 data-i18n="farewellTitle">FAREWELL OUR FRIEND, SEE YOU IN ANOTHER DIMENSION</h2>
+        <p class="lead" data-i18n="farewellText">THIS STORYLINE ENDS HERE. ANOTHER PORTAL MAY OPEN SOMEDAY.</p>
+        <div class="panel-actions">
+          <button id="returnBtn" class="btn btn-primary" data-i18n="returnInvitation">RETURN TO INVITATION</button>
+        </div>
       </div>
     </section>
 
@@ -46,120 +87,96 @@
       <div class="stars"></div>
 
       <div class="welcome-content">
-        <p class="eyebrow">Welcome sequence</p>
-        <h2>Welcome to our world</h2>
-        <p class="lead">
-          You were chosen to step beyond the code and into our story.
+        <p class="eyebrow" data-i18n="nextScene">NEXT SCENE</p>
+        <h2 data-i18n="welcomeTitle">WELCOME TO OUR WORLD</h2>
+        <p class="lead" data-i18n="welcomeText">
+          YOU HAVE PASSED THROUGH THE CODE. NOW STEP INTO A NIGHT OF LOVE,
+          CINEMA, SUMMER LIGHTS, AND ONE STORY WRITTEN FOR ALL OF US.
         </p>
-        <button id="enterWorldBtn" class="btn btn-primary">Enter the celebration</button>
+
+        <div class="panel-actions">
+          <button id="enterWorldBtn" class="btn btn-primary" data-i18n="enterCelebration">ENTER THE CELEBRATION</button>
+        </div>
       </div>
     </section>
 
     <section id="mainExperience" class="hidden-screen">
       <header class="hero">
         <div class="hero-copy">
-          <p class="eyebrow">Maria & Mario</p>
-          <h2>Our story begins where fantasy meets destiny.</h2>
-          <p class="lead">
-            A cinematic summer evening, a celebration with the people who matter most,
-            and one unforgettable world made for all of us together.
+          <p class="eyebrow" data-i18n="mainStory">THE MAIN STORY</p>
+          <h2 data-i18n="heroTitle">OUR STORY BEGINS WHERE FANTASY MEETS DESTINY.</h2>
+          <p class="lead" data-i18n="heroText">
+            A CINEMATIC SUMMER EVENING. A WORLD BUILT FOR THE PEOPLE WE LOVE.
+            A MOMENT WHERE REAL LIFE FEELS BIGGER THAN FILM.
           </p>
+
+          <div class="hero-actions">
+            <button id="playVowBtn" class="btn btn-primary" data-i18n="playTheme">PLAY OUR THEME</button>
+            <button id="pauseVowBtn" class="btn btn-secondary" data-i18n="pauseMusic">PAUSE MUSIC</button>
+          </div>
         </div>
 
         <div class="hero-portrait hero-first">
-          <img src="./assets/images/portrait-01.webp" alt="Maria and Mario portrait" width="1200" height="1500" fetchpriority="high" />
+          <img src="./assets/images/portrait-01.webp" alt="MARIA AND MARIO PORTRAIT" width="1200" height="1500" fetchpriority="high" />
         </div>
       </header>
 
       <section class="photo-band">
-        <div class="photo-card large"><img src="./assets/images/portrait-02.webp" alt="Maria and Mario portrait" width="1200" height="1500" loading="lazy" decoding="async" /></div>
-        <div class="photo-card"><img src="./assets/images/portrait-03.webp" alt="Maria and Mario portrait" width="1200" height="1500" loading="lazy" decoding="async" /></div>
-        <div class="photo-card"><img src="./assets/images/portrait-04.webp" alt="Maria and Mario portrait" width="1200" height="1500" loading="lazy" decoding="async" /></div>
+        <div class="photo-card large"><img src="./assets/images/portrait-02.webp" alt="MARIA AND MARIO PORTRAIT" width="1200" height="1500" loading="lazy" decoding="async" /></div>
+        <div class="photo-card"><img src="./assets/images/portrait-03.webp" alt="MARIA AND MARIO PORTRAIT" width="1200" height="1500" loading="lazy" decoding="async" /></div>
+        <div class="photo-card"><img src="./assets/images/portrait-04.webp" alt="MARIA AND MARIO PORTRAIT" width="1200" height="1500" loading="lazy" decoding="async" /></div>
       </section>
 
       <section class="info-section">
         <div class="section-heading">
-          <p class="eyebrow">Celebration details</p>
-          <h2>Event information</h2>
+          <p class="eyebrow" data-i18n="eventFile">EVENT FILE</p>
+          <h2 data-i18n="detailsTitle">CELEBRATION DETAILS</h2>
         </div>
 
         <div class="info-grid">
           <article class="info-card">
-            <span class="info-key">Location:</span>
-            <span class="info-value">Event coordinates to be added</span>
+            <span class="info-key" data-i18n="locationKey">LOCATION:</span>
+            <span class="info-value" data-i18n="locationValue">COORDINATES TO BE ADDED</span>
           </article>
 
           <article class="info-card">
-            <span class="info-key">Dress code:</span>
-            <span class="info-value">Casual summer party</span>
+            <span class="info-key" data-i18n="dressCodeKey">DRESS CODE:</span>
+            <span class="info-value" data-i18n="dressCodeValue">CASUAL SUMMER PARTY</span>
           </article>
 
           <article class="info-card">
-            <span class="info-key">Start time:</span>
-            <span class="info-value">18:00</span>
+            <span class="info-key" data-i18n="startTimeKey">START TIME:</span>
+            <span class="info-value" data-i18n="startTimeValue">18:00</span>
           </article>
 
           <article class="info-card">
-            <span class="info-key">Required gifts:</span>
-            <span class="info-value">Only money accepted - ticket on entrance</span>
+            <span class="info-key" data-i18n="giftKey">REQUIRED GIFTS:</span>
+            <span class="info-value" data-i18n="giftValue">ONLY MONEY ACCEPTED - TICKET ON ENTRANCE</span>
           </article>
         </div>
       </section>
 
       <section class="gallery-section">
         <div class="section-heading">
-          <p class="eyebrow">Moments</p>
-          <h2>Fragments from our universe</h2>
+          <p class="eyebrow" data-i18n="visualMemory">VISUAL MEMORY</p>
+          <h2 data-i18n="galleryTitle">FRAGMENTS FROM OUR UNIVERSE</h2>
         </div>
 
         <div class="gallery-grid">
-          <div class="gallery-item tall"><img src="./assets/images/portrait-05.webp" alt="Maria and Mario portrait" width="1200" height="1500" loading="lazy" decoding="async" /></div>
-          <div class="gallery-item"><img src="./assets/images/portrait-06.webp" alt="Maria and Mario portrait" width="1200" height="1500" loading="lazy" decoding="async" /></div>
-          <div class="gallery-item"><img src="./assets/images/portrait-07.webp" alt="Maria and Mario portrait" width="1200" height="1500" loading="lazy" decoding="async" /></div>
-          <div class="gallery-item wide"><img src="./assets/images/portrait-08.webp" alt="Maria and Mario portrait" width="1200" height="1500" loading="lazy" decoding="async" /></div>
-          <div class="gallery-item"><img src="./assets/images/portrait-09.webp" alt="Maria and Mario portrait" width="1200" height="1500" loading="lazy" decoding="async" /></div>
-          <div class="gallery-item"><img src="./assets/images/portrait-10.webp" alt="Maria and Mario portrait" width="1200" height="1500" loading="lazy" decoding="async" /></div>
+          <div class="gallery-item tall"><img src="./assets/images/portrait-05.webp" alt="MARIA AND MARIO PORTRAIT" width="1200" height="1500" loading="lazy" decoding="async" /></div>
+          <div class="gallery-item"><img src="./assets/images/portrait-06.webp" alt="MARIA AND MARIO PORTRAIT" width="1200" height="1500" loading="lazy" decoding="async" /></div>
+          <div class="gallery-item"><img src="./assets/images/portrait-07.webp" alt="MARIA AND MARIO PORTRAIT" width="1200" height="1500" loading="lazy" decoding="async" /></div>
+          <div class="gallery-item wide"><img src="./assets/images/portrait-08.webp" alt="MARIA AND MARIO PORTRAIT" width="1200" height="1500" loading="lazy" decoding="async" /></div>
+          <div class="gallery-item"><img src="./assets/images/portrait-09.webp" alt="MARIA AND MARIO PORTRAIT" width="1200" height="1500" loading="lazy" decoding="async" /></div>
+          <div class="gallery-item"><img src="./assets/images/portrait-10.webp" alt="MARIA AND MARIO PORTRAIT" width="1200" height="1500" loading="lazy" decoding="async" /></div>
         </div>
       </section>
 
       <section class="music-donate-section">
         <div class="music-card">
-          <p class="eyebrow">Soundtrack</p>
-          <h2>The music of our world</h2>
-          <p>
-            Your favorite songs and memories will become part of the night.
-          </p>
-          <button id="playVowBtn" class="btn btn-primary">Play our theme</button>
-          <button id="pauseVowBtn" class="btn btn-secondary">Pause music</button>
+          <p class="eyebrow" data-i18n="soundtrack">SOUNDTRACK</p>
+          <h2 data-i18n="musicTitle">THE MUSIC OF OUR WORLD</h2>
+          <p data-i18n="musicText">YOUR FAVORITE SONGS, MEMORIES, AND MOMENTS WILL BECOME PART OF THE NIGHT.</p>
         </div>
 
-        <div class="donate-card">
-          <p class="eyebrow">Donate our young family</p>
-          <h2>Revolut QR</h2>
-          <img src="./assets/qr/revolut-qr.png" alt="Revolut QR code" width="1200" height="1200" loading="lazy" decoding="async" class="qr-image" />
-        </div>
-      </section>
-
-      <section class="closing-gallery">
-        <div class="closing-card"><img src="./assets/images/portrait-11.webp" alt="Maria and Mario portrait" width="1200" height="1500" loading="lazy" decoding="async" /></div>
-        <div class="closing-card"><img src="./assets/images/portrait-12.webp" alt="Maria and Mario portrait" width="1200" height="1500" loading="lazy" decoding="async" /></div>
-        <div class="closing-card"><img src="./assets/images/portrait-13.webp" alt="Maria and Mario portrait" width="1200" height="1500" loading="lazy" decoding="async" /></div>
-        <div class="closing-card"><img src="./assets/images/portrait-14.webp" alt="Maria and Mario portrait" width="1200" height="1500" loading="lazy" decoding="async" /></div>
-      </section>
-
-      <section class="rsvp-entry">
-        <div class="message-panel">
-          <p class="eyebrow">Next step</p>
-          <h2>RSVP and family response are next.</h2>
-          <p>
-            In the next step we will add the protected invitation flow, attendance choices,
-            drinks selection, guest count, favorite song gift, and family-safe RSVP logic.
-          </p>
-        </div>
-      </section>
-    </section>
-  </main>
-
-  <script src="./script.js" defer></script>
-</body>
-</html>
+        <div class="donate-ca
