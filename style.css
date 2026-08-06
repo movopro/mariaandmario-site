@@ -1,7 +1,7 @@
 :root {
   --bg: #030509;
   --bg-2: #07101a;
-  --surface: rgba(8, 13, 22, 0.62);
+  --surface: rgba(8, 13, 22, 0.64);
   --surface-2: rgba(255, 255, 255, 0.06);
   --border: rgba(127, 255, 170, 0.12);
   --text: #f5f7fb;
@@ -61,6 +61,25 @@ button {
   pointer-events: none;
   mix-blend-mode: screen;
   filter: saturate(1.15) contrast(1.08);
+  transition: opacity 1.2s ease;
+}
+
+body.matrix-hidden #matrixCanvas {
+  opacity: 0;
+}
+
+.scene-fade {
+  position: fixed;
+  inset: 0;
+  background: #020406;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.scene-fade.is-active {
+  opacity: 1;
 }
 
 .site-shell {
@@ -120,7 +139,7 @@ button {
 
 #mainExperience::before {
   background:
-    radial-gradient(circle at top, rgba(108, 255, 159, 0.04), transparent 25%);
+    radial-gradient(circle at top, rgba(108, 255, 159, 0.03), transparent 24%);
 }
 
 .gate-panel,
@@ -225,6 +244,7 @@ button {
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
   backdrop-filter: blur(12px);
+  transition: opacity 0.3s ease;
 }
 
 .hidden-switch {
@@ -489,11 +509,11 @@ button {
 }
 
 .message-panel h2,
-.hero-copy h2,
 .section-heading h2,
 .music-card h2,
 .donate-card h2,
-.welcome-content h2 {
+.welcome-content h2,
+.journey-content h2 {
   margin: 0 0 16px;
   font-family: "Cormorant Garamond", serif;
   line-height: 1.05;
@@ -501,9 +521,9 @@ button {
 }
 
 .message-panel p,
-.hero-copy p,
 .music-card p,
-.welcome-content p {
+.welcome-content p,
+.journey-content p {
   margin: 0;
   color: var(--muted);
   font-size: 1.03rem;
@@ -575,35 +595,140 @@ button {
   margin-top: 24px;
 }
 
-.hero-actions {
-  justify-content: flex-start;
+.story-mode {
+  position: relative;
+  z-index: 2;
 }
 
-#mainExperience {
+.journey-hero {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+.journey-background {
+  position: absolute;
+  inset: 0;
+}
+
+.journey-slide {
+  position: absolute;
+  inset: -4%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transform: scale(1.08);
+  transition: opacity 1.8s ease, transform 8s ease;
+}
+
+.journey-slide.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.journey-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(3, 5, 9, 0.42), rgba(3, 5, 9, 0.72)),
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.04), transparent 46%);
+  z-index: 1;
+}
+
+.journey-content {
+  position: relative;
+  z-index: 2;
+  width: min(100% - 32px, 980px);
+  text-align: center;
+  padding: 48px 24px;
+}
+
+.mission-section,
+.gallery-section,
+.music-donate-section,
+.closing-gallery,
+.rsvp-entry {
   width: min(100% - 32px, var(--container));
   margin: 0 auto;
-  padding: 64px 0 96px;
+  padding: 88px 0 0;
 }
 
-.hero {
+.section-heading {
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.mission-grid {
   display: grid;
-  grid-template-columns: 1.08fr 0.92fr;
-  gap: 32px;
-  align-items: center;
-  margin-bottom: 56px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
 }
 
-.hero-copy {
-  padding: 28px 0;
+.mission-card {
+  position: relative;
+  padding: 28px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03)),
+    rgba(8, 13, 22, 0.7);
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
 }
 
-.hero-portrait,
-.photo-card,
+.mission-index {
+  display: inline-block;
+  margin-bottom: 18px;
+  color: var(--green);
+  font-size: 0.78rem;
+  letter-spacing: 0.28em;
+  font-weight: 800;
+}
+
+.reveal-card {
+  opacity: 0;
+  transform: translateY(36px);
+  filter: blur(10px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease,
+    filter 0.8s ease;
+}
+
+.reveal-card.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+.info-key {
+  display: block;
+  color: var(--gold);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  font-size: 0.76rem;
+  margin-bottom: 10px;
+}
+
+.info-value {
+  color: var(--text);
+  font-size: 1.02rem;
+  line-height: 1.6;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
 .gallery-item,
 .closing-card,
 .music-card,
-.donate-card,
-.info-card {
+.donate-card {
   border-radius: var(--radius);
   overflow: hidden;
   background: var(--surface);
@@ -612,64 +737,10 @@ button {
   backdrop-filter: blur(10px);
 }
 
-.hero-portrait img,
-.photo-card img,
 .gallery-item img,
 .closing-card img {
   aspect-ratio: 4 / 5;
   object-fit: cover;
-}
-
-.photo-band {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr 1fr;
-  gap: 20px;
-  margin-bottom: 72px;
-}
-
-.section-heading {
-  margin-bottom: 24px;
-}
-
-.info-grid {
-  display: grid;
-  gap: 16px;
-  margin-bottom: 72px;
-}
-
-.info-card {
-  padding: 24px 28px;
-  display: grid;
-  gap: 10px;
-  animation: floatCard 7s ease-in-out infinite;
-}
-
-.info-card:nth-child(2) { animation-delay: 0.6s; }
-.info-card:nth-child(3) { animation-delay: 1.2s; }
-.info-card:nth-child(4) { animation-delay: 1.8s; }
-
-@keyframes floatCard {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-6px); }
-}
-
-.info-key {
-  color: var(--gold);
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  font-size: 0.76rem;
-}
-
-.info-value {
-  color: var(--text);
-  font-size: 1.02rem;
-}
-
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-  margin-bottom: 72px;
 }
 
 .gallery-item.tall {
@@ -684,7 +755,6 @@ button {
   display: grid;
   grid-template-columns: 1fr 0.9fr;
   gap: 24px;
-  margin-bottom: 72px;
 }
 
 .music-card,
@@ -706,13 +776,12 @@ button {
 }
 
 .rsvp-entry {
-  margin-bottom: 40px;
+  padding-bottom: 72px;
 }
 
 @media (max-width: 980px) {
-  .hero,
+  .mission-grid,
   .music-donate-section,
-  .photo-band,
   .gallery-grid,
   .closing-gallery {
     grid-template-columns: 1fr;
@@ -722,10 +791,6 @@ button {
   .gallery-item.tall {
     grid-column: auto;
     grid-row: auto;
-  }
-
-  .hero-actions {
-    justify-content: center;
   }
 }
 
@@ -762,21 +827,26 @@ button {
   .message-panel,
   .music-card,
   .donate-card,
-  .info-card,
+  .mission-card,
   .gate-panel {
     padding: 24px 20px;
-  }
-
-  .choice-block {
-    flex-direction: column;
   }
 
   .btn {
     width: 100%;
   }
 
-  #mainExperience {
+  .journey-content {
+    width: min(100% - 24px, 980px);
+    padding: 32px 12px;
+  }
+
+  .mission-section,
+  .gallery-section,
+  .music-donate-section,
+  .closing-gallery,
+  .rsvp-entry {
     width: min(100% - 24px, var(--container));
-    padding-top: 40px;
+    padding-top: 64px;
   }
 }
