@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MARIA & MARIO | WEDDING INVITATION</title>
-  <meta name="description" content="MARIA AND MARIO WEDDING INVITATION." />
+  <meta name="description" content="Maria and Mario wedding invitation website." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
@@ -17,20 +17,58 @@
 
   <main class="site-shell">
     <section id="languageGate" class="screen gate-screen">
+      <div class="gate-aura gate-aura-1"></div>
+      <div class="gate-aura gate-aura-2"></div>
+
       <div class="gate-panel">
         <p class="eyebrow">WELCOME</p>
         <h1 class="gate-title">SELECT LANGUAGE</h1>
         <p class="gate-subtitle">ИЗБЕРИ ЕЗИК / CHOOSE LANGUAGE</p>
 
         <div class="gate-actions">
-          <button class="lang-choice" type="button" data-lang-select="en">
-            <span class="lang-choice-label">ENGLISH</span>
-            <span class="lang-choice-text">ENTER IN ENGLISH</span>
+          <button class="lang-choice fancy-lang-btn" type="button" data-lang-select="en">
+            <span class="flag-badge" aria-hidden="true">
+              <svg viewBox="0 0 64 64" class="flag-icon" role="img" aria-label="United Kingdom flag">
+                <defs>
+                  <clipPath id="clip-uk">
+                    <rect x="6" y="14" width="52" height="36" rx="8" ry="8"></rect>
+                  </clipPath>
+                </defs>
+                <g clip-path="url(#clip-uk)">
+                  <rect x="6" y="14" width="52" height="36" fill="#1f4aa8"></rect>
+                  <path d="M6 14L58 50M58 14L6 50" stroke="#ffffff" stroke-width="8"></path>
+                  <path d="M6 14L58 50M58 14L6 50" stroke="#d81f35" stroke-width="4"></path>
+                  <path d="M32 14V50M6 32H58" stroke="#ffffff" stroke-width="12"></path>
+                  <path d="M32 14V50M6 32H58" stroke="#d81f35" stroke-width="6"></path>
+                </g>
+                <rect x="6" y="14" width="52" height="36" rx="8" ry="8" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"></rect>
+              </svg>
+            </span>
+
+            <span class="lang-content">
+              <span class="lang-choice-label">ENGLISH</span>
+              <span class="lang-choice-text">ENTER IN ENGLISH</span>
+            </span>
+
+            <span class="lang-arrow" aria-hidden="true">↗</span>
           </button>
 
-          <button class="lang-choice" type="button" data-lang-select="bg">
-            <span class="lang-choice-label">БЪЛГАРСКИ</span>
-            <span class="lang-choice-text">ВЛЕЗ НА БЪЛГАРСКИ</span>
+          <button class="lang-choice fancy-lang-btn" type="button" data-lang-select="bg">
+            <span class="flag-badge" aria-hidden="true">
+              <svg viewBox="0 0 64 64" class="flag-icon" role="img" aria-label="Bulgaria flag">
+                <rect x="6" y="14" width="52" height="12" rx="3" fill="#ffffff"></rect>
+                <rect x="6" y="26" width="52" height="12" fill="#1f9d55"></rect>
+                <rect x="6" y="38" width="52" height="12" rx="3" fill="#d7343a"></rect>
+                <rect x="6" y="14" width="52" height="36" rx="8" ry="8" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"></rect>
+              </svg>
+            </span>
+
+            <span class="lang-content">
+              <span class="lang-choice-label">БЪЛГАРСКИ</span>
+              <span class="lang-choice-text">ВЛЕЗ НА БЪЛГАРСКИ</span>
+            </span>
+
+            <span class="lang-arrow" aria-hidden="true">↗</span>
           </button>
         </div>
       </div>
@@ -46,7 +84,6 @@
 
       <div class="intro-center intro-box">
         <p class="eyebrow" data-i18n="brand">MARIA & MARIO</p>
-
         <div id="typeSequence" class="type-sequence" aria-live="polite"></div>
 
         <div id="dateBlock" class="date-block hidden">
@@ -56,13 +93,13 @@
 
         <div id="choiceBlock" class="choice-block hidden">
           <div class="choice-stack">
-            <button id="yesBtn" class="choice-card choice-card-primary">
+            <button id="yesBtn" class="choice-card choice-card-primary" type="button">
               <span class="choice-kicker" data-i18n="choiceAKicker">CHOICE A</span>
               <span class="choice-title" data-i18n="yesTitle">YES, I'M IN</span>
               <span class="choice-text" data-i18n="yesText">ENTER THE STORY. JOIN THE CELEBRATION. UNLOCK THE NEXT SCENE.</span>
             </button>
 
-            <button id="noBtn" class="choice-card choice-card-secondary">
+            <button id="noBtn" class="choice-card choice-card-secondary" type="button">
               <span class="choice-kicker" data-i18n="choiceBKicker">CHOICE B</span>
               <span class="choice-title" data-i18n="noTitle">NO, I PREFER MY SIMULATION OF REALITY</span>
               <span class="choice-text" data-i18n="noText">EXIT THIS TIMELINE AND RETURN TO YOUR DIMENSION.</span>
@@ -78,7 +115,7 @@
         <h2 data-i18n="farewellTitle">FAREWELL OUR FRIEND, SEE YOU IN ANOTHER DIMENSION</h2>
         <p class="lead" data-i18n="farewellText">THIS STORYLINE ENDS HERE. ANOTHER PORTAL MAY OPEN SOMEDAY.</p>
         <div class="panel-actions">
-          <button id="returnBtn" class="btn btn-primary" data-i18n="returnInvitation">RETURN TO INVITATION</button>
+          <button id="returnBtn" class="btn btn-primary" type="button" data-i18n="returnInvitation">RETURN TO INVITATION</button>
         </div>
       </div>
     </section>
@@ -96,7 +133,7 @@
         </p>
 
         <div class="panel-actions">
-          <button id="enterWorldBtn" class="btn btn-primary" data-i18n="enterCelebration">ENTER THE CELEBRATION</button>
+          <button id="enterWorldBtn" class="btn btn-primary" type="button" data-i18n="enterCelebration">ENTER THE CELEBRATION</button>
         </div>
       </div>
     </section>
@@ -123,38 +160,38 @@
           </p>
 
           <div class="hero-actions">
-            <button id="playVowBtn" class="btn btn-primary" data-i18n="playTheme">PLAY OUR THEME</button>
-            <button id="pauseVowBtn" class="btn btn-secondary" data-i18n="pauseMusic">PAUSE MUSIC</button>
+            <button id="playVowBtn" class="btn btn-primary" type="button" data-i18n="playTheme">PLAY OUR THEME</button>
+            <button id="pauseVowBtn" class="btn btn-secondary" type="button" data-i18n="pauseMusic">PAUSE MUSIC</button>
           </div>
         </div>
       </section>
 
       <section class="mission-section">
-        <div class="section-heading">
+        <div class="section-heading reveal-card" style="transition-delay: 0.05s;">
           <p class="eyebrow" data-i18n="eventFile">EVENT FILE</p>
           <h2 data-i18n="detailsTitle">CELEBRATION DETAILS</h2>
         </div>
 
         <div class="mission-grid">
-          <article class="mission-card reveal-card">
+          <article class="mission-card reveal-card" style="transition-delay: 0.1s;">
             <span class="mission-index">01</span>
             <span class="info-key" data-i18n="locationKey">LOCATION:</span>
             <span class="info-value" data-i18n="locationValue">COORDINATES TO BE ADDED</span>
           </article>
 
-          <article class="mission-card reveal-card">
+          <article class="mission-card reveal-card" style="transition-delay: 0.18s;">
             <span class="mission-index">02</span>
             <span class="info-key" data-i18n="dressCodeKey">DRESS CODE:</span>
             <span class="info-value" data-i18n="dressCodeValue">CASUAL SUMMER PARTY</span>
           </article>
 
-          <article class="mission-card reveal-card">
+          <article class="mission-card reveal-card" style="transition-delay: 0.26s;">
             <span class="mission-index">03</span>
             <span class="info-key" data-i18n="startTimeKey">START TIME:</span>
             <span class="info-value" data-i18n="startTimeValue">18:00</span>
           </article>
 
-          <article class="mission-card reveal-card">
+          <article class="mission-card reveal-card" style="transition-delay: 0.34s;">
             <span class="mission-index">04</span>
             <span class="info-key" data-i18n="giftKey">REQUIRED GIFTS:</span>
             <span class="info-value" data-i18n="giftValue">ONLY MONEY ACCEPTED - TICKET ON ENTRANCE</span>
@@ -162,56 +199,137 @@
         </div>
       </section>
 
-      <section class="gallery-section">
-        <div class="section-heading">
-          <p class="eyebrow" data-i18n="visualMemory">VISUAL MEMORY</p>
-          <h2 data-i18n="galleryTitle">FRAGMENTS FROM OUR UNIVERSE</h2>
-        </div>
-
-        <div class="gallery-grid">
-          <div class="gallery-item tall"><img src="./assets/images/portrait-07.webp" alt="MARIA AND MARIO PORTRAIT" width="1200" height="1500" loading="lazy" decoding="async" /></div>
-          <div class="gallery-item"><img src="./assets/images/portrait-08.webp" alt="MARIA AND MARIO PORTRAIT" width="1200" height="1500" loading="lazy" decoding="async" /></div>
-          <div class="gallery-item"><img src="./assets/images/portrait-09.webp" alt="MARIA AND MARIO PORTRAIT" width="1200" height="1500" loading="lazy" decoding="async" /></div>
-          <div class="gallery-item wide"><img src="./assets/images/portrait-10.webp" alt="MARIA AND MARIO PORTRAIT" width="1200" height="1500" loading="lazy" decoding="async" /></div>
-          <div class="gallery-item"><img src="./assets/images/portrait-11.webp" alt="MARIA AND MARIO PORTRAIT" width="1200" height="1500" loading="lazy" decoding="async" /></div>
-          <div class="gallery-item"><img src="./assets/images/portrait-12.webp" alt="MARIA AND MARIO PORTRAIT" width="1200" height="1500" loading="lazy" decoding="async" /></div>
-        </div>
-      </section>
-
       <section class="music-donate-section">
-        <div class="music-card">
+        <div class="music-card reveal-card" style="transition-delay: 0.08s;">
           <p class="eyebrow" data-i18n="soundtrack">SOUNDTRACK</p>
           <h2 data-i18n="musicTitle">THE MUSIC OF OUR WORLD</h2>
           <p data-i18n="musicText">YOUR FAVORITE SONGS, MEMORIES, AND MOMENTS WILL BECOME PART OF THE NIGHT.</p>
         </div>
 
-        <div class="donate-card">
+        <div class="donate-card reveal-card" style="transition-delay: 0.16s;">
           <p class="eyebrow" data-i18n="donateTitle">DONATE OUR YOUNG FAMILY</p>
           <h2>REVOLUT QR</h2>
-          <img src="./assets/qr/revolut-qr.png" alt="REVOLUT QR CODE" width="1200" height="1200" loading="lazy" decoding="async" class="qr-image" />
+          <img src="./assets/qr/revolut-qr.png" alt="Revolut QR code" width="1200" height="1200" loading="lazy" decoding="async" class="qr-image" />
         </div>
-      </section>
-
-      <section class="closing-gallery">
-        <div class="closing-card"><img src="./assets/images/portrait-13.webp" alt="MARIA AND MARIO PORTRAIT" width="1200" height="1500" loading="lazy" decoding="async" /></div>
-        <div class="closing-card"><img src="./assets/images/portrait-14.webp" alt="MARIA AND MARIO PORTRAIT" width="1200" height="1500" loading="lazy" decoding="async" /></div>
-        <div class="closing-card"><img src="./assets/images/portrait-01.webp" alt="MARIA AND MARIO PORTRAIT" width="1200" height="1500" loading="lazy" decoding="async" /></div>
-        <div class="closing-card"><img src="./assets/images/portrait-02.webp" alt="MARIA AND MARIO PORTRAIT" width="1200" height="1500" loading="lazy" decoding="async" /></div>
       </section>
 
       <section class="rsvp-entry">
-        <div class="message-panel">
+        <div class="section-heading reveal-card" style="transition-delay: 0.05s;">
           <p class="eyebrow" data-i18n="nextInteraction">NEXT INTERACTION</p>
-          <h2 data-i18n="rsvpReadyTitle">READY FOR THE RSVP MENU</h2>
-          <p data-i18n="rsvpReadyText">
-            THE NEXT STEP IS THE ACTUAL INTERACTIVE MENU WITH ATTENDANCE,
-            FAMILY RESPONSE, DRINKS, SONG REQUEST, DONATION, AND SAFE INVITE LOGIC.
+          <h2 data-i18n="rsvpMissionTitle">MISSION RSVP</h2>
+          <p class="lead" data-i18n="rsvpMissionText">
+            CONFIRM YOUR PRESENCE, CHOOSE YOUR DRINKS, LEAVE A SONG, AND COMPLETE YOUR ENTRY INTO OUR CELEBRATION.
           </p>
-
-          <div class="panel-actions">
-            <button class="btn btn-primary" type="button" data-i18n="rsvpSoon">OPEN RSVP MENU SOON</button>
-          </div>
         </div>
+
+        <form id="rsvpForm" class="rsvp-form" novalidate>
+          <div class="rsvp-grid">
+            <section class="rsvp-card reveal-card" style="transition-delay: 0.08s;">
+              <span class="mission-index">01</span>
+              <h3 class="rsvp-card-title" data-i18n="attendanceTitle">ATTENDANCE STATUS</h3>
+
+              <div class="option-grid two-col">
+                <label class="choice-option">
+                  <input type="radio" name="attendance" value="attending" checked />
+                  <span data-i18n="attendanceYes">WE WILL ATTEND</span>
+                </label>
+
+                <label class="choice-option">
+                  <input type="radio" name="attendance" value="not_attending" />
+                  <span data-i18n="attendanceNo">WE CANNOT ATTEND</span>
+                </label>
+              </div>
+            </section>
+
+            <section class="rsvp-card reveal-card" style="transition-delay: 0.14s;">
+              <span class="mission-index">02</span>
+              <h3 class="rsvp-card-title" data-i18n="guestCountTitle">GUEST COUNT</h3>
+
+              <div class="option-grid two-col">
+                <label class="choice-option">
+                  <input type="radio" name="guestCount" value="1" checked />
+                  <span data-i18n="guestOne">ONLY 1 PERSON</span>
+                </label>
+
+                <label class="choice-option">
+                  <input type="radio" name="guestCount" value="2" />
+                  <span data-i18n="guestTwo">2 PEOPLE / +1</span>
+                </label>
+              </div>
+            </section>
+
+            <section class="rsvp-card reveal-card" style="transition-delay: 0.2s;">
+              <span class="mission-index">03</span>
+              <h3 class="rsvp-card-title" data-i18n="drinksTitle">ALCOHOL PREFERENCES</h3>
+
+              <div class="drink-grid">
+                <label class="check-option"><input type="checkbox" name="drinks" value="vodka" /><span data-i18n="drinkVodka">VODKA</span></label>
+                <label class="check-option"><input type="checkbox" name="drinks" value="whiskey" /><span data-i18n="drinkWhiskey">WHISKEY</span></label>
+                <label class="check-option"><input type="checkbox" name="drinks" value="beer" /><span data-i18n="drinkBeer">BEER</span></label>
+                <label class="check-option"><input type="checkbox" name="drinks" value="rakia" /><span data-i18n="drinkRakia">RAKIA</span></label>
+                <label class="check-option"><input type="checkbox" name="drinks" value="cognac" /><span data-i18n="drinkCognac">COGNAC</span></label>
+                <label class="check-option"><input type="checkbox" name="drinks" value="wine" /><span data-i18n="drinkWine">WINE</span></label>
+              </div>
+            </section>
+
+            <section class="rsvp-card reveal-card" style="transition-delay: 0.26s;">
+              <span class="mission-index">04</span>
+              <h3 class="rsvp-card-title" data-i18n="songTitle">SONG GIFT</h3>
+
+              <label class="field-label" for="songInput" data-i18n="songLabel">WRITE A FAVORITE SONG FOR THE NIGHT</label>
+              <input
+                id="songInput"
+                name="song"
+                type="text"
+                class="text-field"
+                maxlength="120"
+                data-i18n-placeholder="songPlaceholder"
+                placeholder="YOUR SONG TITLE / ARTIST"
+              />
+            </section>
+
+            <section class="rsvp-card reveal-card" style="transition-delay: 0.32s;">
+              <span class="mission-index">05</span>
+              <h3 class="rsvp-card-title" data-i18n="messageTitle">OPTIONAL MESSAGE</h3>
+
+              <label class="field-label" for="messageInput" data-i18n="messageLabel">LEAVE A SHORT NOTE FOR US</label>
+              <textarea
+                id="messageInput"
+                name="message"
+                class="text-area"
+                rows="5"
+                maxlength="400"
+                data-i18n-placeholder="messagePlaceholder"
+                placeholder="WRITE YOUR MESSAGE HERE"
+              ></textarea>
+            </section>
+
+            <section class="rsvp-card reveal-card donate-panel" style="transition-delay: 0.38s;">
+              <span class="mission-index">06</span>
+              <h3 class="rsvp-card-title" data-i18n="donatePanelTitle">DONATE OUR YOUNG FAMILY</h3>
+              <p class="rsvp-copy" data-i18n="donatePanelText">
+                IF YOU CANNOT ATTEND OR IF YOU WISH TO SUPPORT US DIRECTLY, YOU CAN USE OUR REVOLUT QR CODE.
+              </p>
+              <img src="./assets/qr/revolut-qr.png" alt="Revolut QR code" width="1200" height="1200" loading="lazy" decoding="async" class="qr-image large-qr" />
+            </section>
+          </div>
+
+          <div class="submit-panel reveal-card" style="transition-delay: 0.44s;">
+            <div class="submit-copy">
+              <p class="eyebrow" data-i18n="finalStep">FINAL STEP</p>
+              <h3 class="rsvp-card-title" data-i18n="submitTitle">SEND YOUR RESPONSE</h3>
+              <p class="rsvp-copy" data-i18n="submitText">
+                THIS IS THE FRONTEND VERSION. NEXT WE WILL CONNECT IT TO A REAL DATABASE WITH ONE RESPONSE PER FAMILY.
+              </p>
+            </div>
+
+            <div class="submit-actions">
+              <button id="submitRsvpBtn" class="btn btn-primary" type="submit" data-i18n="submitBtn">SUBMIT RESPONSE</button>
+            </div>
+          </div>
+
+          <p id="rsvpStatus" class="rsvp-status" aria-live="polite"></p>
+        </form>
       </section>
     </section>
   </main>
