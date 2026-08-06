@@ -1,3 +1,8 @@
+const SUPABASE_URL = "https://kotgbrwblrtjmizoojii.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtvdGdicndibHJ0am1pem9vamlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwMjMyMDUsImV4cCI6MjEwMTU5OTIwNX0.uCFXjKrjSFWCQEMskae2J9fZ0lrtzMccNuuNaJGPr0Y";
+
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 const translations = {
   en: {
     brand: "MARIA & MARIO",
@@ -20,6 +25,7 @@ const translations = {
     mainStory: "THE MAIN STORY",
     heroTitle: "OUR STORY BEGINS WHERE FANTASY MEETS DESTINY.",
     heroText: "A CINEMATIC SUMMER EVENING. A WORLD BUILT FOR THE PEOPLE WE LOVE. A MOMENT WHERE REAL LIFE FEELS BIGGER THAN FILM.",
+    alwaysLine: "ALWAYS? ALWAYS.",
     playTheme: "PLAY OUR THEME",
     pauseMusic: "PAUSE MUSIC",
     eventFile: "EVENT FILE",
@@ -62,8 +68,11 @@ const translations = {
     donatePanelText: "IF YOU CANNOT ATTEND OR IF YOU WISH TO SUPPORT US DIRECTLY, YOU CAN USE OUR REVOLUT QR CODE.",
     finalStep: "FINAL STEP",
     submitTitle: "SEND YOUR RESPONSE",
-    submitText: "THIS IS THE FRONTEND VERSION. NEXT WE WILL CONNECT IT TO A REAL DATABASE WITH ONE RESPONSE PER FAMILY.",
+    submitText: "YOUR RESPONSE WILL NOW BE SAVED TO OUR GUEST SYSTEM.",
     submitBtn: "SUBMIT RESPONSE",
+    responseSaved: "YOUR RESPONSE HAS BEEN SAVED.",
+    inviteMissing: "INVALID OR MISSING INVITE TOKEN.",
+    responseError: "WE COULD NOT SAVE YOUR RESPONSE. PLEASE TRY AGAIN.",
     sequence: [
       "TIME HAS COME...",
       "TO GET MARRIED",
@@ -94,6 +103,7 @@ const translations = {
     mainStory: "ГЛАВНАТА ИСТОРИЯ",
     heroTitle: "НАШАТА ИСТОРИЯ ЗАПОЧВА ТАМ, КЪДЕТО ФАНТАЗИЯТА СРЕЩА СЪДБАТА.",
     heroText: "ЕДНА КИНЕМАТОГРАФИЧНА ЛЯТНА ВЕЧЕР. СВЯТ, СЪЗДАДЕН ЗА ХОРАТА, КОИТО ОБИЧАМЕ. МИГ, В КОЙТО РЕАЛНОСТТА Е ПО-ГОЛЯМА ОТ ФИЛМ.",
+    alwaysLine: "ALWAYS? ALWAYS.",
     playTheme: "ПУСНИ НАШАТА ТЕМА",
     pauseMusic: "СПРИ МУЗИКАТА",
     eventFile: "ДОСИЕ НА СЪБИТИЕТО",
@@ -136,8 +146,11 @@ const translations = {
     donatePanelText: "АКО НЕ МОЖЕТЕ ДА ПРИСЪСТВАТЕ ИЛИ ИСКАТЕ ДА НИ ПОДКРЕПИТЕ ДИРЕКТНО, МОЖЕТЕ ДА ИЗПОЛЗВАТЕ НАШИЯ REVOLUT QR КОД.",
     finalStep: "ПОСЛЕДНА СТЪПКА",
     submitTitle: "ИЗПРАТИ ОТГОВОРА",
-    submitText: "ТОВА Е FRONTEND ВЕРСИЯТА. СЛЕДВАЩО ЩЕ Я СВЪРЖЕМ С РЕАЛНА БАЗА ДАННИ И ПО ЕДИН ОТГОВОР НА СЕМЕЙСТВО.",
+    submitText: "ТВОЯТ ОТГОВОР ЩЕ БЪДЕ ЗАПИСАН В НАШАТА СИСТЕМА.",
     submitBtn: "ИЗПРАТИ ОТГОВОР",
+    responseSaved: "ТВОЯТ ОТГОВОР БЕШЕ ЗАПИСАН.",
+    inviteMissing: "ЛИПСВА ИЛИ Е НЕВАЛИДЕН INVITE TOKEN.",
+    responseError: "НЕ УСПЯХМЕ ДА ЗАПИШЕМ ОТГОВОРА. ОПИТАЙ ПАК.",
     sequence: [
       "МОМЕНТЪТ НАСТЪПИ...",
       "ДА СЕ ОЖЕНИМ",
@@ -153,6 +166,8 @@ let currentLang = "en";
 let sequenceStarted = false;
 let journeyStarted = false;
 let journeyInterval = null;
+let matrixAnimationActive = true;
+let inviteRecord = null;
 
 const body = document.body;
 const languageGate = document.getElementById("languageGate");
@@ -190,6 +205,31 @@ introAudio.volume = 0.55;
 const vowAudio = new Audio("./assets/music/the-vow.mp3");
 vowAudio.volume = 0.5;
 vowAudio.loop = true;
+
+function getInviteToken() {
+  const url = new URL(window.location.href);
+  return url.searchParams.get("invite");
+}
+
+async function loadInvite() {
+  const token = getInviteToken();
+  if (!token) return null;
+
+  const { data, error } = await supabaseClient
+    .from("invites")
+    .select("*")
+    .eq("invite_token", token)
+    .eq("is_active", true)
+    .maybeSingle();
+
+  if (error) {
+    console.error(error);
+    return null;
+  }
+
+  inviteRecord = data;
+  return data;
+}
 
 function activateSceneFade() {
   sceneFade.classList.add("is-active");
@@ -266,16 +306,31 @@ function startExperience(lang) {
   }, 650);
 }
 
+function cycleJourneyMotion(index) {
+  const motions = ["pan-left", "pan-right", "pan-up"];
+  journeySlides.forEach((slide) => {
+    slide.classList.remove("pan-left", "pan-right", "pan-up", "is-active");
+  });
+
+  const slide = journeySlides[index];
+  slide.classList.add("is-active", motions[index % motions.length]);
+}
+
 function startJourneySlides() {
   if (journeyInterval || journeySlides.length === 0) return;
 
   let current = 0;
+  cycleJourneyMotion(current);
 
   journeyInterval = setInterval(() => {
-    journeySlides[current].classList.remove("is-active");
     current = (current + 1) % journeySlides.length;
-    journeySlides[current].classList.add("is-active");
-  }, 4200);
+    cycleJourneyMotion(current);
+  }, 3800);
+}
+
+function stopMatrixAnimation() {
+  matrixAnimationActive = false;
+  body.classList.add("matrix-hidden");
 }
 
 function enterJourney() {
@@ -285,7 +340,7 @@ function enterJourney() {
   activateSceneFade();
 
   setTimeout(() => {
-    body.classList.add("matrix-hidden");
+    stopMatrixAnimation();
     showScreen(mainExperience);
     window.scrollTo({ top: 0, behavior: "auto" });
     startJourneySlides();
@@ -362,30 +417,53 @@ pauseVowBtn.addEventListener("click", () => {
   vowAudio.pause();
 });
 
-rsvpForm.addEventListener("submit", (event) => {
+rsvpForm.addEventListener("submit", async (event) => {
   event.preventDefault();
+  rsvpStatus.textContent = "";
+
+  const token = getInviteToken();
+  if (!token) {
+    rsvpStatus.textContent = translations[currentLang].inviteMissing;
+    return;
+  }
+
+  if (!inviteRecord) {
+    await loadInvite();
+  }
+
+  if (!inviteRecord) {
+    rsvpStatus.textContent = translations[currentLang].inviteMissing;
+    return;
+  }
 
   const formData = new FormData(rsvpForm);
   const attendance = formData.get("attendance");
-  const guestCount = formData.get("guestCount");
+  const guestCount = Number(formData.get("guestCount"));
   const drinks = formData.getAll("drinks");
-  const song = formData.get("song")?.trim() || "";
-  const message = formData.get("message")?.trim() || "";
+  const song = formData.get("song")?.trim() || null;
+  const message = formData.get("message")?.trim() || null;
 
   const payload = {
+    invite_id: inviteRecord.id,
     attendance,
-    guestCount,
+    guest_count: guestCount,
     drinks,
     song,
-    message
+    message,
+    updated_at: new Date().toISOString()
   };
 
-  console.log("RSVP FRONTEND PAYLOAD:", payload);
+  const { error } = await supabaseClient
+    .from("responses")
+    .upsert(payload, { onConflict: "invite_id" });
 
-  rsvpStatus.textContent =
-    currentLang === "bg"
-      ? "ОТГОВОРЪТ Е ПОДГОТВЕН. СЛЕДВАЩО ГО СВЪРЗВАМЕ С БАЗАТА."
-      : "RESPONSE CAPTURED. NEXT WE CONNECT IT TO THE DATABASE.";
+  if (error) {
+    console.error(error);
+    rsvpStatus.textContent = translations[currentLang].responseError;
+    return;
+  }
+
+  rsvpStatus.textContent = translations[currentLang].responseSaved;
 });
 
 const canvas = document.getElementById("matrixCanvas");
@@ -412,6 +490,8 @@ function resizeCanvas() {
 }
 
 function drawMatrix() {
+  if (!matrixAnimationActive) return;
+
   ctx.fillStyle = "rgba(2, 6, 8, 0.072)";
   ctx.fillRect(0, 0, width, height);
 
@@ -439,4 +519,8 @@ function drawMatrix() {
 }
 
 window.addEventListener("resize", resizeCanvas);
-requestAnimationFrame(drawMatrix);
+
+(async function init() {
+  await loadInvite();
+  requestAnimationFrame(drawMatrix);
+})();
