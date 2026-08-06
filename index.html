@@ -1,5 +1,119 @@
-<body>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-test
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maria & Mario | Wedding Invitation</title>
+  <meta name="description" content="Maria and Mario wedding invitation." />
+  <link rel="stylesheet" href="./style.css" />
 </head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <header class="topbar">
+    <div class="brand">M&M</div>
+    <div class="topbar-actions">
+      <button id="themeToggle" class="ghost-btn" aria-label="Toggle theme">Theme</button>
+      <button id="langToggle" class="ghost-btn" aria-label="Switch language">BG</button>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section id="matrixScreen" class="screen active">
+      <div class="matrix-rain" aria-hidden="true"></div>
+      <div class="matrix-overlay"></div>
+
+      <div class="content-shell">
+        <p id="sequenceText" class="sequence-text"></p>
+
+        <div id="dateBlock" class="date-block hidden">
+          <p class="event-date" data-en="28 August 2027" data-bg="28 Август 2027">28 August 2027</p>
+
+          <div class="decision-group">
+            <button id="yesBtn" class="primary-btn"
+              data-en="Yes, I'm in"
+              data-bg="Да, вътре съм">
+              Yes, I'm in
+            </button>
+
+            <button id="noBtn" class="secondary-btn"
+              data-en="No, I prefer my simulation of reality"
+              data-bg="Не, предпочитам моята симулация на реалността">
+              No, I prefer my simulation of reality
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="farewellScreen" class="screen hidden-screen">
+      <div class="farewell-wrap">
+        <h1
+          data-en="Farewell our friend, see you in another dimension"
+          data-bg="Сбогом, приятелю, ще се видим в друго измерение">
+          Farewell our friend, see you in another dimension
+        </h1>
+
+        <button id="restartBtn" class="primary-btn"
+          data-en="Return to the portal"
+          data-bg="Върни ме в портала">
+          Return to the portal
+        </button>
+      </div>
+    </section>
+
+    <section id="worldScreen" class="screen hidden-screen">
+      <div class="castle-background"></div>
+      <div class="world-overlay"></div>
+
+      <div class="world-content">
+        <p class="eyebrow" data-en="Welcome to our world" data-bg="Добре дошли в нашия свят">
+          Welcome to our world
+        </p>
+
+        <h1 data-en="Maria & Mario" data-bg="Мария и Марио">
+          Maria & Mario
+        </h1>
+
+        <p class="intro-copy"
+          data-en="This is where our story opens. A cinematic wedding experience is coming next."
+          data-bg="Тук започва нашата история. Следва кино изживяване за нашата сватба.">
+          This is where our story opens. A cinematic wedding experience is coming next.
+        </p>
+
+        <button id="enterSiteBtn" class="primary-btn"
+          data-en="Enter our world"
+          data-bg="Влез в нашия свят">
+          Enter our world
+        </button>
+      </div>
+    </section>
+
+    <section id="infoScreen" class="screen hidden-screen">
+      <div class="info-wrap">
+        <h2 data-en="Event Details" data-bg="Детайли за събитието">Event Details</h2>
+
+        <div class="details-list">
+          <p><span>Location:</span> <span data-en="Coordinates to be added" data-bg="Координатите ще бъдат добавени">Coordinates to be added</span></p>
+          <p><span>Dress code:</span> <span>casual summer party</span></p>
+          <p><span data-en="Start time:" data-bg="Начален час:">Start time:</span> <span>18:00</span></p>
+          <p><span data-en="Required gifts:" data-bg="Подаръци:">Required gifts:</span> <span data-en="Only money accepted - ticket on entrance" data-bg="Приемат се само пари - билет на входа">Only money accepted - ticket on entrance</span></p>
+        </div>
+
+        <div class="placeholder-box">
+          <p data-en="Next step: media carousel, RSVP per family, drinks, favorite song, donate QR."
+             data-bg="Следваща стъпка: медия каросел, RSVP за семейство, напитки, любима песен, donate QR.">
+            Next step: media carousel, RSVP per family, drinks, favorite song, donate QR.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <audio id="introAudio" preload="none">
+    <source src="./assets/trailer-intro.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script src="./script.js" defer></script>
 </body>
+</html>
