@@ -405,19 +405,22 @@ async function enterJourney() {
 
   activateSceneFade();
 
+async function enterJourney() {
+  if (journeyStarted) return;
+  journeyStarted = true;
+  activateSceneFade();
+
   setTimeout(async () => {
     stopMatrixAnimation();
     stopAudio(languageAudio);
     showScreen(mainExperience);
-    window.scrollTo({ top: 0, behavior: "auto" });
+    window.scrollTo({ top: 0, behavior: 'auto' });
     observeRevealCards();
     journeyAudio.currentTime = 0;
     await safePlay(journeyAudio);
   }, 450);
 
-  setTimeout(() => {
-    deactivateSceneFade();
-  }, 1100);
+  setTimeout(() => deactivateSceneFade(), 1100);
 }
 
 langChoices.forEach((button) => {
