@@ -107,12 +107,17 @@ const translations = {
 
 let currentLang = "en";
 let sequenceStarted = false;
+let journeyStarted = false;
+let revealTriggered = false;
+let journeyInterval = null;
 
+const body = document.body;
 const languageGate = document.getElementById("languageGate");
 const gatePanel = document.querySelector(".gate-panel");
 const langChoices = document.querySelectorAll("[data-lang-select]");
 const langSwitcher = document.querySelector(".lang-switch");
 const langButtons = document.querySelectorAll(".lang-btn");
+const sceneFade = document.getElementById("sceneFade");
 
 const typeSequence = document.getElementById("typeSequence");
 const dateBlock = document.getElementById("dateBlock");
@@ -130,12 +135,23 @@ const enterWorldBtn = document.getElementById("enterWorldBtn");
 const playVowBtn = document.getElementById("playVowBtn");
 const pauseVowBtn = document.getElementById("pauseVowBtn");
 
+const revealCards = document.querySelectorAll(".reveal-card");
+const journeySlides = document.querySelectorAll(".journey-slide");
+
 const introAudio = new Audio("./assets/music/trailer-intro.mp3");
 introAudio.volume = 0.55;
 
 const vowAudio = new Audio("./assets/music/the-vow.mp3");
 vowAudio.volume = 0.5;
 vowAudio.loop = true;
+
+function activateSceneFade() {
+  sceneFade.classList.add("is-active");
+}
+
+function deactivateSceneFade() {
+  sceneFade.classList.remove("is-active");
+}
 
 function applyTranslations(lang) {
   currentLang = lang;
@@ -197,6 +213,48 @@ function startExperience(lang) {
   }, 650);
 }
 
+function runMissionReveal() {
+  if (revealTriggered) return;
+  revealTriggered = true;
+
+  revealCards.forEach((card, index) => {
+    setTimeout(() => {
+      card.classList.add("is-visible");
+    }, 220 + index * 220);
+  });
+}
+
+function startJourneySlides() {
+  if (journeyInterval || journeySlides.length === 0) return;
+
+  let current = 0;
+
+  journeyInterval = setInterval(() => {
+    journeySlides[current].classList.remove("is-active");
+    current = (current + 1) % journeySlides.length;
+    journeySlides[current].classList.add("is-active");
+  }, 4200);
+}
+
+function enterJourney() {
+  if (journeyStarted) return;
+  journeyStarted = true;
+
+  activateSceneFade();
+
+  setTimeout(() => {
+    body.classList.add("matrix-hidden");
+    showScreen(mainExperience);
+    window.scrollTo({ top: 0, behavior: "auto" });
+    startJourneySlides();
+    runMissionReveal();
+  }, 450);
+
+  setTimeout(() => {
+    deactivateSceneFade();
+  }, 1100);
+}
+
 langChoices.forEach(button => {
   button.addEventListener("click", () => {
     startExperience(button.dataset.langSelect);
@@ -230,8 +288,7 @@ yesBtn.addEventListener("click", async () => {
 });
 
 enterWorldBtn.addEventListener("click", () => {
-  showScreen(mainExperience);
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  enterJourney();
 });
 
 playVowBtn.addEventListener("click", async () => {
