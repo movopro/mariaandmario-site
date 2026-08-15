@@ -1,32 +1,139 @@
-/* Maria & Mario — mobile Matrix reveal fix + original playful digital cue. */
+/* Maria & Mario — bulletproof Matrix mobile/desktop reveal + original playful digital cue. */
 (() => {
   let audioContext = null;
-  const style = () => {
-    if (document.getElementById('mmMatrixFix')) return;
-    const s = document.createElement('style'); s.id = 'mmMatrixFix';
+
+  const inject = () => {
+    if (document.getElementById('mmBulletproofMatrix')) return;
+    const s = document.createElement('style');
+    s.id = 'mmBulletproofMatrix';
     s.textContent = `
       #matrixIntro .intro-center,#matrixIntro .intro-box,#matrixIntro #typeSequence{background:transparent!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;border-radius:0!important}
-      #matrixIntro .intro-center{padding:28px 16px!important;min-height:0!important}
-      #matrixIntro #typeSequence{min-height:190px!important;width:min(94vw,1100px)!important;display:grid!important;place-items:center!important;overflow:visible!important}
-      .mm-matrix-line{font-family:Cinzel,serif;font-size:clamp(2rem,5vw,5.2rem);font-weight:600;line-height:1.06;letter-spacing:.025em;text-align:center;color:#f7fff9;will-change:opacity,transform,filter;text-shadow:0 0 10px rgba(255,255,255,.10),0 0 28px rgba(57,233,122,.28),0 0 70px rgba(57,233,122,.10);opacity:0;transform:translateY(18px) scale(.985);filter:blur(9px);transition:opacity .36s cubic-bezier(.16,1,.3,1),transform .36s cubic-bezier(.16,1,.3,1),filter .36s cubic-bezier(.16,1,.3,1)}
-      .mm-matrix-line.is-in{opacity:1;transform:none;filter:blur(0)}
-      .mm-matrix-line.is-out{opacity:0;transform:translateY(-10px) scale(1.012);filter:blur(5px)}
-      #matrixIntro .date-block,#matrixIntro .choice-block{transition:opacity .7s ease,transform .7s ease,filter .7s ease}
-      @media(max-width:760px){#matrixIntro #typeSequence{min-height:175px!important}#matrixIntro .type-sequence{min-height:175px!important}.mm-matrix-line{font-size:clamp(1.65rem,7.7vw,3.15rem);line-height:1.08;padding:0 8px;text-shadow:0 0 8px rgba(255,255,255,.10),0 0 22px rgba(57,233,122,.30),0 0 50px rgba(57,233,122,.10)}}
-      @media(prefers-reduced-motion:reduce){.mm-matrix-line{transition:none!important}}
-    `; document.head.appendChild(s);
+      #mmMatrixOverlay{position:absolute;inset:0;z-index:20;display:grid;place-items:center;pointer-events:none;padding:24px;visibility:hidden;opacity:0;transition:opacity .25s ease}
+      #mmMatrixOverlay.is-active{visibility:visible;opacity:1}
+      #mmMatrixOverlay .mm-overlay-line{width:min(94vw,1100px);text-align:center;font-family:Cinzel,serif;font-size:clamp(2.05rem,5vw,5.4rem);font-weight:600;line-height:1.08;letter-spacing:.02em;color:#f7fff9;text-shadow:0 0 10px rgba(255,255,255,.13),0 0 28px rgba(57,233,122,.34),0 0 80px rgba(57,233,122,.12);opacity:0;transform:translate3d(0,18px,0) scale(.985);filter:blur(8px);will-change:opacity,transform,filter;transition:opacity .42s cubic-bezier(.16,1,.3,1),transform .42s cubic-bezier(.16,1,.3,1),filter .42s cubic-bezier(.16,1,.3,1)}
+      #mmMatrixOverlay .mm-overlay-line.is-in{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}
+      #mmMatrixOverlay .mm-overlay-line.is-out{opacity:0;transform:translate3d(0,-16px,0) scale(1.01);filter:blur(5px)}
+      #mmMatrixOverlay .mm-cursor{display:inline-block;margin-left:.08em;color:#39e97a;text-shadow:0 0 12px #39e97a;animation:mmCursor .62s steps(1) infinite}
+      @keyframes mmCursor{50%{opacity:0}}
+      @media(max-width:760px){#mmMatrixOverlay{padding:20px 12px}#mmMatrixOverlay .mm-overlay-line{font-size:clamp(1.7rem,7.5vw,3.15rem);line-height:1.1;text-shadow:0 0 8px rgba(255,255,255,.1),0 0 24px rgba(57,233,122,.34),0 0 55px rgba(57,233,122,.12)}}
+      @media(prefers-reduced-motion:reduce){#mmMatrixOverlay .mm-overlay-line{transition:none!important}}
+    `;
+    document.head.appendChild(s);
   };
-  const cue = () => {
-    const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
-    try {
-      audioContext?.close?.(); audioContext = new AC(); const c=audioContext, master=c.createGain(); master.gain.value=.22; master.connect(c.destination); if(c.state==='suspended')c.resume(); const now=c.currentTime;
-      const tone=(freq,dur,type,gain,delay,endFreq)=>{const o=c.createOscillator(),g=c.createGain(),t=now+delay;o.type=type;o.frequency.setValueAtTime(freq,t);if(endFreq)o.frequency.exponentialRampToValueAtTime(endFreq,t+dur);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(gain,t+.018);g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.connect(g).connect(master);o.start(t);o.stop(t+dur+.04)};
-      tone(58,.72,'sawtooth',.14,0,24); tone(116,.42,'square',.055,.04,52); tone(420,.10,'square',.035,.20,210); tone(760,.08,'square',.028,.32,380); tone(980,.10,'square',.03,.42,490); tone(260,.18,'triangle',.04,.58,130); tone(520,.22,'sine',.045,.72,1040); tone(1040,.18,'square',.028,.94,520); tone(330,.38,'triangle',.055,1.08,165);
-      setTimeout(()=>audioContext?.close?.(),1800);
-    } catch(e) {}
+
+  const ensureOverlay = () => {
+    let overlay = document.getElementById('mmMatrixOverlay');
+    if (overlay) return overlay;
+    const intro = document.getElementById('matrixIntro');
+    if (!intro) return null;
+    overlay = document.createElement('div');
+    overlay.id = 'mmMatrixOverlay';
+    overlay.setAttribute('aria-live','polite');
+    overlay.setAttribute('aria-label','Matrix invitation introduction');
+    intro.appendChild(overlay);
+    return overlay;
   };
-  const sequences={en:["TIME HAS COME...","TO GET MARRIED","IF YOU SEE THIS THEN YOU ARE SPECIAL TO US","AND...","YOU'VE BEEN SELECTED TO JOIN OUR MATRIX","ARE YOU IN?"],bg:["МОМЕНТЪТ НАСТЪПИ...","ДА СЕ ОЖЕНИМ","ЩОМ ВИЖДАШ ТОВА, ЗНАЧИ СИ СПЕЦИАЛЕН ЗА НАС","И...","ТИ БЕШЕ ИЗБРАН ДА ВЛЕЗЕШ В НАШАТА МАТРИЦА","ВЛИЗАШ ЛИ?"]};
-  const runMatrixReveal=(lang)=>{const oldHost=document.getElementById('typeSequence');if(!oldHost)return;const host=oldHost.cloneNode(false);oldHost.replaceWith(host);host.classList.add('mm-fixed-sequence');host.innerHTML='';const lines=sequences[lang]||sequences.en;let i=0;const show=()=>{if(i>=lines.length){const date=document.getElementById('dateBlock'),choices=document.getElementById('choiceBlock');[date,choices].forEach(el=>{if(el){el.classList.remove('hidden');el.style.opacity='0';el.style.transform='translateY(10px)';el.style.filter='blur(4px)';requestAnimationFrame(()=>{el.style.opacity='1';el.style.transform='none';el.style.filter='none'})}});return}const line=document.createElement('div');line.className='mm-matrix-line';line.textContent=lines[i++];host.replaceChildren(line);requestAnimationFrame(()=>requestAnimationFrame(()=>line.classList.add('is-in')));setTimeout(()=>{line.classList.add('is-out');setTimeout(show,330)},780)};show()};
-  const onLanguageClick=(event)=>{const button=event.target.closest?.('[data-lang-select]');if(!button)return;const lang=button.dataset.langSelect||'en';setTimeout(()=>{const intro=document.getElementById('introAudio');if(intro){intro.pause();try{intro.currentTime=0}catch(e){}}cue();runMatrixReveal(lang)},55)};
-  const init=()=>{style();document.addEventListener('click',onLanguageClick,{capture:true,passive:true})}; if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+
+  const sequences = {
+    en:["TIME HAS COME...","TO GET MARRIED","IF YOU SEE THIS THEN YOU ARE SPECIAL TO US","AND...","YOU'VE BEEN SELECTED TO JOIN OUR MATRIX","ARE YOU IN?"],
+    bg:["МОМЕНТЪТ НАСТЪПИ...","ДА СЕ ОЖЕНИМ","ЩОМ ВИЖДАШ ТОВА, ЗНАЧИ СИ СПЕЦИАЛЕН ЗА НАС","И...","ТИ БЕШЕ ИЗБРАН ДА ВЛЕЗЕШ В НАШАТА МАТРИЦА","ВЛИЗАШ ЛИ?"]
+  };
+
+  const reveal = (lang) => {
+    const overlay = ensureOverlay();
+    if (!overlay) return;
+    const intro = document.getElementById('matrixIntro');
+    if (intro) {
+      intro.classList.remove('hidden-screen');
+      intro.style.display = 'grid';
+      intro.style.visibility = 'visible';
+    }
+    overlay.classList.add('is-active');
+    overlay.replaceChildren();
+    const lines = sequences[lang] || sequences.en;
+    let i = 0;
+
+    const showNext = () => {
+      if (i >= lines.length) {
+        overlay.classList.remove('is-active');
+        setTimeout(() => {
+          const date = document.getElementById('dateBlock');
+          const choices = document.getElementById('choiceBlock');
+          [date,choices].forEach(el => {
+            if (!el) return;
+            el.classList.remove('hidden');
+            el.style.opacity='0';
+            el.style.transform='translateY(12px)';
+            el.style.filter='blur(5px)';
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+              el.style.opacity='1'; el.style.transform='none'; el.style.filter='none';
+            }));
+          });
+        },280);
+        return;
+      }
+      const line = document.createElement('div');
+      line.className='mm-overlay-line';
+      line.textContent=lines[i++];
+      const cursor=document.createElement('span');
+      cursor.className='mm-cursor'; cursor.textContent='▋'; line.appendChild(cursor);
+      overlay.replaceChildren(line);
+      requestAnimationFrame(() => requestAnimationFrame(() => line.classList.add('is-in')));
+      setTimeout(() => {
+        line.classList.add('is-out');
+        setTimeout(showNext,260);
+      },1050);
+    };
+    showNext();
+  };
+
+  const matrixCue = () => {
+    const AC=window.AudioContext||window.webkitAudioContext;
+    if(!AC)return;
+    try{
+      audioContext?.close?.();
+      audioContext=new AC();
+      const c=audioContext, master=c.createGain();
+      master.gain.value=.19; master.connect(c.destination);
+      if(c.state==='suspended')c.resume();
+      const now=c.currentTime;
+      const tone=(f,d,type,g,delay,end)=>{
+        const o=c.createOscillator(),v=c.createGain(),t=now+delay;
+        o.type=type;o.frequency.setValueAtTime(f,t);
+        if(end)o.frequency.exponentialRampToValueAtTime(end,t+d);
+        v.gain.setValueAtTime(.0001,t);v.gain.exponentialRampToValueAtTime(g,t+.012);v.gain.exponentialRampToValueAtTime(.0001,t+d);
+        o.connect(v).connect(master);o.start(t);o.stop(t+d+.03);
+      };
+      // Original cue: ominous Matrix-like bass + deliberately cheeky digital beeps.
+      tone(55,.9,'sawtooth',.13,0,25);
+      tone(110,.42,'square',.045,.04,55);
+      tone(740,.09,'square',.028,.22,370);
+      tone(980,.09,'square',.028,.34,490);
+      tone(620,.12,'triangle',.035,.47,310);
+      tone(1240,.07,'square',.026,.62,620);
+      tone(330,.24,'triangle',.045,.76,165);
+      tone(880,.14,'sine',.035,1.02,1320);
+      tone(440,.42,'triangle',.045,1.16,220);
+      setTimeout(()=>audioContext?.close?.(),1900);
+    }catch(e){}
+  };
+
+  const onLanguageClick = (event) => {
+    const button=event.target.closest?.('[data-lang-select]');
+    if(!button)return;
+    const lang=button.dataset.langSelect||'en';
+    setTimeout(()=>{
+      const intro=document.getElementById('introAudio');
+      if(intro){intro.pause();try{intro.currentTime=0}catch(e){}}
+      matrixCue();
+      reveal(lang);
+    },120);
+  };
+
+  const init=()=>{
+    inject();
+    ensureOverlay();
+    document.addEventListener('click',onLanguageClick,{capture:true,passive:true});
+  };
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
