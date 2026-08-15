@@ -1,0 +1,23 @@
+/* M&M cinematic polish — lightweight, responsive, original visual treatment. */
+#mmStorybookIntro{height:100svh;min-height:100dvh;contain:layout paint;}
+#mmStorybookIntro .mm-stars{background-size:clamp(105px,10vw,170px) clamp(105px,10vw,170px);will-change:transform,opacity;}
+#mmStorybookIntro .mm-arc,#mmStorybookIntro .mm-rays,#mmStorybookIntro .mm-orbit,#mmStorybookIntro .mm-initials,#mmStorybookIntro .mm-sweep{will-change:transform,opacity;}
+#mmStorybookIntro .mm-arc{width:min(96vw,1120px);height:min(96vw,1120px);}
+#mmStorybookIntro .mm-rays{width:min(88vw,1000px);}
+#mmStorybookIntro .mm-orbit{width:min(76vw,820px);}
+#mmStorybookIntro .mm-core{width:min(76vw,760px);}
+#mmStorybookIntro .mm-initials{font-size:clamp(8.5rem,22vw,19rem);letter-spacing:-.105em;text-rendering:geometricPrecision;}
+#mmStorybookIntro .mm-caption{font-size:clamp(.7rem,1.25vw,1rem);text-shadow:0 0 18px rgba(255,220,145,.22);}
+@media (max-width:760px){
+  #mmStorybookIntro .mm-stars{background-size:96px 96px;opacity:.34!important;}
+  #mmStorybookIntro .mm-horizon{filter:blur(12px);}
+  #mmStorybookIntro .mm-arc{width:132vw;height:132vw;box-shadow:0 0 28px rgba(255,218,130,.07),inset 0 0 28px rgba(255,218,130,.035);}
+  #mmStorybookIntro .mm-rays{width:118vw;}
+  #mmStorybookIntro .mm-orbit{width:96vw;}
+  #mmStorybookIntro .mm-core{width:88vw;}
+  #mmStorybookIntro .mm-initials{font-size:clamp(5.7rem,30vw,10rem);letter-spacing:-.09em;-webkit-text-stroke:.7px rgba(255,240,193,.72);}
+  #mmStorybookIntro .mm-sweep{width:6px;filter:blur(3px);}
+  #mmStorybookIntro .mm-caption{bottom:max(8%,env(safe-area-inset-bottom));letter-spacing:.22em;font-size:.68rem;}
+}
+@media (max-height:700px) and (max-width:900px){#mmStorybookIntro .mm-initials{font-size:clamp(5rem,25vh,8rem)}#mmStorybookIntro .mm-caption{bottom:7%;}}
+@media (prefers-reduced-motion:reduce){#mmStorybookIntro .mm-stars,#mmStorybookIntro .mm-horizon,#mmStorybookIntro .mm-arc,#mmStorybookIntro .mm-rays,#mmStorybookIntro .mm-orbit,#mmStorybookIntro .mm-core::before,#mmStorybookIntro .mm-initials,#mmStorybookIntro .mm-sweep,#mmStorybookIntro .mm-caption{animation:none!important;opacity:1!important;transform:none!important;}}
