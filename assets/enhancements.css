@@ -1,0 +1,296 @@
+/* Maria & Mario — visual + mobile polish */
+
+:root {
+  --mm-gold-soft: rgba(240, 210, 141, 0.22);
+  --mm-glass: rgba(7, 11, 18, 0.68);
+}
+
+html {
+  min-height: 100%;
+  background: #030509;
+  overscroll-behavior-x: none;
+}
+
+body {
+  min-height: 100svh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.screen {
+  min-height: 100svh;
+  padding-top: max(24px, env(safe-area-inset-top));
+  padding-right: max(16px, env(safe-area-inset-right));
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
+  padding-left: max(16px, env(safe-area-inset-left));
+}
+
+.gate-title,
+.gate-subtitle,
+.type-sequence,
+.date-block h1,
+.choice-title,
+.welcome-content h2,
+.journey-content h2,
+.message-panel h2,
+.section-heading h2,
+.music-card h2,
+.donate-card h2,
+.rsvp-card-title,
+.info-value,
+.choice-text,
+.lead,
+.rsvp-copy {
+  overflow-wrap: anywhere;
+  hyphens: none;
+}
+
+:where(button, input, textarea):focus-visible {
+  outline: 2px solid rgba(255, 210, 140, 0.9);
+  outline-offset: 3px;
+}
+
+.gate-panel,
+.intro-box,
+.message-panel {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.025),
+    0 28px 90px rgba(0, 0, 0, 0.48),
+    0 0 80px rgba(240, 210, 141, 0.045);
+}
+
+.fancy-lang-btn,
+.choice-card,
+.btn,
+.choice-option,
+.check-option {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .fancy-lang-btn:hover,
+  .choice-card:hover,
+  .btn:hover,
+  .choice-option:hover,
+  .check-option:hover {
+    transform: none;
+  }
+
+  .fancy-lang-btn:active,
+  .choice-card:active,
+  .btn:active,
+  .choice-option:active,
+  .check-option:active {
+    transform: scale(0.985);
+  }
+}
+
+@media (max-width: 480px) {
+  .gate-panel {
+    width: 100%;
+    padding: 30px 16px;
+    border-radius: 26px;
+  }
+
+  .gate-title {
+    font-size: clamp(2.2rem, 11vw, 3.5rem);
+    letter-spacing: -0.02em;
+  }
+
+  .gate-subtitle {
+    font-size: 0.78rem;
+    line-height: 1.45;
+    margin-bottom: 22px;
+  }
+
+  .gate-actions {
+    gap: 12px;
+  }
+
+  .fancy-lang-btn {
+    min-height: 92px;
+    border-radius: 22px;
+    padding: 16px 14px;
+  }
+
+  .flag-badge {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+  }
+
+  .flag-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .lang-choice-label {
+    font-size: 1.55rem;
+  }
+
+  .lang-choice-text {
+    font-size: 0.72rem;
+    line-height: 1.35;
+  }
+
+  .intro-center {
+    width: 100%;
+    min-height: 0;
+    padding: 62px 16px 28px;
+    border-radius: 26px;
+  }
+
+  .type-sequence {
+    min-height: 170px;
+    font-size: clamp(1.75rem, 9vw, 3rem);
+    line-height: 1.08;
+  }
+
+  .date-block h1 {
+    font-size: clamp(2rem, 9vw, 3rem);
+  }
+
+  .choice-card {
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  .choice-title {
+    font-size: 1.35rem;
+  }
+
+  .choice-text {
+    font-size: 0.78rem;
+    line-height: 1.5;
+  }
+
+  .welcome-content {
+    padding: 54px 10px 34px;
+  }
+
+  .welcome-content h2,
+  .journey-content h2,
+  .message-panel h2,
+  .section-heading h2,
+  .music-card h2,
+  .donate-card h2 {
+    font-size: clamp(1.9rem, 9vw, 3rem);
+  }
+
+  .lead,
+  .message-panel p,
+  .music-card p,
+  .welcome-content p,
+  .journey-content p,
+  .rsvp-copy {
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+
+  .hero-actions,
+  .panel-actions {
+    width: 100%;
+  }
+
+  .btn {
+    min-height: 52px;
+    padding: 14px 18px;
+  }
+
+  .journey-hero {
+    min-height: 100svh;
+  }
+
+  .journey-content {
+    width: 100%;
+    padding: 38px 10px;
+  }
+
+  .marvel-wall {
+    width: 175%;
+    left: -37.5%;
+    gap: 10px;
+  }
+
+  .marvel-track {
+    gap: 10px;
+  }
+
+  .marvel-track img {
+    width: 92px;
+    height: 122px;
+    border-radius: 13px;
+  }
+
+  .mission-section,
+  .music-donate-section,
+  .rsvp-entry {
+    width: 100%;
+    padding-top: 54px;
+  }
+
+  .mission-card,
+  .music-card,
+  .donate-card,
+  .rsvp-card,
+  .submit-panel {
+    border-radius: 22px;
+    padding: 22px 18px;
+  }
+
+  .option-grid.two-col,
+  .drink-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .choice-option,
+  .check-option {
+    min-height: 54px;
+    padding: 14px;
+  }
+
+  .text-field,
+  .text-area {
+    font-size: 16px;
+  }
+
+  .large-qr,
+  .qr-image {
+    width: min(100%, 220px);
+    margin-inline: auto;
+  }
+
+  .submit-panel {
+    gap: 10px;
+  }
+
+  .submit-actions,
+  .submit-actions .btn {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .marvel-track {
+    transform: none !important;
+  }
+
+  .reveal-card {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
