@@ -1,0 +1,637 @@
+/* Maria & Mario — one cinematic direction for the whole invitation. */
+
+:root {
+  --mm-ivory: #fff8e9;
+  --mm-code: #6dffa7;
+  --mm-code-soft: rgba(109, 255, 167, 0.28);
+  --mm-gold: #f6d38a;
+  --mm-red: #a91320;
+  --mm-black: #020204;
+}
+
+/* Opening gate: typography floating in the code, never a card. */
+#languageGate {
+  isolation: isolate;
+  background: radial-gradient(circle at 50% 48%, rgba(44, 123, 78, 0.11), transparent 32%), #010303;
+}
+
+#languageGate .gate-panel {
+  width: min(92vw, 760px);
+  padding: 42px 18px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+#languageGate .gate-title {
+  font-family: "Syne", sans-serif;
+  font-weight: 700;
+  font-size: clamp(2.9rem, 8vw, 6.8rem);
+  letter-spacing: -0.055em;
+  color: #f2fff6;
+  text-shadow: 0 0 22px rgba(109, 255, 167, 0.14);
+}
+
+#languageGate .gate-subtitle {
+  font-family: "Bebas Neue", sans-serif;
+  color: rgba(213, 255, 227, 0.58);
+  letter-spacing: 0.3em;
+}
+
+#languageGate .eyebrow {
+  font-family: "Syne", sans-serif;
+  letter-spacing: 0.42em;
+  color: var(--mm-code);
+  opacity: 0.76;
+}
+
+#languageGate .gate-actions {
+  width: min(100%, 620px);
+  gap: 0;
+  margin-top: 12px;
+  border-top: 1px solid rgba(109, 255, 167, 0.18);
+}
+
+#languageGate .fancy-lang-btn {
+  min-height: 88px;
+  padding: 16px 4px;
+  border: 0;
+  border-bottom: 1px solid rgba(109, 255, 167, 0.18);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+}
+
+#languageGate .fancy-lang-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, transparent, rgba(109, 255, 167, 0.075), transparent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.55s cubic-bezier(.16, 1, .3, 1);
+}
+
+#languageGate .fancy-lang-btn:hover,
+#languageGate .fancy-lang-btn:focus-visible {
+  border-color: rgba(109, 255, 167, 0.52);
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+}
+
+#languageGate .fancy-lang-btn:hover::before,
+#languageGate .fancy-lang-btn:focus-visible::before {
+  transform: scaleX(1);
+}
+
+#languageGate .flag-badge {
+  width: 50px;
+  height: 50px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: none;
+}
+
+#languageGate .flag-icon { width: 38px; height: 38px; border-radius: 50%; }
+#languageGate .lang-choice-label { font-family: "Syne", sans-serif; font-size: clamp(1.5rem, 3vw, 2.2rem); }
+#languageGate .lang-choice-text { color: rgba(220, 255, 231, 0.5); }
+
+/* Matrix chapter: the copy resolves directly out of the code field. */
+#matrixIntro {
+  overflow: hidden;
+  isolation: isolate;
+  background: radial-gradient(circle at 50% 50%, rgba(68, 217, 121, 0.08), transparent 25%), #010303;
+}
+
+#matrixIntro .intro-overlay {
+  z-index: 0;
+  background: radial-gradient(circle at 50% 50%, transparent 0 18%, rgba(0, 0, 0, 0.25) 48%, rgba(0, 0, 0, 0.82) 100%);
+}
+
+#matrixIntro .intro-center,
+#matrixIntro .intro-center.intro-box,
+#matrixIntro .intro-box,
+#matrixIntro #typeSequence {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+#matrixIntro .intro-center {
+  z-index: 3;
+  width: min(94vw, 1180px);
+  min-height: 100svh;
+  padding: 84px 22px 42px;
+}
+
+#matrixIntro .intro-center > .eyebrow {
+  font-family: "Syne", sans-serif;
+  letter-spacing: 0.5em;
+  color: rgba(151, 255, 188, 0.7);
+  text-shadow: 0 0 24px rgba(109, 255, 167, 0.24);
+}
+
+#matrixIntro #typeSequence {
+  width: min(100%, 1120px);
+  min-height: 250px;
+  font-family: "Syne", sans-serif;
+  font-size: clamp(2.2rem, 6.2vw, 6.6rem);
+  font-weight: 600;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+}
+
+#matrixIntro .signal-line {
+  color: #effff4;
+  letter-spacing: -0.045em;
+  text-shadow: 0 0 8px rgba(196, 255, 216, 0.34), 0 0 34px rgba(109, 255, 167, 0.25), 0 0 90px rgba(109, 255, 167, 0.1);
+  animation: mmCodeTextIn 1.05s cubic-bezier(.16, 1, .3, 1) both;
+}
+
+#matrixIntro .signal-line::before,
+#matrixIntro .signal-line::after { display: none; }
+
+#matrixIntro .signal-complete { animation: mmCodeLock 1.1s ease both; }
+
+#matrixIntro::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.35;
+  background: repeating-linear-gradient(180deg, rgba(118, 255, 170, 0.022) 0 1px, transparent 1px 6px);
+  mix-blend-mode: screen;
+}
+
+#matrixIntro .hidden {
+  max-height: 0;
+  margin: 0;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+#matrixIntro .date-block,
+#matrixIntro .choice-block {
+  max-height: 700px;
+  visibility: visible;
+  transition: opacity 0.9s ease, transform 0.9s ease, filter 0.9s ease, max-height 0.9s ease;
+}
+
+#matrixIntro .date-block h1 {
+  font-family: "Syne", sans-serif;
+  font-weight: 600;
+  color: #e9fff1;
+  letter-spacing: -0.04em;
+}
+
+#matrixIntro .date-label { color: var(--mm-code); }
+#matrixIntro .choice-stack { gap: 0; border-top: 1px solid rgba(109, 255, 167, 0.2); }
+
+#matrixIntro .choice-card {
+  padding: 18px 4px;
+  border: 0;
+  border-bottom: 1px solid rgba(109, 255, 167, 0.2);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+}
+
+#matrixIntro .choice-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, rgba(109, 255, 167, 0.1), transparent 72%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.55s cubic-bezier(.16, 1, .3, 1);
+}
+
+#matrixIntro .choice-card:hover,
+#matrixIntro .choice-card:focus-visible {
+  border-color: rgba(109, 255, 167, 0.58);
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+}
+
+#matrixIntro .choice-card:hover::after,
+#matrixIntro .choice-card:focus-visible::after { transform: scaleX(1); }
+#matrixIntro .choice-title { font-family: "Syne", sans-serif; font-weight: 600; }
+
+/* Fairytale-studio chapter with an unmistakable beam crossing over the M&M logo. */
+#mmStorybookIntro {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 52%, rgba(255, 235, 170, 0.2), transparent 9%), radial-gradient(circle at 50% 55%, rgba(76, 123, 203, 0.2), transparent 34%), linear-gradient(180deg, #02040a 0%, #071127 55%, #160d24 100%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 1s ease, visibility 1s ease;
+}
+
+#mmStorybookIntro.is-live { opacity: 1; visibility: visible; pointer-events: auto; }
+#mmStorybookIntro.is-leaving { opacity: 0; }
+#mmStorybookIntro .mm-sky { position: absolute; inset: 0; overflow: hidden; }
+
+#mmStorybookIntro .mm-stars,
+#mmStorybookIntro .mm-stars::before,
+#mmStorybookIntro .mm-stars::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  opacity: 0;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0 1px, transparent 1.7px);
+  background-size: 145px 145px;
+  transform: scale(0.72);
+  animation: mmStars 7.8s ease-out forwards;
+}
+
+#mmStorybookIntro .mm-stars::before { background-size: 225px 225px; animation-delay: 0.3s; }
+#mmStorybookIntro .mm-stars::after { background-size: 335px 335px; animation-delay: 0.7s; }
+
+#mmStorybookIntro .mm-horizon {
+  position: absolute;
+  left: -10vw;
+  bottom: -45vh;
+  width: 120vw;
+  height: 70vh;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(255, 230, 160, 0.3), rgba(255, 207, 112, 0.08) 24%, transparent 62%);
+  filter: blur(18px);
+  opacity: 0;
+  transform: scale(0.55);
+  animation: mmHorizon 7.8s ease-out forwards;
+}
+
+#mmStorybookIntro .mm-arc {
+  position: absolute;
+  width: min(90vw, 1040px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(255, 236, 173, 0.2);
+  border-radius: 50%;
+  box-shadow: 0 0 56px rgba(255, 218, 130, 0.1), inset 0 0 56px rgba(255, 218, 130, 0.05);
+  opacity: 0;
+  transform: scale(0.18) rotate(-28deg);
+  animation: mmArc 7.8s cubic-bezier(.16, 1, .3, 1) forwards;
+}
+
+#mmStorybookIntro .mm-rays {
+  position: absolute;
+  width: min(82vw, 900px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  opacity: 0;
+  background: conic-gradient(from 0deg, transparent 0 8deg, rgba(255, 238, 182, 0.12) 10deg, transparent 13deg 27deg, rgba(255, 238, 182, 0.1) 29deg, transparent 33deg 360deg);
+  -webkit-mask-image: radial-gradient(circle, transparent 0 22%, #000 39%, transparent 73%);
+  mask-image: radial-gradient(circle, transparent 0 22%, #000 39%, transparent 73%);
+  animation: mmRays 7.8s ease-out forwards;
+}
+
+#mmStorybookIntro .mm-core {
+  position: relative;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  width: min(76vw, 720px);
+  aspect-ratio: 1;
+}
+
+#mmStorybookIntro .mm-initials,
+#mmStorybookIntro .mm-logo-shine {
+  position: absolute;
+  margin: 0;
+  font-family: "Cinzel", serif;
+  font-size: clamp(7.2rem, 23vw, 18rem);
+  font-weight: 500;
+  line-height: 0.8;
+  letter-spacing: -0.09em;
+}
+
+#mmStorybookIntro .mm-initials {
+  z-index: 4;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 240, 193, 0.78);
+  background: linear-gradient(115deg, #fffdf2 0%, #ffe9a9 38%, #fffdf4 49%, #dba83f 51%, #fff1bd 72%, #fffdf2 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(0 0 12px rgba(255, 232, 160, 0.24)) drop-shadow(0 0 48px rgba(255, 193, 62, 0.2));
+  opacity: 0;
+  transform: translateY(30px) scale(0.58);
+  animation: mmInitials 7.8s cubic-bezier(.16, 1, .3, 1) forwards;
+}
+
+#mmStorybookIntro .mm-logo-shine {
+  z-index: 7;
+  color: transparent;
+  background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.15) 44%, #fff 49%, rgba(255,233,172,0.95) 52%, transparent 61%);
+  background-size: 320% 100%;
+  background-position: 150% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  opacity: 0;
+  animation: mmLogoBeam 7.8s cubic-bezier(.2, .8, .2, 1) forwards;
+}
+
+#mmStorybookIntro .mm-beam {
+  position: absolute;
+  z-index: 6;
+  top: -20%;
+  left: -90%;
+  width: 55%;
+  height: 140%;
+  opacity: 0;
+  transform: rotate(17deg);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04) 24%, rgba(255,247,218,0.5) 46%, rgba(255,255,255,0.92) 50%, rgba(176,218,255,0.22) 57%, transparent 78%);
+  filter: blur(10px);
+  mix-blend-mode: screen;
+  animation: mmBeamCross 7.8s cubic-bezier(.2, .8, .2, 1) forwards;
+}
+
+#mmStorybookIntro .mm-caption {
+  position: absolute;
+  z-index: 8;
+  right: 0;
+  bottom: 11%;
+  left: 0;
+  font-family: "Syne", sans-serif;
+  font-size: clamp(0.7rem, 1.4vw, 1rem);
+  letter-spacing: 0.48em;
+  text-align: center;
+  color: rgba(255, 242, 201, 0.72);
+  opacity: 0;
+  animation: mmCaption 7.8s ease-out forwards;
+}
+
+/* Photo-title chapter: kinetic panels, image-filled typography, red final lockup. */
+#mmMarvelIntro {
+  position: fixed;
+  inset: 0;
+  z-index: 75;
+  overflow: hidden;
+  background: #020203;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.42s ease, visibility 0.42s ease;
+}
+
+#mmMarvelIntro.is-live { opacity: 1; visibility: visible; pointer-events: auto; }
+#mmMarvelIntro.is-leaving { opacity: 0; }
+
+#mmMarvelIntro .mm-photo-stage {
+  position: absolute;
+  inset: -12%;
+  display: grid;
+  align-content: center;
+  gap: clamp(8px, 1.4vw, 18px);
+  background: #050506;
+  transform: rotate(-4deg) scale(1.18);
+  animation: mmStageDrift 7.3s cubic-bezier(.2, .7, .2, 1) forwards;
+}
+
+#mmMarvelIntro .mm-film-row {
+  display: flex;
+  gap: clamp(8px, 1.2vw, 16px);
+  width: max-content;
+  opacity: 0;
+  filter: grayscale(1) contrast(1.22) brightness(0.66);
+}
+
+#mmMarvelIntro .mm-film-row:nth-child(1) { animation: mmFilmLeft 7.3s ease-out forwards; }
+#mmMarvelIntro .mm-film-row:nth-child(2) { animation: mmFilmRight 7.3s ease-out 0.08s forwards; }
+#mmMarvelIntro .mm-film-row:nth-child(3) { animation: mmFilmLeft 7.3s ease-out 0.16s forwards; }
+
+#mmMarvelIntro .mm-film-row img {
+  width: clamp(132px, 17vw, 270px);
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 0;
+  box-shadow: 0 16px 44px rgba(0,0,0,0.55);
+}
+
+#mmMarvelIntro .mm-red-wash {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(115deg, rgba(80,0,5,0.72), rgba(0,0,0,0.08) 38%, rgba(134,7,18,0.76)), radial-gradient(circle at center, transparent 20%, rgba(0,0,0,0.88) 92%);
+  mix-blend-mode: multiply;
+  animation: mmRedWash 7.3s ease both;
+}
+
+#mmMarvelIntro .mm-frame-lines {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.34;
+  background: repeating-linear-gradient(90deg, transparent 0 18vw, rgba(255,255,255,0.08) 18vw calc(18vw + 1px));
+  animation: mmFrameLines 7.3s linear forwards;
+}
+
+#mmMarvelIntro .mm-photo-title,
+#mmMarvelIntro .mm-final-lockup {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+}
+
+#mmMarvelIntro .mm-photo-title span {
+  display: block;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(5rem, 17vw, 15rem);
+  line-height: 0.78;
+  letter-spacing: -0.035em;
+  white-space: nowrap;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255,255,255,0.32);
+  background: linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,0.1)), url("./images/portrait-14.webp") center 45% / cover;
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(0 15px 34px rgba(0,0,0,0.8));
+  opacity: 0;
+  transform: scale(8);
+  animation: mmPhotoTitle 7.3s cubic-bezier(.16, 1, .3, 1) forwards;
+}
+
+#mmMarvelIntro .mm-final-lockup { opacity: 0; transform: scale(1.7); animation: mmFinalLockup 7.3s cubic-bezier(.16, 1, .3, 1) forwards; }
+
+#mmMarvelIntro .mm-lockup-box {
+  position: relative;
+  min-width: min(88vw, 980px);
+  padding: clamp(12px, 2vw, 24px) clamp(20px, 4vw, 46px) clamp(8px, 1.6vw, 18px);
+  background: linear-gradient(135deg, #7f0711, #c01827 52%, #870913);
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.88), 0 0 0 5px #a00d1a, 0 28px 90px rgba(0,0,0,0.72);
+  overflow: hidden;
+}
+
+#mmMarvelIntro .mm-lockup-box::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 25%, rgba(255,255,255,0.42) 50%, transparent 72%);
+  transform: translateX(-130%);
+  animation: mmLockupShine 7.3s ease forwards;
+}
+
+#mmMarvelIntro .mm-lockup-title {
+  display: block;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(3.6rem, 13vw, 10rem);
+  line-height: 0.82;
+  letter-spacing: -0.02em;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 4px 0 rgba(0,0,0,0.18);
+}
+
+#mmMarvelIntro .mm-lockup-subtitle {
+  display: block;
+  margin-top: 0.45em;
+  font-family: "Syne", sans-serif;
+  font-size: clamp(0.58rem, 1.2vw, 0.9rem);
+  font-weight: 700;
+  letter-spacing: 0.62em;
+  text-align: center;
+  color: rgba(255,255,255,0.82);
+}
+
+/* More life throughout the invitation, kept subtle after the intros. */
+#mainExperience.is-entering .journey-content > * { animation: mmHeroRise 1.2s cubic-bezier(.16, 1, .3, 1) both; }
+#mainExperience.is-entering .journey-content > :nth-child(2) { animation-delay: 0.12s; }
+#mainExperience.is-entering .journey-content > :nth-child(3) { animation-delay: 0.22s; }
+#mainExperience.is-entering .journey-content > :nth-child(4) { animation-delay: 0.32s; }
+#mainExperience.is-entering .journey-content > :nth-child(5) { animation-delay: 0.42s; }
+
+.reveal-card {
+  --mm-reveal-delay: 0ms;
+  --mm-tilt-x: 0deg;
+  --mm-tilt-y: 0deg;
+  opacity: 0;
+  clip-path: inset(0 0 18% 0);
+  transform: perspective(900px) translateY(38px) scale(0.98) rotateX(var(--mm-tilt-x)) rotateY(var(--mm-tilt-y));
+  filter: blur(8px);
+  transition: opacity 0.85s ease var(--mm-reveal-delay), transform 0.85s cubic-bezier(.16, 1, .3, 1) var(--mm-reveal-delay), filter 0.85s ease var(--mm-reveal-delay), clip-path 0.85s ease var(--mm-reveal-delay), border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.reveal-card.is-visible {
+  opacity: 1;
+  clip-path: inset(0 0 0 0);
+  transform: perspective(900px) translateY(0) scale(1) rotateX(var(--mm-tilt-x)) rotateY(var(--mm-tilt-y));
+  filter: blur(0);
+}
+
+.mission-card::after,
+.music-card::after,
+.donate-card::after,
+.rsvp-card::after,
+.submit-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent 28%, rgba(255,222,164,0.1) 47%, transparent 66%);
+  transform: translateX(-120%);
+  transition: transform 0.8s cubic-bezier(.16, 1, .3, 1);
+}
+
+.mission-card:hover::after,
+.music-card:hover::after,
+.donate-card:hover::after,
+.rsvp-card:hover::after,
+.submit-panel:hover::after { transform: translateX(120%); }
+
+.mission-card:hover,
+.music-card:hover,
+.donate-card:hover,
+.rsvp-card:hover { border-color: rgba(255, 210, 137, 0.3); box-shadow: 0 30px 90px rgba(0,0,0,0.52), 0 0 46px rgba(166, 20, 31, 0.09); }
+
+.large-qr { transition: transform 0.55s cubic-bezier(.16, 1, .3, 1), box-shadow 0.55s ease; }
+.donate-card:hover .large-qr { transform: rotate(-2deg) scale(1.035); box-shadow: 0 24px 55px rgba(0,0,0,0.38); }
+
+@keyframes mmCodeTextIn { from { opacity: 0; transform: translateY(22px) scale(0.985); filter: blur(16px); } to { opacity: 1; transform: none; filter: blur(0); } }
+@keyframes mmCodeLock { 0% { opacity: 0.45; filter: blur(5px); } 42% { opacity: 1; filter: blur(0); } 100% { opacity: 1; filter: blur(0); } }
+@keyframes mmStars { 0% { opacity: 0; transform: scale(0.72) translateY(3%); } 30% { opacity: 0.25; } 100% { opacity: 0.52; transform: scale(1.16) translateY(-2%); } }
+@keyframes mmHorizon { 0%, 20% { opacity: 0; transform: scale(0.55); } 52% { opacity: 0.38; } 100% { opacity: 0.72; transform: scale(1.15); } }
+@keyframes mmArc { 0%, 15% { opacity: 0; transform: scale(0.18) rotate(-28deg); } 42% { opacity: 0.18; } 100% { opacity: 0.8; transform: scale(1) rotate(8deg); } }
+@keyframes mmRays { 0%, 25% { opacity: 0; transform: scale(0.3) rotate(-25deg); } 58% { opacity: 0.24; } 100% { opacity: 0.62; transform: scale(1.05) rotate(18deg); } }
+@keyframes mmInitials { 0%, 30% { opacity: 0; transform: translateY(30px) scale(0.58); filter: blur(14px); } 50% { opacity: 0.58; transform: translateY(4px) scale(0.9); filter: blur(3px); } 66%, 100% { opacity: 1; transform: none; filter: blur(0); } }
+@keyframes mmLogoBeam { 0%, 51% { opacity: 0; background-position: 150% 0; } 58% { opacity: 1; } 76% { opacity: 1; background-position: -55% 0; } 82%, 100% { opacity: 0; background-position: -55% 0; } }
+@keyframes mmBeamCross { 0%, 50% { left: -90%; opacity: 0; } 58% { opacity: 0.85; } 76% { left: 135%; opacity: 0.25; } 82%, 100% { left: 135%; opacity: 0; } }
+@keyframes mmCaption { 0%, 60% { opacity: 0; transform: translateY(12px); } 76%, 100% { opacity: 0.72; transform: none; } }
+@keyframes mmStageDrift { 0% { transform: rotate(-7deg) scale(1.42); } 58% { transform: rotate(-2deg) scale(1.12); } 100% { transform: rotate(0) scale(1.02); } }
+@keyframes mmFilmLeft { 0% { opacity: 0; transform: translateX(12%); filter: grayscale(1) contrast(1.3) brightness(0.48); } 12% { opacity: 1; } 55% { transform: translateX(-12%); filter: grayscale(0.2) contrast(1.12) brightness(0.78); } 100% { opacity: 0.35; transform: translateX(-22%); filter: grayscale(0) contrast(1.05) brightness(0.52); } }
+@keyframes mmFilmRight { 0% { opacity: 0; transform: translateX(-24%); filter: grayscale(1) contrast(1.3) brightness(0.48); } 12% { opacity: 1; } 55% { transform: translateX(-4%); filter: grayscale(0.2) contrast(1.12) brightness(0.78); } 100% { opacity: 0.35; transform: translateX(6%); filter: grayscale(0) contrast(1.05) brightness(0.52); } }
+@keyframes mmRedWash { 0% { opacity: 0.2; } 38% { opacity: 0.6; } 70%, 100% { opacity: 0.92; } }
+@keyframes mmFrameLines { from { transform: translateX(-7%); } to { transform: translateX(7%); } }
+@keyframes mmPhotoTitle { 0%, 25% { opacity: 0; transform: scale(8); background-position: center 20%; } 38% { opacity: 1; } 62% { opacity: 1; transform: scale(1); background-position: center 80%; } 72%, 100% { opacity: 0; transform: scale(0.82); background-position: center 100%; } }
+@keyframes mmFinalLockup { 0%, 66% { opacity: 0; transform: scale(1.7); filter: blur(8px); } 78% { opacity: 1; transform: scale(1); filter: blur(0); } 94% { opacity: 1; } 100% { opacity: 0; transform: scale(0.985); } }
+@keyframes mmLockupShine { 0%, 76% { transform: translateX(-130%); } 91%, 100% { transform: translateX(130%); } }
+@keyframes mmHeroRise { from { opacity: 0; transform: translateY(30px); filter: blur(6px); } to { opacity: 1; transform: none; filter: blur(0); } }
+
+@media (max-width: 760px) {
+  #languageGate .gate-panel { padding-inline: 4px; }
+  #languageGate .fancy-lang-btn { grid-template-columns: auto 1fr auto; justify-items: initial; text-align: left; }
+  #languageGate .lang-content { justify-items: start; }
+  #languageGate .lang-arrow { display: block; }
+  #matrixIntro .intro-center { padding-inline: 12px; }
+  #matrixIntro #typeSequence { min-height: 210px; font-size: clamp(2rem, 10vw, 4.2rem); line-height: 1.02; }
+  #matrixIntro .choice-card { padding: 16px 2px; }
+  #mmStorybookIntro .mm-caption { bottom: 9%; letter-spacing: 0.28em; }
+  #mmMarvelIntro .mm-photo-stage { inset: -6% -68%; transform: rotate(-4deg) scale(1.22); }
+  #mmMarvelIntro .mm-film-row img { width: 42vw; }
+  #mmMarvelIntro .mm-photo-title span { font-size: clamp(4rem, 22vw, 7rem); white-space: normal; text-align: center; line-height: 0.82; }
+  #mmMarvelIntro .mm-lockup-box { min-width: 90vw; }
+  #mmMarvelIntro .mm-lockup-title { font-size: clamp(3.3rem, 18vw, 6rem); }
+  #mmMarvelIntro .mm-lockup-subtitle { letter-spacing: 0.36em; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #mmStorybookIntro *,
+  #mmMarvelIntro *,
+  #mainExperience.is-entering .journey-content > *,
+  .reveal-card {
+    animation: none !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  #mmStorybookIntro .mm-stars,
+  #mmStorybookIntro .mm-horizon,
+  #mmStorybookIntro .mm-arc,
+  #mmStorybookIntro .mm-rays,
+  #mmStorybookIntro .mm-initials,
+  #mmStorybookIntro .mm-caption,
+  #mmMarvelIntro .mm-film-row,
+  #mmMarvelIntro .mm-final-lockup,
+  .reveal-card {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    clip-path: none !important;
+  }
+
+  #mmMarvelIntro .mm-photo-title { display: none; }
+}
