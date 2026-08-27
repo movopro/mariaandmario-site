@@ -208,7 +208,7 @@
     playPhotoIntroSound();
     const screen = makePhotoIntro();
     requestAnimationFrame(() => requestAnimationFrame(() => screen.classList.add('is-live')));
-    const duration = reducedMotion.matches ? 1200 : 7400;
+    const duration = reducedMotion.matches ? 1200 : 8300;
     window.setTimeout(() => {
       screen.classList.add('is-leaving');
       window.setTimeout(() => {
