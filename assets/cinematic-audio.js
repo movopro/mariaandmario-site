@@ -289,3 +289,13 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', attach);
   else attach();
 })();
+
+/* Load privacy-preserving analytics after the cinematic layer without touching RSVP field contents. */
+(() => {
+  if (document.querySelector('script[data-mm-analytics]')) return;
+  const script = document.createElement('script');
+  script.src = './analytics.js';
+  script.async = true;
+  script.dataset.mmAnalytics = 'true';
+  document.head.appendChild(script);
+})();
