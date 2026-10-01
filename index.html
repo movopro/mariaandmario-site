@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Maria &amp; Mario</title>
-<meta name="description" content="With great power comes great responsibility.">
+<meta name="description" content="With great power comes a great responsibility.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpolygon fill='%23FFD23A' stroke='%23000' stroke-width='4' points='32,2 39,20 58,14 46,30 62,40 42,42 46,62 32,48 18,62 22,42 2,40 18,30 6,14 25,20'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -74,6 +74,35 @@
       linear-gradient(315deg, #000 0%, transparent 42%);
   }
 
+  /* Original hero silhouettes, behind the burst */
+  .hero{
+    position:fixed;
+    z-index:1;
+    pointer-events:none;
+    fill:var(--ink);
+    stroke:var(--ink);
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+  .hero .cape{ fill:#4A0A0E; stroke:#4A0A0E; stroke-width:6; }
+  .hero-flyer{
+    top:calc(env(safe-area-inset-top, 0px) + 1vh);
+    left:-3vw;
+    width:min(34vw, 500px);
+    transform:rotate(-14deg);
+  }
+  .hero-standing{
+    top:50%;
+    right:-1vw;
+    height:min(62vh, 540px);
+    transform:translateY(-50%);
+  }
+  .hero-lander{
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 1vh);
+    left:1vw;
+    width:min(28vw, 400px);
+  }
+
   .panel{
     position:relative;
     z-index:2;
@@ -141,6 +170,9 @@
   }
 
   @media (max-width: 600px){
+    .hero-flyer{ width:62vw; left:-8vw; top:calc(env(safe-area-inset-top, 0px) + 2vh); }
+    .hero-standing{ display:none; }
+    .hero-lander{ width:54vw; left:-4vw; bottom:calc(env(safe-area-inset-bottom, 0px) + 2vh); }
     .burst{ inset:-14% -11%; width:122%; height:128%; }
     .panel{ padding:clamp(34px, 12vw, 60px) clamp(18px, 6vw, 40px); }
     .quote{ font-size:clamp(1.9rem, 10vw, 3rem); -webkit-text-stroke-width:2px; text-shadow:4px 4px 0 var(--ink), 7px 7px 0 var(--sky); }
@@ -151,13 +183,46 @@
   <div class="rays" aria-hidden="true"></div>
   <div class="dots" aria-hidden="true"></div>
 
+  <svg class="hero hero-flyer" viewBox="0 0 350 210" aria-hidden="true" focusable="false">
+    <polygon class="cape" points="232,58 254,92 170,150 118,124 66,156 30,112 96,104 160,66"/>
+    <line x1="248" y1="80" x2="178" y2="112" stroke-width="40"/>
+    <line x1="178" y1="112" x2="92" y2="138" stroke-width="26"/>
+    <line x1="180" y1="118" x2="108" y2="168" stroke-width="24"/>
+    <line x1="236" y1="98" x2="208" y2="134" stroke-width="18"/>
+    <line x1="250" y1="88" x2="336" y2="66" stroke-width="20"/>
+    <circle cx="264" cy="52" r="22" stroke="none"/>
+  </svg>
+
+  <svg class="hero hero-standing" viewBox="0 0 280 300" aria-hidden="true" focusable="false">
+    <polygon class="cape" points="96,66 184,66 258,220 222,292 196,236 170,296 110,296 84,236 58,292 22,220"/>
+    <polygon points="96,70 184,70 162,172 118,172" stroke-width="12"/>
+    <line x1="104" y1="82" x2="56" y2="128" stroke-width="22"/>
+    <line x1="56" y1="128" x2="116" y2="156" stroke-width="18"/>
+    <line x1="176" y1="82" x2="224" y2="128" stroke-width="22"/>
+    <line x1="224" y1="128" x2="164" y2="156" stroke-width="18"/>
+    <line x1="126" y1="170" x2="108" y2="286" stroke-width="28"/>
+    <line x1="154" y1="170" x2="172" y2="286" stroke-width="28"/>
+    <circle cx="140" cy="40" r="24" stroke="none"/>
+  </svg>
+
+  <svg class="hero hero-lander" viewBox="0 0 260 220" aria-hidden="true" focusable="false">
+    <line x1="150" y1="140" x2="215" y2="150" stroke-width="26"/>
+    <line x1="215" y1="150" x2="225" y2="205" stroke-width="24"/>
+    <line x1="148" y1="145" x2="85" y2="200" stroke-width="24"/>
+    <line x1="85" y1="200" x2="22" y2="202" stroke-width="22"/>
+    <line x1="140" y1="90" x2="150" y2="140" stroke-width="40"/>
+    <line x1="136" y1="96" x2="66" y2="196" stroke-width="18"/>
+    <line x1="150" y1="86" x2="224" y2="30" stroke-width="18"/>
+    <circle cx="142" cy="62" r="22" stroke="none"/>
+  </svg>
+
   <main class="panel">
     <svg class="burst" viewBox="-80 -60 1160 720" preserveAspectRatio="none" aria-hidden="true" focusable="false">
       <polygon points="1037,300 969,323 1049,359 932,372 973,417 902,413 965,482 860,455 919,538 815,492 863,539 752,519 731,572 665,551 643,619 586,555 552,599 500,556 447,621 416,560 350,603 328,549 264,596 255,530 152,551 174,488 96,530 139,458 68,477 75,418 -52,414 45,372 -53,360 24,325 -52,300 53,275 -60,235 41,229 -6,178 100,183 57,140 142,138 118,90 189,100 191,42 254,70 239,-12 335,57 352,-36 411,49 452,-9 500,38 552,-11 582,44 648,-18 674,52 748,1 748,85 858,26 823,101 902,84 859,140 934,142 907,186 1002,192 929,230 1005,241 946,275"/>
     </svg>
     <h1 class="quote">
       <span>With great power</span>
-      <span>comes great</span>
+      <span>comes a great</span>
       <span>responsibility.</span>
     </h1>
   </main>
