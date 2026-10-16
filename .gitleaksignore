@@ -1,0 +1,9 @@
+# gitleaks findings reviewed and accepted (2026-10-16, MARVIS final audit, hygiene).
+# Both are browser-side keys that are public by design, not secrets:
+# - analytics.js: the PostHog project key (phc_...), a client-side ingestion key every visitor's browser receives.
+# - script.js (old commit, no longer in HEAD): a Supabase "anon" JWT (role=anon), the public key gated by row-level security.
+# Add a line only after the same review; never allowlist a whole folder.
+# Check: gitleaks git . --redact --log-opts=--all  and  gitleaks dir . --redact
+a9f16b89d6f7852f15e5147b6346158a44547ee2:analytics.js:generic-api-key:6
+360fa1dfe87ca541cce4e9e889ca1eb2a7477a03:script.js:jwt:2
+analytics.js:generic-api-key:6
